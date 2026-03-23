@@ -8,9 +8,24 @@
   <body>
     <div id="section-admin">
       <h1>Création du questionnaire</h1>
-      <input type="text" id="titre-test" placeholder="Nom du test" />
-      <input type="text" id="video-url" placeholder="Lien de la vidéo" />
-      <input type="text" id="audio-url" placeholder="Lien de l'audio" />
+      <input
+        type="text"
+        id="title-test"
+        name="title-test"
+        placeholder="Nom du test"
+      />
+      <input
+        type="text"
+        id="video-url"
+        name="video-url"
+        placeholder="Lien de la vidéo"
+      />
+      <input
+        type="text"
+        id="audio-url"
+        name="audio-url"
+        placeholder="Lien de l'audio"
+      />
 
       <div id="questions-video">
         <h2>Questions sur la vidéo</h2>
@@ -26,7 +41,7 @@
         <h2>Questions sur la mémoire de la source</h2>
         <div id="container-questions-mdls"></div>
       </div>
-      <button onclick="sauvegarderJSON()">Créer le fichier JSON</button>
+      <button onclick="saveJSON()">Créer le fichier JSON</button>
     </div>
   </body>
 </html>
