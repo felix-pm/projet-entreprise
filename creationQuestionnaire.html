@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="section-admin">
+      <h1>Création du questionnaire</h1>
+      <input type="text" id="titre-test" placeholder="Nom du test" />
+      <input type="text" id="video-url" placeholder="Lien de la vidéo" />
+      <input type="text" id="audio-url" placeholder="Lien de l'audio" />
+
+      <div id="questions-video">
+        <h2>Questions sur la vidéo</h2>
+        <div id="container-questions-video"></div>
+      </div>
+
+      <div id="questions-audio">
+        <h2>Questions sur l'audio</h2>
+        <div id="container-questions-audio"></div>
+      </div>
+
+      <div id="question-mdls">
+        <h2>Questions sur la mémoire de la source</h2>
+        <div id="container-questions-mdls"></div>
+      </div>
+      <button onclick="sauvegarderJSON()">Créer le fichier JSON</button>
+    </div>
+  </body>
+</html>
