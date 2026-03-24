@@ -8,7 +8,7 @@ function questionVideo() {
     const labelQuestionVideo = document.createElement("label");
     const inputQuestionVideo = document.createElement("input");
 
-    labelQuestionVideo.textContent = "Question " + i;
+    labelQuestionVideo.textContent = "Question " + i + " : ";
     inputQuestionVideo.className = "questions-video";
     inputQuestionVideo.dataset.id = i;
 
@@ -27,7 +27,7 @@ function questionAudio() {
     const labelQuestionAudio = document.createElement("label");
     const inputQuestionAudio = document.createElement("input");
 
-    labelQuestionAudio.textContent = "Question " + i;
+    labelQuestionAudio.textContent = "Question " + i + " : ";
     inputQuestionAudio.className = "questions-audio";
     inputQuestionAudio.dataset.id = i;
 
@@ -46,7 +46,7 @@ function questionMdls() {
     const labelQuestionMdls = document.createElement("label");
     const inputQuestionMdls = document.createElement("input");
 
-    labelQuestionMdls.textContent = "Question " + i;
+    labelQuestionMdls.textContent = "Question " + i + " : ";
     inputQuestionMdls.className = "questions-mdls";
     inputQuestionMdls.dataset.id = i;
 
@@ -54,8 +54,6 @@ function questionMdls() {
     containerQuestionMdls.appendChild(divQuestionMdls);
   }
 }
-// git config --global user.email "you@example.com"
-//   git config --global user.name "Your Name"
 
 function saveJson() {
   const buttonSaveJson = document.querySelector("#saveJson");
