@@ -1,123 +1,72 @@
-function questionVideo() {
-  const containerQuestionVideo = document.querySelector(
-    "#container-questions-video",
-  );
+function survey(
+  containerQuestion,
+  className,
+  checkboxName,
+  numberQuestions,
+  choice1Text,
+  choice2Text,
+) {
+  const containerQuestions = document.querySelector(containerQuestion);
 
-  for (let i = 1; i <= 15; i++) {
-    const divQuestionVideo = document.createElement("div");
-    const labelQuestionVideo = document.createElement("label");
-    const inputQuestionVideo = document.createElement("input");
-    const checkboxVideo1 = document.createElement("input");
-    const checkboxVideo2 = document.createElement("input");
-    const pTrue = document.createElement("span");
-    const pFalse = document.createElement("span");
+  for (let i = 1; i <= numberQuestions; i++) {
+    const divQuestion = document.createElement("div");
+    const labelQuestion = document.createElement("label");
+    const inputQuestion = document.createElement("input");
+    const checkbox1 = document.createElement("input");
+    const checkbox2 = document.createElement("input");
+    const choice1 = document.createElement("span");
+    const choice2 = document.createElement("span");
 
-    labelQuestionVideo.textContent = "Question " + i + " : ";
-    inputQuestionVideo.className = "questions-video";
-    inputQuestionVideo.dataset.id = i;
+    labelQuestion.textContent = "Question " + i + " : ";
+    inputQuestion.className = className;
+    inputQuestion.dataset.id = i;
 
-    checkboxVideo1.type = "radio";
-    checkboxVideo1.name = "answer-video" + i;
-    pTrue.textContent = "Vrai";
-    checkboxVideo1.value = "Vrai";
+    checkbox1.type = "radio";
+    checkbox1.name = checkboxName + i;
+    checkbox1.className = "checkboxSurvey";
+    choice1.textContent = choice1Text;
+    checkbox1.value = choice1Text;
 
-    checkboxVideo2.type = "radio";
-    checkboxVideo2.name = "answer-video" + i;
-    pFalse.textContent = "Faux";
-    checkboxVideo2.value = "Faux";
+    checkbox2.type = "radio";
+    checkbox2.name = checkboxName + i;
+    checkbox2.className = "checkboxSurvey";
+    choice2.textContent = choice2Text;
+    checkbox2.value = choice2Text;
 
-    divQuestionVideo.append(
-      labelQuestionVideo,
-      inputQuestionVideo,
-      checkboxVideo1,
-      pTrue,
-      checkboxVideo2,
-      pFalse,
+    divQuestion.append(
+      labelQuestion,
+      inputQuestion,
+      checkbox1,
+      choice1,
+      checkbox2,
+      choice2,
     );
-    containerQuestionVideo.append(divQuestionVideo);
+    containerQuestions.appendChild(divQuestion);
   }
 }
+survey(
+  "#container-questions-video",
+  "questions-video",
+  "answer-video",
+  15,
+  "Vrai",
+  "Faux",
+);
 
-function questionAudio() {
-  const containerQuestionAudio = document.querySelector(
-    "#container-questions-audio",
-  );
+survey(
+  "#container-questions-audio",
+  "questions-audio",
+  "answer-audio",
+  15,
+  "Vrai",
+  "Faux",
+);
 
-  for (let i = 1; i <= 15; i++) {
-    const divQuestionAudio = document.createElement("div");
-    const labelQuestionAudio = document.createElement("label");
-    const inputQuestionAudio = document.createElement("input");
-    const checkboxAudio1 = document.createElement("input");
-    const checkboxAudio2 = document.createElement("input");
-    const pTrue = document.createElement("span");
-    const pFalse = document.createElement("span");
-
-    labelQuestionAudio.textContent = "Question " + i + " : ";
-    inputQuestionAudio.className = "questions-audio";
-    inputQuestionAudio.dataset.id = i;
-
-    checkboxAudio1.type = "radio";
-    checkboxAudio1.name = "answer-audio" + i;
-    pTrue.textContent = "Vrai";
-    checkboxAudio1.value = "Vrai";
-
-    checkboxAudio2.type = "radio";
-    checkboxAudio2.name = "answer-audio" + i;
-    pFalse.textContent = "Faux";
-    checkboxAudio2.value = "Faux";
-
-    divQuestionAudio.append(
-      labelQuestionAudio,
-      inputQuestionAudio,
-      checkboxAudio1,
-      pTrue,
-      checkboxAudio2,
-      pFalse,
-    );
-    containerQuestionAudio.appendChild(divQuestionAudio);
-  }
-}
-
-function questionMdls() {
-  const containerQuestionMdls = document.querySelector(
-    "#container-questions-mdls",
-  );
-
-  for (let i = 1; i <= 10; i++) {
-    const divQuestionMdls = document.createElement("div");
-    const labelQuestionMdls = document.createElement("label");
-    const inputQuestionMdls = document.createElement("input");
-    const checkboxMdls1 = document.createElement("input");
-    const checkboxMdls2 = document.createElement("input");
-    const pSeen = document.createElement("span");
-    const pHeard = document.createElement("span");
-
-    labelQuestionMdls.textContent = "Question " + i + " : ";
-    inputQuestionMdls.className = "questions-mdls";
-    inputQuestionMdls.dataset.id = i;
-
-    checkboxMdls1.type = "radio";
-    checkboxMdls1.name = "answer-mdls" + i;
-    pSeen.textContent = "Vu";
-    checkboxMdls1.value = "Vu";
-
-    checkboxMdls2.type = "radio";
-    checkboxMdls2.name = "answer-mdls" + i;
-    pHeard.textContent = "Entendu";
-    checkboxMdls2.value = "Entendu";
-
-    divQuestionMdls.append(
-      labelQuestionMdls,
-      inputQuestionMdls,
-      checkboxMdls1,
-      pHeard,
-      checkboxMdls2,
-      pSeen,
-    );
-    containerQuestionMdls.appendChild(divQuestionMdls);
-  }
-}
-
-questionAudio();
-questionVideo();
-questionMdls();
+survey(
+  "#container-questions-mdls",
+  "questions-mdls",
+  "answer-mdls",
+  10,
+  "Vu",
+  "Entendu",
+);

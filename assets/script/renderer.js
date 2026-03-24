@@ -1,3 +1,20 @@
+function saveQuestion(saveQuestionName, inputName, dataQuestionPush) {
+  saveQuestionName.forEach((input) => {
+    if (input.value.trim() !== "") {
+      const id = input.dataset.id;
+      const saveAnswer = document.querySelector(
+        `input[name="${inputName}${id}"]:checked`,
+      );
+
+      dataQuestionPush.push({
+        id: input.dataset.id,
+        question: input.value,
+        answer: saveAnswer ? saveAnswer.value : null,
+      });
+    }
+  });
+}
+
 function saveJson() {
   const buttonSaveJson = document.querySelector("#saveJson");
 
@@ -17,50 +34,9 @@ function saveJson() {
       questionsMdls: [],
     };
 
-    saveQuestionVideo.forEach((input) => {
-      if (input.value.trim() !== "") {
-        const id = input.dataset.id;
-        const saveAnswer = document.querySelector(
-          `input[name="answer-video${id}"]:checked`,
-        );
-
-        data.questionsVideo.push({
-          id: input.dataset.id,
-          question: input.value,
-          answer: saveAnswer ? saveAnswer.value : null,
-        });
-      }
-    });
-
-    saveQuestionAudio.forEach((input) => {
-      if (input.value.trim() !== "") {
-        const id = input.dataset.id;
-        const saveAnswer = document.querySelector(
-          `input[name="answer-audio${id}"]:checked`,
-        );
-
-        data.questionsAudio.push({
-          id: input.dataset.id,
-          question: input.value,
-          answer: saveAnswer ? saveAnswer.value : null,
-        });
-      }
-    });
-
-    saveQuestionMdls.forEach((input) => {
-      if (input.value.trim() !== "") {
-        const id = input.dataset.id;
-        const saveAnswer = document.querySelector(
-          `input[name="answer-mdls${id}"]:checked`,
-        );
-
-        data.questionsMdls.push({
-          id: input.dataset.id,
-          question: input.value,
-          answer: saveAnswer ? saveAnswer.value : null,
-        });
-      }
-    });
+    saveQuestion(saveQuestionAudio, "answer-audio", data.questionsAudio);
+    saveQuestion(saveQuestionVideo, "answer-video", data.questionsVideo);
+    saveQuestion(saveQuestionMdls, "answer-mdls", data.questionsMdls);
 
     downloadJson(data);
 
