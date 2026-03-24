@@ -15,7 +15,6 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-
   // Charge le fichier index.html situé à la racine du projet.
   // Comme ce script est dans assets/script/, on remonte de deux dossiers avec '../../'
 
