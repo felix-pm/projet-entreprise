@@ -1,0 +1,11 @@
+{
+  "name": "psychosoftware",
+  "version": "1.0.0",
+  "main": "assets/script/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^41.0.3"
+  }
+}

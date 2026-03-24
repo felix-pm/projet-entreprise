@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiche de renseignements</title>
+  </head>
+  <body>
+    <section id="section-renseignement">
+      <h1>Veuillez renseigner les informations du patient</h1>
+      <div class="section-input" style="display: flex; flex-direction: column">
+        <label for="number-passation">
+          Renseignez le numéro de passation
+          <input type="number" id="number-passation" placeholder="Numéro" />
+        </label>
+        <label for="age">
+          Renseigner l'âge du patient
+          <input type="number" id="age" placeholder="Âge" />
+        </label>
+        <label for="sexe-select">
+          Renseignez le sexe du patient
+          <select name="sexe" id="sexe-select">
+            <option value="">--Veuillez choisir une option--</option>
+            <option value="men">Homme</option>
+            <option value="girl">Femme</option>
+          </select>
+        </label>
+        <button type="submit">Enregistrer</button>
+      </div>
+    </section>
+  </body>
+</html>
