@@ -8,13 +8,17 @@
   <body>
     <div id="section-admin">
       <h1>Création du questionnaire</h1>
-      <input
-        type="text"
-        id="title-test"
-        name="title-test"
-        placeholder="Nom du test"
-      />
-      <input
+      <form id="form-test">
+        <input
+          type="text"
+          id="title-test"
+          name="title-test"
+          placeholder="Nom du test"
+        />
+        <button type="submit">Créer le fichier JSON</button>
+      </form>
+
+      <!-- <input
         type="text"
         id="video-url"
         name="video-url"
@@ -41,8 +45,8 @@
         <h2>Questions sur la mémoire de la source</h2>
         <div id="container-questions-mdls"></div>
       </div>
-      <button id="saveJson">Créer le fichier JSON</button>
-    </div>
-    <script src="../assets/script/creationQuestionnaire.js"></script>
+    </div> -->
+
+    <script src="../assets/script/renderer.js"></script>
   </body>
 </html>
