@@ -1,6 +1,9 @@
 function saveJson() {
   const buttonSaveJson = document.querySelector("#saveJson");
-  buttonSaveJson.addEventListener("click", () => {
+
+  buttonSaveJson.addEventListener("click", (event) => {
+    event.preventDefault();
+
     const saveQuestionVideo = document.querySelectorAll(".questions-video");
     const saveQuestionAudio = document.querySelectorAll(".questions-audio");
     const saveQuestionMdls = document.querySelectorAll(".questions-mdls");
@@ -12,18 +15,19 @@ function saveJson() {
       questionsVideo: [],
       questionsAudio: [],
       questionsMdls: [],
-      answer: [],
     };
 
     saveQuestionVideo.forEach((input) => {
       if (input.value.trim() !== "") {
         const id = input.dataset.id;
-        const saveAnswer = document.querySelectorAll(`
-          input[(name = "answer-video${id}")]:checked`);
+        const saveAnswer = document.querySelector(
+          `input[name="answer-video${id}"]:checked`,
+        );
+
         data.questionsVideo.push({
           id: input.dataset.id,
           question: input.value,
-          answer: saveAnswer.value,
+          answer: saveAnswer ? saveAnswer.value : null,
         });
       }
     });
@@ -31,12 +35,14 @@ function saveJson() {
     saveQuestionAudio.forEach((input) => {
       if (input.value.trim() !== "") {
         const id = input.dataset.id;
-        const saveAnswer = document.querySelectorAll(`
-          input[(name = "answer-audio${id}")]:checked`);
+        const saveAnswer = document.querySelector(
+          `input[name="answer-audio${id}"]:checked`,
+        );
+
         data.questionsAudio.push({
           id: input.dataset.id,
           question: input.value,
-          answer: saveAnswer.value,
+          answer: saveAnswer ? saveAnswer.value : null,
         });
       }
     });
@@ -44,23 +50,26 @@ function saveJson() {
     saveQuestionMdls.forEach((input) => {
       if (input.value.trim() !== "") {
         const id = input.dataset.id;
-        const saveAnswer = document.querySelectorAll(`
-          input[(name = "answer-mdls${id}")]:checked`);
+        const saveAnswer = document.querySelector(
+          `input[name="answer-mdls${id}"]:checked`,
+        );
+
         data.questionsMdls.push({
           id: input.dataset.id,
           question: input.value,
-          answer: saveAnswer.value,
+          answer: saveAnswer ? saveAnswer.value : null,
         });
       }
     });
+
     downloadJson(data);
+
+    window.location.href = "allQuestionnaire.html";
   });
 }
 
 function downloadJson(data) {
-  // On utilise le talkie-walkie pour envoyer les données au cerveau (main.js)
   window.electronAPI.sendData(data);
-
   alert("Le questionnaire a été enregistré dans tes Documents !");
 }
 

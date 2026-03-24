@@ -18,9 +18,7 @@ function createWindow() {
   // Charge le fichier index.html situé à la racine du projet.
   // Comme ce script est dans assets/script/, on remonte de deux dossiers avec '../../'
 
-  win.loadFile(
-    path.join(__dirname, "../../templates/creationQuestionnaire.html"),
-  );
+  win.loadFile(path.join(__dirname, "../../index.html"));
 }
 
 // Cette méthode sera appelée quand Electron aura fini de s'initialiser.
