@@ -10,8 +10,6 @@ function createWindow() {
       nodeIntegration: true, // Permet d'utiliser Node.js dans le HTML si besoin
     },
   });
-  zq;
-
   // Charge le fichier index.html situé à la racine du projet.
   // Comme ce script est dans assets/script/, on remonte de deux dossiers avec '../../'
   win.loadFile(path.join(__dirname, "../../index.html"));
