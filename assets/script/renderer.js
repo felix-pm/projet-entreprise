@@ -1,21 +1,67 @@
-// renderer.js
-// On sélectionne le formulaire dans le HTML (assure-toi que ton form a bien cet ID)
-const form = document.getElementById("form-test");
+function saveJson() {
+  const buttonSaveJson = document.querySelector("#saveJson");
+  buttonSaveJson.addEventListener("click", () => {
+    const saveQuestionVideo = document.querySelectorAll(".questions-video");
+    const saveQuestionAudio = document.querySelectorAll(".questions-audio");
+    const saveQuestionMdls = document.querySelectorAll(".questions-mdls");
 
-form.addEventListener("submit", (event) => {
-  // 1. On bloque le rechargement de la page
-  event.preventDefault();
+    const data = {
+      title: document.querySelector("#title-test").value,
+      video: document.querySelector("#video-url").value,
+      audio: document.querySelector("#audio-url").value,
+      questionsVideo: [],
+      questionsAudio: [],
+      questionsMdls: [],
+      answer: [],
+    };
 
-  // 2. On aspire les données tapées par l'utilisateur
-  const formData = new FormData(form);
-  const objectJS = Object.fromEntries(formData);
+    saveQuestionVideo.forEach((input) => {
+      if (input.value.trim() !== "") {
+        const id = input.dataset.id;
+        const saveAnswer = document.querySelectorAll(`
+          input[(name = "answer-video${id}")]:checked`);
+        data.questionsVideo.push({
+          id: input.dataset.id,
+          question: input.value,
+          answer: saveAnswer.value,
+        });
+      }
+    });
 
-  // 3. On utilise le talkie-walkie (créé dans le preload) pour envoyer les données
-  window.electronAPI.sendData(objectJS);
+    saveQuestionAudio.forEach((input) => {
+      if (input.value.trim() !== "") {
+        const id = input.dataset.id;
+        const saveAnswer = document.querySelectorAll(`
+          input[(name = "answer-audio${id}")]:checked`);
+        data.questionsAudio.push({
+          id: input.dataset.id,
+          question: input.value,
+          answer: saveAnswer.value,
+        });
+      }
+    });
 
-  // 4. On vide le formulaire pour le prochain inscrit
-  form.reset();
+    saveQuestionMdls.forEach((input) => {
+      if (input.value.trim() !== "") {
+        const id = input.dataset.id;
+        const saveAnswer = document.querySelectorAll(`
+          input[(name = "answer-mdls${id}")]:checked`);
+        data.questionsMdls.push({
+          id: input.dataset.id,
+          question: input.value,
+          answer: saveAnswer.value,
+        });
+      }
+    });
+    downloadJson(data);
+  });
+}
 
-  // Petit message visuel pour rassurer l'utilisateur
-  alert("Données enregistrées en toute discrétion !");
-});
+function downloadJson(data) {
+  // On utilise le talkie-walkie pour envoyer les données au cerveau (main.js)
+  window.electronAPI.sendData(data);
+
+  alert("Le questionnaire a été enregistré dans tes Documents !");
+}
+
+saveJson();
