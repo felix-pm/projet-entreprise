@@ -54,6 +54,8 @@ function questionMdls() {
     containerQuestionMdls.appendChild(divQuestionMdls);
   }
 }
+// git config --global user.email "you@example.com"
+//   git config --global user.name "Your Name"
 
 function saveJson() {
   const buttonSaveJson = document.querySelector("#saveJson");
