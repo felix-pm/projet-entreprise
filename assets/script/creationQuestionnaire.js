@@ -70,3 +70,9 @@ survey(
   "Vu",
   "Entendu",
 );
+
+const btnBack = document.getElementById("btnBack");
+btnBack.addEventListener("click", (event) => {
+  event.preventDefault();
+  window.location.href = "../index.html";
+});
