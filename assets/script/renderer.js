@@ -25,10 +25,14 @@ function saveJson() {
     const saveQuestionAudio = document.querySelectorAll(".questions-audio");
     const saveQuestionMdls = document.querySelectorAll(".questions-mdls");
 
+    const titleValidator = document.querySelector("#title-test").value.trim();
+    const videoValidator = document.querySelector("#video-url").value.trim();
+    const audioValidator = document.querySelector("#audio-url")?.value.trim();
+
     const data = {
-      title: document.querySelector("#title-test").value,
-      video: document.querySelector("#video-url").value,
-      audio: document.querySelector("#audio-url").value,
+      title: titleValidator,
+      video: videoValidator,
+      audio: audioValidator,
       questionsVideo: [],
       questionsAudio: [],
       questionsMdls: [],
@@ -38,10 +42,74 @@ function saveJson() {
     saveQuestion(saveQuestionVideo, "answer-video", data.questionsVideo);
     saveQuestion(saveQuestionMdls, "answer-mdls", data.questionsMdls);
 
-    downloadJson(data);
+    const isTitleOk = titleValidator !== "";
+    const isVideoLinkOk = videoValidator !== "";
+    const isAudioLinkOk = audioValidator !== "";
 
-    window.location.href = "allQuestionnaire.html";
+    const isAudioAnswerOk = isValid(data.questionsAudio, 15);
+    const isVideoAnswerOk = isValid(data.questionsVideo, 15);
+    const isMdlsAnswerOk = isValid(data.questionsMdls, 10);
+
+    if (
+      isAudioAnswerOk &&
+      isVideoAnswerOk &&
+      isMdlsAnswerOk &&
+      isTitleOk &&
+      isVideoLinkOk &&
+      isAudioLinkOk
+    ) {
+      downloadJson(data);
+      window.location.href = "allQuestionnaire.html";
+    } else {
+      let errorMessage = "Erreur de validation :\n";
+      if (!isTitleOk) {
+        errorMessage += "Veuillez rentrer un titre\n";
+      }
+      if (!isVideoLinkOk) {
+        errorMessage += "Veuillez rentrer un lien vidéo\n";
+      }
+      if (!isAudioLinkOk) {
+        errorMessage += "Veuillez rentrer un lien audio\n";
+      }
+      if (!isAudioAnswerOk) {
+        errorMessage +=
+          "Veuillez compléter tous les champs dans la section audio\n";
+      }
+      if (!isVideoAnswerOk) {
+        errorMessage +=
+          "Veuillez compléter tous les champs dans la section vidéo\n";
+      }
+      if (!isMdlsAnswerOk) {
+        errorMessage +=
+          "Veuillez compléter tous les champs dans la section mémoire de la source\n";
+      }
+
+      setTimeout(() => {
+        alert(errorMessage);
+        const firstEmpty = document.querySelector(
+          '.questions-video[value=""], .questions-audio[value=""], #title-test[value=""]',
+        );
+        if (firstEmpty) firstEmpty.focus();
+      }, 10);
+
+      return;
+    }
   });
+}
+
+function isValid(array, expectedCount) {
+  const rightCount = array.length === expectedCount;
+  let allAnswered = true;
+
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].answer === null) {
+      allAnswered = false;
+      break;
+    }
+  }
+  if (rightCount && allAnswered) {
+    return true;
+  } else return false;
 }
 
 function downloadJson(data) {
