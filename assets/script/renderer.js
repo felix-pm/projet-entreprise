@@ -83,16 +83,14 @@ function saveJson() {
         errorMessage +=
           "Veuillez compléter tous les champs dans la section mémoire de la source\n";
       }
+      const alertBox = document.querySelector("#custom-alert");
+      const alertText = document.querySelector("#alert-text");
 
-      setTimeout(() => {
-        alert(errorMessage);
-        const firstEmpty = document.querySelector(
-          '.questions-video[value=""], .questions-audio[value=""], #title-test[value=""]',
-        );
-        if (firstEmpty) firstEmpty.focus();
-      }, 10);
+      alertText.textContent = errorMessage;
+      alertBox.style.display = "block";
 
-      return;
+      const firstEmpty = document.querySelector("#title-test");
+      if (firstEmpty) firstEmpty.focus();
     }
   });
 }
