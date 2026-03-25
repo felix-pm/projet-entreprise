@@ -1,11 +1,32 @@
 const container = document.querySelector(".allQuestionnaire");
 
-function getQuestionnaire() {
-  const listQuestionnaire = JSON.parse(data.json);
-  if (!listQuestionnaire) {
-    return;
+const fs = require("node:fs/promises");
+const path = require("node:path");
+const { app } = require("electron");
+
+const dataFolder = path.join(
+  app.getPath("documents"),
+  "PsychoSoftware",
+  "data.json",
+);
+
+// ** Fonction permettant de récupérer sous forme de tableau js les données d'un fichier JSON
+async function getQuestionnaire(pathData) {
+  try {
+    const rawData = await fs.readFile(pathData);
+    const data = JSON.parse(rawData);
+    return data;
+  } catch (err) {
+    console.error(err);
   }
-  return listQuestionnaire;
+}
+
+// ** Fonction permettant de chercher dans un fichier une données précise selon sa typologie
+// ** ( par exemple un titre qui se nomme "questionnaire 1")
+function getElementJSON(json, key, value) {
+  const tabJson = getQuestionnaire(json);
+  const elt = tabJson.find((element) => element[key] == value);
+  return elt;
 }
 
 function createLinkQuestionnaire(container, listQuestionnaire) {
