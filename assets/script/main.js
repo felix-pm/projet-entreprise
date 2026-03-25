@@ -3,7 +3,6 @@ const path = require("path");
 const fs = require("fs");
 
 const folderData = path.join(app.getPath("documents"), "PsychoSoftware");
-const pathJson = path.join(folderData, "data.json");
 
 function createWindow() {
   // Création de la fenêtre du navigateur.
@@ -27,11 +26,6 @@ app.whenReady().then(() => {
     fs.mkdirSync(folderData, { recursive: true });
   }
 
-  // On vérifie si le fichier JSON existe, sinon on le crée avec une liste vide []
-  if (!fs.existsSync(pathJson)) {
-    fs.writeFileSync(pathJson, JSON.stringify([], null, 2));
-  }
-
   createWindow();
 
   app.on("activate", () => {
@@ -53,6 +47,14 @@ app.on("window-all-closed", () => {
 ipcMain.on("form-test", (event, receivedData) => {
   try {
     // A. On lit la liste existante
+    const title = receivedData.title + ".json";
+    const pathJson = path.join(folderData, title);
+
+    // On vérifie si le fichier JSON existe, sinon on le crée avec une liste vide []
+    if (!fs.existsSync(pathJson)) {
+      fs.writeFileSync(pathJson, JSON.stringify([], null, 2));
+    }
+
     const currentData = JSON.parse(fs.readFileSync(pathJson, "utf-8"));
 
     // B. On ajoute le nouveau profil à la fin de la liste
