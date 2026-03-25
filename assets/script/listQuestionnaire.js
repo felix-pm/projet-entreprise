@@ -29,6 +29,18 @@ function getElementJSON(json, key, value) {
   return elt;
 }
 
+// function getQuestion(json, title, typeQuestion, list) {
+//   const tabJson = getQuestionnaire(json);
+//   const question = tabJson.find((element) => element["title"] == title);
+//   list[typeQuestion] = question[typeQuestion];
+//   return list;
+// }
+
+function getQuestion(json, key) {
+  const tabJson = getQuestionnaire(json);
+  return tabJson[key];
+}
+
 function createLinkQuestionnaire(container, listQuestionnaire) {
   listQuestionnaire.forEach((questionnaire) => {
     const link = document.createElement("a");
