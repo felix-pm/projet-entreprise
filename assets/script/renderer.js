@@ -95,6 +95,10 @@ function saveJson() {
   });
 }
 
+function getTitle(data) {
+  return data.title;
+}
+
 function isValid(array, expectedCount) {
   const rightCount = array.length === expectedCount;
   let allAnswered = true;
