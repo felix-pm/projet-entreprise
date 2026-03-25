@@ -6,7 +6,6 @@ const folderData = path.join(
   app.getPath("documents"),
   "PsychoSoftware/donnees",
 );
-const pathJson = path.join(folderData, "data.json");
 const renseigntmentsJson = path.join(folderData, "renseignements.json");
 
 function createWindow() {
