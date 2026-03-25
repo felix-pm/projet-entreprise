@@ -59,7 +59,7 @@ function saveJson() {
       isAudioLinkOk
     ) {
       downloadJson(data);
-      window.location.href = "allQuestionnaire.html";
+      window.location.href = "index.html";
     } else {
       let errorMessage = "Erreur de validation :\n";
       if (!isTitleOk) {
