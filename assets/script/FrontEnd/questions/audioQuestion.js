@@ -1,3 +1,2 @@
-function questionAudio() {
-  const audioSection = document.querySelector(".containerQuest");
-}
+const btnAudioQuestions = document.getElementById("audioQuestions");
+btnAudioQuestions.addEventListener("click", (event) => {});
