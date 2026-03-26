@@ -1,6 +1,7 @@
 {
   "name": "psychosoftware",
   "version": "1.0.0",
+  "type": "module",
   "main": "assets/script/main.js",
   "scripts": {
     "start": "electron ."

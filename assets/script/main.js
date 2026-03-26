@@ -1,6 +1,6 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
-const path = require("path");
-const fs = require("fs");
+import { app, BrowserWindow, ipcMain } from "electron";
+import path from "node:path";
+import fs from "node:fs";
 
 const folderData = path.join(
   app.getPath("documents"),

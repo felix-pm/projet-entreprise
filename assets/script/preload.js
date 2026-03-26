@@ -1,5 +1,5 @@
 // preload.js
-const { contextBridge, ipcRenderer } = require("electron");
+import { contextBridge, ipcRenderer } from "electron";
 
 // On crée notre fameux canal sécurisé "electronAPI"
 contextBridge.exposeInMainWorld("electronAPI", {
@@ -8,4 +8,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
   sendData: (data) => ipcRenderer.send("form-test", data),
   sendData2: (childrenDatas) =>
     ipcRenderer.send("form-renseignements", childrenDatas),
+  getQuestionnaires: () => ipcRenderer.invoke("get-questionnaires"),
 });

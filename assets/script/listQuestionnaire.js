@@ -1,9 +1,5 @@
 const container = document.querySelector(".allQuestionnaire");
 
-const fs = require("node:fs/promises");
-const path = require("node:path");
-const { app } = require("electron");
-
 const dataFolder = path.join(
   app.getPath("documents"),
   "PsychoSoftware",
@@ -17,7 +13,8 @@ async function getQuestionnaire(pathData, title) {
   try {
     const rawData = await fs.readFile(path.join(pathData, `${title}.json`));
     const data = JSON.parse(rawData);
-    return data;
+    console.log(data);
+    // return data;
   } catch (err) {
     console.error(err);
   }
@@ -28,7 +25,8 @@ async function getQuestionnaire(pathData, title) {
 
 function getElement(json, title, key) {
   const tabJson = getQuestionnaire(json, title);
-  return tabJson[key];
+  console.log(tabJson[key]);
+  // return tabJson[key];
 }
 
 // ? fetch depuis un JSON contenant tout les questionnaire
@@ -64,3 +62,6 @@ function createLinkQuestionnaire(container, listQuestionnaire) {
     container.appendChild(link);
   });
 }
+
+getQuestionnaire(dataFolder, "test1");
+getQuestionnaire(dataFolder, "Test2");

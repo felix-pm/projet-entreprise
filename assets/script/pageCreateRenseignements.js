@@ -29,9 +29,4 @@ function downloadJson(childrenDatas) {
   alert("Le questionnaire a été enregistré dans tes Documents !");
 }
 
-btnSubmit.addEventListener("click", (event) => {
-  event.preventDefault();
-  window.location.href = "allQuestionnaire.html";
-});
-
 saveJsonChildren();
