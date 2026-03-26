@@ -46,15 +46,15 @@ function survey(
 }
 
 function externalscore(className) {
-  const containerExternalScores = document.querySelector("#externalScore");
+  const containerExternalScores = document.querySelector(
+    "#container-scores-externes",
+  );
 
   for (let i = 1; i <= 9; i++) {
-    const divExternalScore = document.createElement("div");
     const inputExternalScore = document.createElement("input");
     inputExternalScore.className = className;
     inputExternalScore.dataset.id = i;
-    divExternalScore.append(inputExternalScore);
-    containerExternalScores.append(divExternalScore);
+    containerExternalScores.append(inputExternalScore);
   }
 }
 
@@ -84,6 +84,8 @@ survey(
   "Vu",
   "Entendu",
 );
+
+externalscore("input-scores-externes");
 
 const btnBack = document.getElementById("btnBack");
 btnBack.addEventListener("click", (event) => {
