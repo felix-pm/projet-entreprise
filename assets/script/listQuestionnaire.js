@@ -34,7 +34,7 @@ function getElement(json, title, key) {
 // ? fetch depuis un JSON contenant tout les questionnaire
 
 // ** Fonction permettant de récupérer sous forme de tableau js les données d'un fichier JSON
-async function getQuestionnaires(pathData) {
+export async function getQuestionnaires(pathData) {
   try {
     const rawData = await fs.readFile(path.join(pathData));
     const data = JSON.parse(rawData);
@@ -57,10 +57,12 @@ function getElementFromJson(json, key, value) {
 
 // ** Fonction qui instancie la liste des différents questionnaire dans l'HTML
 function createLinkQuestionnaire(container, listQuestionnaire) {
-  listQuestionnaire.forEach((questionnaire) => {
+  container.innerHTML = "";
+  listQuestionnaire.forEach((title) => {
     const link = document.createElement("a");
-    link.textContent = questionnaire["Title"];
+    link.textContent = title;
     link.href = "questionnaire.html";
+    // ?title=${encodeURIComponent(title)}`
     container.appendChild(link);
   });
 }
