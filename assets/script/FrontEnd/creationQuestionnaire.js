@@ -44,6 +44,20 @@ function survey(
     containerQuestions.appendChild(divQuestion);
   }
 }
+
+function externalscore(className) {
+  const containerExternalScores = document.querySelector(
+    "#container-scores-externes",
+  );
+
+  for (let i = 1; i <= 9; i++) {
+    const inputExternalScore = document.createElement("input");
+    inputExternalScore.className = className;
+    inputExternalScore.dataset.id = i;
+    containerExternalScores.append(inputExternalScore);
+  }
+}
+
 survey(
   "#container-questions-video",
   "questions-video",
@@ -70,6 +84,8 @@ survey(
   "Vu",
   "Entendu",
 );
+
+externalscore("input-scores-externes");
 
 const btnBack = document.getElementById("btnBack");
 btnBack.addEventListener("click", (event) => {
