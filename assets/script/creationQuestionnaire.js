@@ -44,6 +44,20 @@ function survey(
     containerQuestions.appendChild(divQuestion);
   }
 }
+
+function externalscore(className) {
+  const containerExternalScores = document.querySelector("#externalScore");
+
+  for (let i = 1; i <= 9; i++) {
+    const divExternalScore = document.createElement("div");
+    const inputExternalScore = document.createElement("input");
+    inputExternalScore.className = className;
+    inputExternalScore.dataset.id = i;
+    divExternalScore.append(inputExternalScore);
+    containerExternalScores.append(divExternalScore);
+  }
+}
+
 survey(
   "#container-questions-video",
   "questions-video",
