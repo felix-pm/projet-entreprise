@@ -112,20 +112,4 @@ ipcMain.handle("get-questionnaires", async () => {
     console.error("Erreur lors de la lecture des dossiers :", erreur);
     return [];
   }
-
-  ipcMain.handle("get-all-titles", async () => {
-    try {
-      const files = fs.readdirSync(folderData);
-      return files
-        .filter((file) => file.endsWith("json"))
-        .map((file) => file.replace("json", ""));
-    } catch (err) {
-      console.error("Erreur : ", err);
-      return [];
-    }
-  });
-
-  ipcMain.handle("get-questionnaire", async (event, title) =>
-    getQuestionnaires(folderData),
-  );
 });
