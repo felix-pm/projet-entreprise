@@ -1,69 +1,21 @@
 const container = document.querySelector(".allQuestionnaire");
 
-const dataFolder = path.join(
-  app.getPath("documents"),
-  "PsychoSoftware",
-  "donnees",
-);
-
-// ? fetch depuis un JSON contenant un questionnaire
-
-// ** Fonction permettant de récupérer sous forme de tableau js les données d'un fichier JSON
-async function getQuestionnaire(pathData, title) {
+async function displayQuestionnaires() {
   try {
-    const rawData = await fs.readFile(path.join(pathData, `${title}.json`));
-    const data = JSON.parse(rawData);
-    console.log(data);
-    // return data;
-  } catch (err) {
-    console.error(err);
+    const listQuestionnaire = await window.electronAPI.getQuestionnaires();
+
+    container.innerHTML = "";
+    listQuestionnaire.forEach((questionnaire) => {
+      const link = document.createElement("a");
+      link.textContent = questionnaire.title;
+      link.href = "questionnaire.html";
+      link.classList.add("link");
+
+      container.appendChild(link);
+    });
+  } catch (error) {
+    console.error("Impossible de charger les questionnaires :", error);
   }
 }
 
-// ** Fonction permettant de chercher dans un fichier une données précise selon sa typologie
-// ** (par exemple un titre qui se nomme "questionnaire 1")
-
-function getElement(json, title, key) {
-  const tabJson = getQuestionnaire(json, title);
-  console.log(tabJson[key]);
-  // return tabJson[key];
-}
-
-// ? fetch depuis un JSON contenant tout les questionnaire
-
-// ** Fonction permettant de récupérer sous forme de tableau js les données d'un fichier JSON
-export async function getQuestionnaires(pathData) {
-  try {
-    const rawData = await fs.readFile(path.join(pathData));
-    const data = JSON.parse(rawData);
-    return data;
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-// ** Fonction permettant de chercher dans un fichier une données précise selon sa typologie
-// ** (par exemple un titre qui se nomme "questionnaire 1")
-
-function getElementFromJson(json, key, value) {
-  const tabJson = getQuestionnaires(json);
-  const elt = tabJson.find((element) => element[key] == value);
-  return elt;
-}
-
-// ? modification du DOM
-
-// ** Fonction qui instancie la liste des différents questionnaire dans l'HTML
-function createLinkQuestionnaire(container, listQuestionnaire) {
-  container.innerHTML = "";
-  listQuestionnaire.forEach((title) => {
-    const link = document.createElement("a");
-    link.textContent = title;
-    link.href = "questionnaire.html";
-    // ?title=${encodeURIComponent(title)}`
-    container.appendChild(link);
-  });
-}
-
-getQuestionnaire(dataFolder, "test1");
-getQuestionnaire(dataFolder, "Test2");
+displayQuestionnaires();

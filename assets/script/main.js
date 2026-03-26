@@ -1,29 +1,40 @@
+// 1. Tes imports d'Electron (avec ipcMain !)
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import fs from "node:fs";
 import { getQuestionnaires } from "./listQuestionnaire";
 
-const folderData = path.join(
-  app.getPath("documents"),
-  "PsychoSoftware/donnees",
-);
+// 2. Ajoute ces imports natifs de Node.js
+import { fileURLToPath } from "url";
+import path from "path";
+import fs from "fs"; // <-- IMPORT DE FS AJOUTÉ ICI
+
+// 3. Recrée __filename et __dirname pour l'ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// 4. Définition de tes chemins de sauvegarde (À adapter selon tes besoins)
+const folderData = path.join(app.getPath("documents"), "psy/mes-donnees"); // Dossier sécurisé par défaut d'Electron
 const renseigntmentsJson = path.join(folderData, "renseignements.json");
 
-function createWindow() {
-  // Création de la fenêtre du navigateur.
-  const win = new BrowserWindow({
-    width: 1024,
-    height: 768,
+// 5. Ensuite, ton code normal commence ici...
+const createWindow = () => {
+  // ... la suite de ton code
+  const mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
     webPreferences: {
-      // On accroche notre talkie-walkie à la fenêtre
       preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false,
     },
   });
-  // Charge le fichier index.html situé à la racine du projet.
-  // Comme ce script est dans assets/script/, on remonte de deux dossiers avec '../../'
 
-  win.loadFile(path.join(__dirname, "../../index.html"));
-}
+  // Et __dirname marchera aussi ici pour charger ton HTML !
+  mainWindow.loadFile(path.join(__dirname, "../../index.html"));
+};
+
+// ... la suite de ton code (app.whenReady, etc.)
 
 // Cette méthode sera appelée quand Electron aura fini de s'initialiser.
 app.whenReady().then(() => {
@@ -82,26 +93,24 @@ ipcMain.on("form-test", (event, receivedData) => {
   }
 });
 
-// Pour les renseignements
-ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
+ipcMain.handle("get-questionnaires", async () => {
   try {
-    // A. On lit la liste existante
-    const currentData = JSON.parse(
-      fs.readFileSync(renseigntmentsJson, "utf-8"),
-    );
+    const files = await fs.promises.readdir(folderData);
+    const questionnaires = [];
 
-    // B. On ajoute le nouveau profil à la fin de la liste
-    currentData.push(receivedDataRenseignements);
+    for (const file of files) {
+      // On garde uniquement les fichiers .json (et on ignore les renseignements)
+      if (file.endsWith(".json") && file !== "renseignements.json") {
+        // On enlève le ".json" pour avoir juste le titre
+        const title = file.replace(".json", "");
+        questionnaires.push({ title: title, fileName: file });
+      }
+    }
 
-    // C. On réécrit le fichier sur le disque dur avec la liste à jour
-    fs.writeFileSync(renseigntmentsJson, JSON.stringify(currentData, null, 2));
-
-    console.log(
-      "Succès ! Fichier mis à jour pour les renseignements dans :",
-      renseigntmentsJson,
-    );
+    return questionnaires;
   } catch (erreur) {
-    console.error("Aïe, erreur lors de la sauvegarde :", erreur);
+    console.error("Erreur lors de la lecture des dossiers :", erreur);
+    return [];
   }
 
   ipcMain.handle("get-all-titles", async () => {
