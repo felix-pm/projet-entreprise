@@ -2,12 +2,9 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import fs from "node:fs";
-import { getQuestionnaires } from "./listQuestionnaire";
 
 // 2. Ajoute ces imports natifs de Node.js
 import { fileURLToPath } from "url";
-import path from "path";
-import fs from "fs"; // <-- IMPORT DE FS AJOUTÉ ICI
 
 // 3. Recrée __filename et __dirname pour l'ESM
 const __filename = fileURLToPath(import.meta.url);
