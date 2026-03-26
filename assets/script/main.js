@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import fs from "node:fs";
+import { getQuestionnaires } from "./listQuestionnaire";
 
 const folderData = path.join(
   app.getPath("documents"),
@@ -102,4 +103,20 @@ ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
   } catch (erreur) {
     console.error("Aïe, erreur lors de la sauvegarde :", erreur);
   }
+
+  ipcMain.handle("get-all-titles", async () => {
+    try {
+      const files = fs.readdirSync(folderData);
+      return files
+        .filter((file) => file.endsWith("json"))
+        .map((file) => file.replace("json", ""));
+    } catch (err) {
+      console.error("Erreur : ", err);
+      return [];
+    }
+  });
+
+  ipcMain.handle("get-questionnaire", async (event, title) =>
+    getQuestionnaires(folderData),
+  );
 });

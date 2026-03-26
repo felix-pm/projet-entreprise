@@ -8,5 +8,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   sendData: (data) => ipcRenderer.send("form-test", data),
   sendData2: (childrenDatas) =>
     ipcRenderer.send("form-renseignements", childrenDatas),
-  getQuestionnaires: () => ipcRenderer.invoke("get-questionnaires"),
+  getAllTitles: () => ipcRenderer.send("get-all-titles"),
+  getQuestionnaire: (title) => ipcRenderer.send("get-questionnaire"),
 });
