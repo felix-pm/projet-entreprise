@@ -11,6 +11,10 @@ async function displayQuestionnaires() {
       link.href = "questionnaire.html";
       link.classList.add("link");
 
+      link.addEventListener("click", () => {
+        sessionStorage.setItem("titreQuestionnaireActuel", questionnaire.title);
+      });
+
       container.appendChild(link);
     });
   } catch (error) {
