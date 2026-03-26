@@ -28,7 +28,7 @@ const createWindow = () => {
   });
 
   // Et __dirname marchera aussi ici pour charger ton HTML !
-  mainWindow.loadFile(path.join(__dirname, "../../index.html"));
+  mainWindow.loadFile(path.join(__dirname, "../../../index.html"));
 };
 
 // ... la suite de ton code (app.whenReady, etc.)
