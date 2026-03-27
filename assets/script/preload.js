@@ -6,4 +6,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
     ipcRenderer.send("form-renseignements", childrenDatas),
 
   getQuestionnaires: () => ipcRenderer.invoke("get-questionnaires"),
+  generateExcel: () => ipcRenderer.send("create-excel-file"),
 });

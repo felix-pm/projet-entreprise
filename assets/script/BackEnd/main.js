@@ -2,6 +2,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import fs from "node:fs";
+import xlsx from "xlsx";
 
 // 2. Ajoute ces imports natifs de Node.js
 import { fileURLToPath } from "url";
@@ -14,6 +15,31 @@ const __dirname = path.dirname(__filename);
 const folderData = path.join(app.getPath("documents"), "psy/mes-donnees"); // Dossier sécurisé par défaut d'Electron
 const renseigntmentsJson = path.join(folderData, "renseignements.json");
 
+ipcMain.on("create-excel-file", async (event) => {
+  const jsonPath = path.join(folderData, "Test2.json");
+  try {
+    // Lis le fichier
+    const jsonRaw = await fs.promises.readFile(jsonPath, "utf-8");
+    // Transforme en objet
+    const jsonObject = JSON.parse(jsonRaw);
+
+    // Crée un classeur excel vide
+    const workbook = xlsx.utils.book_new();
+    // Ajoute l'objet sur une feuille excel
+    const workSheet = xlsx.utils.json_to_sheet(jsonObject);
+
+    // Ajoute la feuille au classeur excel
+    xlsx.utils.book_append_sheet(workbook, workSheet);
+    const outputPath = path.join(folderData, "convertedToExcel.xlsx");
+    // Ajoute le classeur au chemin
+    xlsx.writeFile(workbook, outputPath);
+
+    console.log("Succès");
+  } catch (err) {
+    console.error("Erreur de la génération : ", err);
+  }
+});
+
 // 5. Ensuite, ton code normal commence ici...
 const createWindow = () => {
   // ... la suite de ton code
@@ -21,7 +47,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "..", "preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
     },
