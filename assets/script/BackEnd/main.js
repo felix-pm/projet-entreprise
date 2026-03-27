@@ -114,7 +114,7 @@ ipcMain.handle("get-questionnaires", async () => {
 ipcMain.handle("get-element", async (event, title, key) => {
   try {
     const filePath = path.join(folderData, `${title}.json`);
-    const rawData = fs.readFileSync(filePath, "utf-8");
+    const rawData = await fs.promises.readFile(filePath, "utf-8");
     const data = JSON.parse(rawData);
 
     // On récupère le premier élément du tableau (index 0)

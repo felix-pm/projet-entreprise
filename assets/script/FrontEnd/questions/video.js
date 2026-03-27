@@ -1,7 +1,6 @@
 const baliseVideo = document.getElementById("baliseVideo");
-baliseVideo.addEventListener("click", (event) => {});
 
-const title = sessionStorage.getItem("titreQuestionnaireActuel");
+// const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
 async function displayQuestionnaires() {
   try {
@@ -9,7 +8,7 @@ async function displayQuestionnaires() {
     baliseVideo.src = lienVideo;
     baliseVideo.load();
   } catch (error) {
-    console.error("Impossible de charger les questionnaires :", error);
+    console.error("Impossible de charger la vidéo :", error);
   }
 }
 
