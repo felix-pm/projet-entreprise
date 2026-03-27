@@ -1,6 +1,6 @@
 const baliseVideo = document.getElementById("baliseVideo");
 
-// const title = sessionStorage.getItem("titreQuestionnaireActuel");
+const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
 async function displayQuestionnaires() {
   try {
