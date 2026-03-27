@@ -21,7 +21,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "../preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
     },
@@ -108,5 +108,22 @@ ipcMain.handle("get-questionnaires", async () => {
   } catch (erreur) {
     console.error("Erreur lors de la lecture des dossiers :", erreur);
     return [];
+  }
+});
+
+ipcMain.handle("get-element", async (event, title, key) => {
+  try {
+    const filePath = path.join(folderData, `${title}.json`);
+    const rawData = await fs.promises.readFile(filePath, "utf-8");
+    const data = JSON.parse(rawData);
+
+    // On récupère le premier élément du tableau (index 0)
+    const questionnaire = data[0];
+
+    // Et on renvoie la bonne clé (video, audio, etc.)
+    return questionnaire[key];
+  } catch (error) {
+    console.error("Erreur lors de la lecture de l'élément :", error);
+    return null;
   }
 });

@@ -7,9 +7,22 @@ function saveQuestion(saveQuestionName, inputName, dataQuestionPush) {
       );
 
       dataQuestionPush.push({
-        id: input.dataset.id,
+        id: id,
         question: input.value,
         answer: saveAnswer ? saveAnswer.value : null,
+      });
+    }
+  });
+}
+
+function getScoreTitle(getExternalTitleScore, scoreTitleTable) {
+  getExternalTitleScore.forEach((input) => {
+    if (input.value.trim() !== "") {
+      const id = input.dataset.id;
+
+      scoreTitleTable.push({
+        id: id,
+        scoreTitle: input.value,
       });
     }
   });
@@ -24,6 +37,9 @@ function saveJson() {
     const saveQuestionVideo = document.querySelectorAll(".questions-video");
     const saveQuestionAudio = document.querySelectorAll(".questions-audio");
     const saveQuestionMdls = document.querySelectorAll(".questions-mdls");
+    const getExternalTitleScore = document.querySelectorAll(
+      ".input-scores-externes",
+    );
 
     const titleValidator = document.querySelector("#title-test").value.trim();
     const videoValidator = document.querySelector("#video-url").value.trim();
@@ -36,11 +52,13 @@ function saveJson() {
       questionsVideo: [],
       questionsAudio: [],
       questionsMdls: [],
+      externalScoreTitle: [],
     };
 
     saveQuestion(saveQuestionAudio, "answer-audio", data.questionsAudio);
     saveQuestion(saveQuestionVideo, "answer-video", data.questionsVideo);
     saveQuestion(saveQuestionMdls, "answer-mdls", data.questionsMdls);
+    getScoreTitle(getExternalTitleScore, data.externalScoreTitle);
 
     const isTitleOk = titleValidator !== "";
     const isVideoLinkOk = videoValidator !== "";
