@@ -91,6 +91,7 @@ ipcMain.on("form-test", (event, receivedData) => {
   }
 });
 
+//récupération du nom du fichier
 ipcMain.handle("get-questionnaires", async () => {
   try {
     const files = await fs.promises.readdir(folderData);
@@ -112,6 +113,7 @@ ipcMain.handle("get-questionnaires", async () => {
   }
 });
 
+//récupération du contenu du fichier
 ipcMain.handle("get-element", async (event, title, key) => {
   try {
     const filePath = path.join(folderData, `${title}.json`);
