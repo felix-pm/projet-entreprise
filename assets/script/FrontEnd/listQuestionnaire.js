@@ -1,6 +1,6 @@
 const container = document.querySelector(".allQuestionnaire");
 
-async function displayQuestionnaires() {
+async function displayQuestionnaires(title) {
   try {
     const listQuestionnaire = await window.electronAPI.getQuestionnaires();
 
