@@ -8,7 +8,7 @@ async function displayQuestionnaires() {
     titleQuestionnaire.textContent = `Questionnaire : ${titleQ}`;
     titleQuestionnaire.load();
   } catch (error) {
-    console.error("Impossible de charger le titre qu questionnaire :", error);
+    console.error("Impossible de charger le titre du questionnaire :", error);
   }
 }
 
