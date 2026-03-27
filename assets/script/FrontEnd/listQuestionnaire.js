@@ -1,6 +1,6 @@
 const container = document.querySelector(".allQuestionnaire");
 
-async function displayQuestionnaires() {
+async function displayQuestionnaires(title) {
   try {
     const listQuestionnaire = await window.electronAPI.getQuestionnaires();
 
@@ -10,6 +10,10 @@ async function displayQuestionnaires() {
       link.textContent = questionnaire.title;
       link.href = "questionnaire.html";
       link.classList.add("link");
+
+      link.addEventListener("click", () => {
+        sessionStorage.setItem("titreQuestionnaireActuel", questionnaire.title);
+      });
 
       container.appendChild(link);
     });
