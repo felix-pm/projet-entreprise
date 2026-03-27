@@ -127,3 +127,26 @@ ipcMain.handle("get-element", async (event, title, key) => {
     return null;
   }
 });
+
+// Pour les renseignements
+ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
+  try {
+    // A. On lit la liste existante
+    const currentData = JSON.parse(
+      fs.readFileSync(renseigntmentsJson, "utf-8"),
+    );
+
+    // B. On ajoute le nouveau profil à la fin de la liste
+    currentData.push(receivedDataRenseignements);
+
+    // C. On réécrit le fichier sur le disque dur avec la liste à jour
+    fs.writeFileSync(renseigntmentsJson, JSON.stringify(currentData, null, 2));
+
+    console.log(
+      "Succès ! Fichier mis à jour pour les renseignements dans :",
+      renseigntmentsJson,
+    );
+  } catch (erreur) {
+    console.error("Aïe, erreur lors de la sauvegarde :", erreur);
+  }
+});
