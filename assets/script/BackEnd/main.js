@@ -118,13 +118,34 @@ ipcMain.on("create-excel-file", async (event) => {
   try {
     // Lis le fichier
     const jsonRaw = await fs.promises.readFile(jsonPath, "utf-8");
+
     // Transforme en objet
     const jsonObject = JSON.parse(jsonRaw);
+
+    const flattenedData = [];
+
+    jsonObject.forEach((item) => {
+      let line = {
+        titre: item.title,
+        video: item.video,
+        audio: item.audio,
+      };
+
+      item.questionsAudio.forEach((q) => {
+        line[`Question audio ${q.id}`] = q.answer;
+      });
+
+      item.questionsVideo.forEach((q) => {
+        line[`Question video ${q.id}`] = q.answer;
+      });
+
+      flattenedData.push(line);
+    });
 
     // Crée un classeur excel vide
     const workbook = xlsx.utils.book_new();
     // Ajoute l'objet sur une feuille excel
-    const workSheet = xlsx.utils.json_to_sheet(jsonObject);
+    const workSheet = xlsx.utils.json_to_sheet(flattenedData);
 
     // Ajoute la feuille au classeur excel
     xlsx.utils.book_append_sheet(workbook, workSheet);
