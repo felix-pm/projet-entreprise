@@ -19,12 +19,17 @@ async function displayQuestionnaires() {
     let count = 1;
 
     lienQuestionVideo.forEach((lien) => {
-      const link = document.createElement("p");
-      console.log("prout");
-      link.textContent = `question ${count} : ${lien["question"]}`;
+      const text = document.createElement("p");
+      text.textContent = `question ${count} : ${lien["question"]}`;
       count++;
-      link.classList.add("link");
-      container.append(link);
+      text.classList.add("text");
+      const vrai = document.createElement("button");
+      vrai.classList.add("btnVrai");
+      vrai.textContent = "Vrai";
+      const faux = document.createElement("button");
+      faux.classList.add("btnFaux");
+      faux.textContent = "Faux";
+      container.append(text, vrai, faux);
     });
   } catch (error) {
     console.error("Impossible de charger les questions :", error);
