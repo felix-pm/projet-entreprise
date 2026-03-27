@@ -1,2 +1,16 @@
-const btnAudio = document.getElementById("audio");
-btnAudio.addEventListener("click", (event) => {});
+const baliseAudio = document.getElementById("audio");
+
+const title = sessionStorage.getItem("titreQuestionnaireActuel");
+
+async function displayQuestionnaires() {
+  try {
+    const lienAudio = await window.electronAPI.getElement(title, "audio");
+    baliseAudio.src = lienAudio;
+    console.log(lienAudio);
+    baliseAudio.load();
+  } catch (error) {
+    console.error("Impossible de charger l'audio :", error);
+  }
+}
+
+displayQuestionnaires();
