@@ -2,6 +2,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import fs from "node:fs";
+import xlsx from "xlsx";
 
 // 2. Ajoute ces imports natifs de Node.js
 import { fileURLToPath } from "url";
@@ -21,7 +22,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "../preload.js"),
+      preload: path.join(__dirname, "..", "preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
     },
@@ -148,5 +149,52 @@ ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
     );
   } catch (erreur) {
     console.error("Aïe, erreur lors de la sauvegarde :", erreur);
+  }
+});
+
+// Json en Excel
+ipcMain.on("create-excel-file", async (event) => {
+  const jsonPath = path.join(folderData, "Test2.json");
+  try {
+    // Lis le fichier
+    const jsonRaw = await fs.promises.readFile(jsonPath, "utf-8");
+
+    // Transforme en objet
+    const jsonObject = JSON.parse(jsonRaw);
+
+    const flattenedData = [];
+
+    jsonObject.forEach((item) => {
+      let line = {
+        titre: item.title,
+        video: item.video,
+        audio: item.audio,
+      };
+
+      item.questionsAudio.forEach((q) => {
+        line[`Question audio ${q.id}`] = q.answer;
+      });
+
+      item.questionsVideo.forEach((q) => {
+        line[`Question video ${q.id}`] = q.answer;
+      });
+
+      flattenedData.push(line);
+    });
+
+    // Crée un classeur excel vide
+    const workbook = xlsx.utils.book_new();
+    // Ajoute l'objet sur une feuille excel
+    const workSheet = xlsx.utils.json_to_sheet(flattenedData);
+
+    // Ajoute la feuille au classeur excel
+    xlsx.utils.book_append_sheet(workbook, workSheet);
+    const outputPath = path.join(folderData, "convertedToExcel.xlsx");
+    // Ajoute le classeur au chemin
+    xlsx.writeFile(workbook, outputPath);
+
+    console.log("Succès");
+  } catch (err) {
+    console.error("Erreur de la génération : ", err);
   }
 });
