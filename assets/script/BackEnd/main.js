@@ -61,26 +61,25 @@ app.on("window-all-closed", () => {
   }
 });
 
-// --- 4. LA SAUVEGARDE (ÉCOUTE DU TALKIE-WALKIE) ---
-// Pour les questionnaires
+function copyMediaFile(originalPath, targetFolder) {
+  if (originalPath && fs.existsSync(originalPath)) {
+    const fileName = path.basename(originalPath);
+    const destinationPath = path.join(targetFolder, fileName);
+
+    if (originalPath !== destinationPath) {
+      fs.copyFileSync(originalPath, destinationPath);
+    }
+
+    return destinationPath;
+  }
+
+  return originalPath || "";
+}
+
 ipcMain.on("form-test", (event, receivedData) => {
   try {
-    const copyMediaFile = (originalPath) => {
-      if (originalPath && fs.existsSync(originalPath)) {
-        const fileName = path.basename(originalPath);
-        const destinationPath = path.join(folderData, fileName);
-
-        if (originalPath !== destinationPath) {
-          fs.copyFileSync(originalPath, destinationPath);
-        }
-
-        return destinationPath;
-      }
-      return originalPath;
-    };
-
-    receivedData.video = copyMediaFile(receivedData.video);
-    receivedData.audio = copyMediaFile(receivedData.audio);
+    receivedData.video = copyMediaFile(receivedData.video, folderData);
+    receivedData.audio = copyMediaFile(receivedData.audio, folderData);
 
     const title = receivedData.title + ".json";
     const pathJson = path.join(folderData, title);
