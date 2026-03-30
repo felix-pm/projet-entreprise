@@ -65,21 +65,34 @@ app.on("window-all-closed", () => {
 // Pour les questionnaires
 ipcMain.on("form-test", (event, receivedData) => {
   try {
-    // A. On lit la liste existante
+    const copyMediaFile = (originalPath) => {
+      if (originalPath && fs.existsSync(originalPath)) {
+        const fileName = path.basename(originalPath);
+        const destinationPath = path.join(folderData, fileName);
+
+        if (originalPath !== destinationPath) {
+          fs.copyFileSync(originalPath, destinationPath);
+        }
+
+        return destinationPath;
+      }
+      return originalPath;
+    };
+
+    receivedData.video = copyMediaFile(receivedData.video);
+    receivedData.audio = copyMediaFile(receivedData.audio);
+
     const title = receivedData.title + ".json";
     const pathJson = path.join(folderData, title);
 
-    // On vérifie si le fichier JSON existe, sinon on le crée avec une liste vide []
     if (!fs.existsSync(pathJson)) {
       fs.writeFileSync(pathJson, JSON.stringify([], null, 2));
     }
 
     const currentData = JSON.parse(fs.readFileSync(pathJson, "utf-8"));
 
-    // B. On ajoute le nouveau profil à la fin de la liste
     currentData.push(receivedData);
 
-    // C. On réécrit le fichier sur le disque dur avec la liste à jour
     fs.writeFileSync(pathJson, JSON.stringify(currentData, null, 2));
 
     console.log(
