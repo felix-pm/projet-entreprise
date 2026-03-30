@@ -13,6 +13,10 @@ async function displayQuestionnaires(title) {
 
       link.addEventListener("click", () => {
         sessionStorage.setItem("titreQuestionnaireActuel", questionnaire.title);
+        const titreQuestion = sessionStorage.getItem(
+          "titreQuestionnaireActuel",
+        );
+        console.log(titreQuestion);
       });
 
       container.appendChild(link);
