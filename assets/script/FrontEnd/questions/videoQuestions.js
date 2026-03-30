@@ -38,9 +38,13 @@ function showQuestion(index) {
   text.textContent = `Question n°${currentQuestion["id"]}: ${currentQuestion["question"]}`;
 
   const btnVrai = document.createElement("button");
+  btnVrai.classList.add("button");
+  btnVrai.classList.add(`btn ${index}`);
   btnVrai.textContent = "Vrai";
 
   const btnFaux = document.createElement("button");
+  btnVrai.classList.add("button");
+  btnVrai.classList.add(`btn ${index}`);
   btnFaux.textContent = "Faux";
 
   btnVrai.addEventListener("click", () => {
