@@ -48,11 +48,11 @@ function showQuestion(index) {
 
   const btnVrai = document.createElement("button");
   btnVrai.classList.add("btnVrai");
-  btnVrai.textContent = "Vrai";
+  btnVrai.textContent = "Vu";
 
   const btnFaux = document.createElement("button");
   btnFaux.classList.add("btnFaux");
-  btnFaux.textContent = "Faux";
+  btnFaux.textContent = "Entendu";
 
   // E. On ajoute les événements DIRECTEMENT sur les boutons qu'on vient de créer
   btnVrai.addEventListener("click", () => {

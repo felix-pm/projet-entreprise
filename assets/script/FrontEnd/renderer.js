@@ -42,8 +42,21 @@ function saveJson() {
     );
 
     const titleValidator = document.querySelector("#title-test").value.trim();
-    const videoValidator = document.querySelector("#video-url").value.trim();
-    const audioValidator = document.querySelector("#audio-url")?.value.trim();
+    const videoInput = document.querySelector("#video-url");
+    const audioInput = document.querySelector("#audio-url");
+
+    // Utilisation de la nouvelle fonction sécurisée d'Electron via le preload
+    let videoValidator = "";
+    if (videoInput.files.length > 0) {
+      videoValidator =
+        window.electronAPI.getFilePath(videoInput.files[0]) || "";
+    }
+
+    let audioValidator = "";
+    if (audioInput && audioInput.files.length > 0) {
+      audioValidator =
+        window.electronAPI.getFilePath(audioInput.files[0]) || "";
+    }
 
     const data = {
       title: titleValidator,
