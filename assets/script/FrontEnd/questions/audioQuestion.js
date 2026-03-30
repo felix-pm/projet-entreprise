@@ -1,3 +1,5 @@
+import { initModal, handleAnswer } from "../modalChrono.js";
+
 const btnBack = document.getElementById("btnBack");
 
 btnBack.addEventListener("click", (event) => {
@@ -5,11 +7,22 @@ btnBack.addEventListener("click", (event) => {
 });
 
 const container = document.getElementById("questionAudio");
+// ** Récupération de la modal
+const modal = document.querySelector("#modalStart");
+const modalTitle = document.querySelector("#questionModal");
+
 const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
 // 1. On crée des variables globales pour stocker les données et notre position
 let questions = [];
 let currentIndex = 0; // En informatique, le premier élément d'un tableau est à l'index 0
+
+document.addEventListener("keydown", (event) => {
+  // On vérifie qu'on appuie sur Espace ET que la modale n'est pas déjà cachée
+  if (event.code === "Space" && !modal.classList.contains("hidden")) {
+    initModal(); // On lance le chrono et on cache la modale
+  }
+});
 
 // 2. On charge les données DEPUIS ELECTRON UNE SEULE FOIS
 async function loadQuestions() {
@@ -38,8 +51,13 @@ function showQuestion(index) {
   // B. On vide le conteneur pour effacer l'ancienne question
   container.innerHTML = "";
 
-  // C. On récupère la question actuelle dans notre tableau
+  // ** Réaffichage de la modal à chaque tour
+  modal.classList.remove("hidden");
+
+  // C.  On récupère la question actuelle dans notre tableau
   const currentQuestion = questions[index];
+
+  modalTitle.textContent = `Question ${index + 1} : ${currentQuestion["question"]}`;
 
   // D. Création des éléments HTML
   const text = document.createElement("p");
@@ -62,6 +80,8 @@ function showQuestion(index) {
     );
     // Plus tard, tu pourras enregistrer la réponse ici
 
+    handleAnswer();
+
     currentIndex++; // On passe à la suivante
     showQuestion(currentIndex); // On met à jour l'écran
   });
@@ -71,6 +91,9 @@ function showQuestion(index) {
       "L'utilisateur a répondu Faux à la question :",
       currentQuestion.id,
     );
+
+    handleAnswer();
+
     // Plus tard, tu pourras enregistrer la réponse ici
 
     currentIndex++; // On passe à la suivante

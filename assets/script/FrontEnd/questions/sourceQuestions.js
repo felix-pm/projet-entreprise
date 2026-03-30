@@ -1,3 +1,5 @@
+import { initModal, handleAnswer } from "../modalChrono.js";
+
 const btnBack = document.getElementById("btnBack");
 
 btnBack.addEventListener("click", (event) => {
@@ -5,11 +7,21 @@ btnBack.addEventListener("click", (event) => {
 });
 
 const container = document.getElementById("sourceQuestion");
+// ** Récupération de la modal
+const modal = document.querySelector("#modalStart");
+const modalTitle = document.querySelector("#questionModal");
 const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
 // 1. On crée des variables globales pour stocker les données et notre position
 let questions = [];
 let currentIndex = 0; // En informatique, le premier élément d'un tableau est à l'index 0
+
+document.addEventListener("keydown", (event) => {
+  // On vérifie qu'on appuie sur Espace ET que la modale n'est pas déjà cachée
+  if (event.code === "Space" && !modal.classList.contains("hidden")) {
+    initModal(); // On lance le chrono et on cache la modale
+  }
+});
 
 // 2. On charge les données DEPUIS ELECTRON UNE SEULE FOIS
 async function loadQuestions() {
@@ -38,47 +50,56 @@ function showQuestion(index) {
   // B. On vide le conteneur pour effacer l'ancienne question
   container.innerHTML = "";
 
+  // ** Réaffichage de la modal à chaque tour
+  modal.classList.remove("hidden");
+
   // C. On récupère la question actuelle dans notre tableau
   const currentQuestion = questions[index];
+
+  modalTitle.textContent = `Question ${index + 1} : ${currentQuestion["question"]}`;
 
   // D. Création des éléments HTML
   const text = document.createElement("p");
   text.classList.add("text");
   text.textContent = `Question ${index + 1} : ${currentQuestion["question"]}`;
 
-  const btnVrai = document.createElement("button");
-  btnVrai.classList.add("btnVrai");
-  btnVrai.textContent = "Vrai";
+  const btnVu = document.createElement("button");
+  btnVu.classList.add("btnVrai");
+  btnVu.textContent = "vu";
 
-  const btnFaux = document.createElement("button");
-  btnFaux.classList.add("btnFaux");
-  btnFaux.textContent = "Faux";
+  const btnEntendu = document.createElement("button");
+  btnEntendu.classList.add("btnFaux");
+  btnEntendu.textContent = "entendu";
 
   // E. On ajoute les événements DIRECTEMENT sur les boutons qu'on vient de créer
-  btnVrai.addEventListener("click", () => {
+  btnVu.addEventListener("click", () => {
     console.log(
-      "L'utilisateur a répondu Vrai à la question :",
+      "L'utilisateur a répondu Vu à la question :",
       currentQuestion.id,
     );
     // Plus tard, tu pourras enregistrer la réponse ici
+
+    handleAnswer();
 
     currentIndex++; // On passe à la suivante
     showQuestion(currentIndex); // On met à jour l'écran
   });
 
-  btnFaux.addEventListener("click", () => {
+  btnEntendu.addEventListener("click", () => {
     console.log(
-      "L'utilisateur a répondu Faux à la question :",
+      "L'utilisateur a répondu Entendu à la question :",
       currentQuestion.id,
     );
     // Plus tard, tu pourras enregistrer la réponse ici
+
+    handleAnswer();
 
     currentIndex++; // On passe à la suivante
     showQuestion(currentIndex); // On met à jour l'écran
   });
 
   // F. On injecte tout dans le HTML
-  container.append(text, btnVrai, btnFaux);
+  container.append(text, btnVu, btnEntendu);
 }
 
 // 4. On lance le processus au chargement de la page
