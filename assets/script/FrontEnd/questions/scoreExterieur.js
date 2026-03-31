@@ -4,15 +4,21 @@ btnBack.addEventListener("click", (event) => {
   window.location.href = "questionnaire.html";
 });
 
-const yield2 = {};
-
-const buttonRecordScore = document.getElementById("recordScore");
-
 const titleScore = document.getElementById("titleScore");
 const scoreValue = document.getElementById("scoreValue");
 
+const numberPassation = sessionStorage.getItem("numberPassation");
+
+const scoreExterieur = { [numberPassation]: {} };
+
+const buttonRecordScore = document.getElementById("recordScore");
+
 buttonRecordScore.addEventListener("click", () => {
-  window.electronAPI.savescoreJson(scoreValue);
+  window.electronAPI.savescoreJson(scoreExterieur);
+  scoreExterieur[`${numberPassation}`][`${titleScore.value}`] =
+    scoreValue.value;
+  // scoreExterieur[numberPassation].push(titleScore.value, scoreValue.value);
+  console.log(scoreExterieur);
   scoreValue.value = "";
   titleScore.value = "";
 });

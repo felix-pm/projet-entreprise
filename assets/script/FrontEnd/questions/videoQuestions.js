@@ -123,3 +123,13 @@ async function clearSessionStorage() {
     sessionStorage.removeItem(key);
   });
 }
+
+const data = {
+  title: titleValidator,
+  video: videoValidator,
+  audio: audioValidator,
+  questionsVideo: [],
+  questionsAudio: [],
+  questionsMdls: [],
+  externalScoreTitle: [],
+};
