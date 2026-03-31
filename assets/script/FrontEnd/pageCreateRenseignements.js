@@ -28,13 +28,15 @@ function convertToMonth(date) {
 
 function saveJsonChildren() {
   btnSubmit.addEventListener("click", (event) => {
+    const age = document.querySelector("#age").value.trim();
+    const sexe = document.querySelector("#sexe-select").value.trim();
+
     const numberPassation = document
       .querySelector("#number-passation")
       .value.trim();
     sessionStorage.setItem("numberPassation", numberPassation);
-
-    const age = document.querySelector("#age").value.trim();
-    const sexe = document.querySelector("#sexe-select").value.trim();
+    sessionStorage.setItem("sexe", sexe);
+    sessionStorage.setItem("age", age);
 
     const ageDate = new Date(age);
 

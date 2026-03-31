@@ -1,6 +1,6 @@
 import { initModal, handleAnswer } from "../modalChrono.js";
 
-const btn = document.getElementById("btnBack");
+const btnBack = document.getElementById("btnBack");
 
 btnBack.addEventListener("click", (event) => {
   window.location.href = "questionnaire.html";
@@ -53,8 +53,7 @@ function showQuestion(index) {
       window.location.href = recordquestions.href;
     });
 
-    // Optionnel : Tu pourrais le rediriger automatiquement avec window.location.href
-    return; // On arrête la fonction ici
+    return;
   }
 
   container.innerHTML = "";
@@ -81,7 +80,10 @@ function showQuestion(index) {
   btnFaux.textContent = "Faux";
 
   btnVrai.addEventListener("click", () => {
-    sessionStorage.setItem(`yield2-Question ${index + 1}`, btnVrai.textContent);
+    sessionStorage.setItem(
+      `yield2-QuestionVideo ${index + 1}`,
+      btnVrai.textContent,
+    );
 
     // Plus tard, tu pourras enregistrer la réponse ici
 
@@ -90,7 +92,10 @@ function showQuestion(index) {
   });
 
   btnFaux.addEventListener("click", () => {
-    sessionStorage.setItem(`yield2-Question ${index + 1}`, btnFaux.textContent);
+    sessionStorage.setItem(
+      `yield2-QuestionVideo ${index + 1}`,
+      btnFaux.textContent,
+    );
     // Plus tard, tu pourras enregistrer la réponse ici
 
     currentIndex++; // On passe à la suivante
@@ -103,33 +108,39 @@ function showQuestion(index) {
 // 4. On lance le processus au chargement de la page
 loadQuestion();
 
+const numberPassation = sessionStorage.getItem("numberPassation");
+const sexe = sessionStorage.getItem("sexe");
+const age = sessionStorage.getItem("age");
+
+const answers = {
+  [numberPassation]: { sexe: [sexe] },
+  age: [age],
+  questionsVideo: {},
+};
+
 async function clearSessionStorage() {
-  const answers = {};
-  let sessionStorageClear = [];
+  let keysToDelete = [];
 
-  for (let i = 0; i < sessionStorage.length; i++) {
-    if (sessionStorage.key(i).startsWith("yield2")) {
-      answers[sessionStorage.key(i)] = sessionStorage.getItem(
-        sessionStorage.key(i),
-      );
-      console.log(answers);
-      sessionStorageClear.push(sessionStorage.key(i));
+  // 2. On parcourt le sessionStorage pour collecter les données
+  // On utilise Object.keys pour éviter les problèmes d'index si le storage change
+  const toutesLesCles = Object.keys(sessionStorage);
+
+  toutesLesCles.forEach((key) => {
+    if (key.startsWith("yield2")) {
+      answers.questionsVideo[key] = sessionStorage.getItem(key);
+
+      keysToDelete.push(key);
     }
-  }
+  });
 
+  console.log(answers);
+
+  // 3. On envoie l'objet complet à Electron
   await window.electronAPI.saveVideosQuestions(answers);
 
-  sessionStorageClear.forEach((key) => {
+  keysToDelete.forEach((key) => {
     sessionStorage.removeItem(key);
   });
-}
 
-const data = {
-  title: titleValidator,
-  video: videoValidator,
-  audio: audioValidator,
-  questionsVideo: [],
-  questionsAudio: [],
-  questionsMdls: [],
-  externalScoreTitle: [],
-};
+  console.log("Sauvegarde effectuée et clés yield2 supprimées.");
+}
