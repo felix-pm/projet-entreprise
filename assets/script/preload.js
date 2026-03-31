@@ -17,4 +17,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   },
   generateExcel: (titleJson) =>
     ipcRenderer.send("create-excel-file", titleJson),
+  savescoreJson: () => ipcRenderer.send("scoreExterieur"),
+  saveVideosQuestions: (answers) =>
+    ipcRenderer.invoke("yield2-videosQuestions", answers),
 });
