@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 let folderData = path.join(app.getPath("documents"), "psy/mes-donnees"); // Dossier sécurisé par défaut d'Electron
 let renseigntmentsJson = path.join(folderData, "renseignements.json");
 let yield2Json = path.join(folderData, "yield2.json");
-let yield1Json = path.join(folderData, "Test2Reponse.json");
+let yield1Json = path.join(folderData, "yield1.json");
 
 // 5. Ensuite, ton code normal commence ici...
 const createWindow = () => {
@@ -40,18 +40,6 @@ const createWindow = () => {
 app.whenReady().then(() => {
   if (!fs.existsSync(folderData)) {
     fs.mkdirSync(folderData, { recursive: true });
-  }
-
-  if (!fs.existsSync(renseigntmentsJson)) {
-    fs.writeFileSync(renseigntmentsJson, JSON.stringify([], null, 2));
-  }
-
-  if (!fs.existsSync(yield2Json)) {
-    fs.writeFileSync(yield2Json, JSON.stringify([], null, 2));
-  }
-
-  if (!fs.existsSync(yield1Json)) {
-    fs.writeFileSync(yield1Json, JSON.stringify([], null, 2));
   }
 
   createWindow();
@@ -93,13 +81,27 @@ ipcMain.on("create-folder", (event, titleJSON) => {
       "psy/mes-donnees/",
       titleJSON,
     );
+    folderData = newFolderPath;
+    renseigntmentsJson = path.join(folderData, "renseignements.json");
+    yield1Json = path.join(folderData, "yield1.json");
+    yield2Json = path.join(folderData, "yield2.json");
 
     if (!fs.existsSync(newFolderPath)) {
       fs.mkdirSync(newFolderPath, { recursive: true });
       console.log("Dossier créé :", newFolderPath);
     }
 
-    folderData = newFolderPath;
+    if (!fs.existsSync(renseigntmentsJson)) {
+      fs.writeFileSync(renseigntmentsJson, JSON.stringify([], null, 2));
+    }
+
+    if (!fs.existsSync(yield2Json)) {
+      fs.writeFileSync(yield2Json, JSON.stringify([], null, 2));
+    }
+
+    if (!fs.existsSync(yield1Json)) {
+      fs.writeFileSync(yield1Json, JSON.stringify([], null, 2));
+    }
   } catch (err) {
     console.log("Erreur du path : ", err);
   }
