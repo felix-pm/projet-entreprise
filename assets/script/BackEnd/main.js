@@ -167,30 +167,47 @@ ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
 });
 
 // Json en Excel
-ipcMain.on("create-excel-file", async (event) => {
-  const jsonPath = path.join(folderData, "Test2.json");
+ipcMain.on("create-excel-file", async (event, titleJson) => {
+  const jsonPath = path.join(folderData, titleJson + ".json");
+  const jsonPathYield1 = path.join(folderData, "Test2Reponse.json");
+  const jsonPathYield2 = path.join(folderData, "Test2Yield2.json");
   try {
     // Lis le fichier
     const jsonRaw = await fs.promises.readFile(jsonPath, "utf-8");
+    const jsonRawYield1 = await fs.promises.readFile(jsonPathYield1, "utf-8");
+    const jsonRawYield2 = await fs.promises.readFile(jsonPathYield2, "utf-8");
 
     // Transforme en objet
     const jsonObject = JSON.parse(jsonRaw);
+    const jsonObjectYield1 = JSON.parse(jsonRawYield1);
+    const jsonObjectYield2 = JSON.parse(jsonRawYield2);
 
     const flattenedData = [];
 
-    jsonObject.forEach((item) => {
-      let line = {
-        titre: item.title,
-        video: item.video,
-        audio: item.audio,
-      };
-
-      item.questionsAudio.forEach((q) => {
-        line[`Question audio ${q.id}`] = q.answer;
+    jsonObject.forEach((item, index) => {
+      let line = {};
+      const audioYield1 = jsonObjectYield1[index].questionsAudio;
+      const audioYield2 = jsonObjectYield2[index].questionsAudio;
+      const videoYield1 = jsonObjectYield1[index].questionsVideo;
+      const videoYield2 = jsonObjectYield2[index].questionsVideo;
+      item.questionsAudio.forEach((q, i) => {
+        line[`Question audio ${q.id} Yield1`] = q.answer;
+        line[`Réponse audio ${q.id} Yield1`] = audioYield1[i].answer;
       });
 
-      item.questionsVideo.forEach((q) => {
-        line[`Question video ${q.id}`] = q.answer;
+      item.questionsAudio.forEach((q, i) => {
+        line[`Question audio ${q.id} Yield2`] = q.answer;
+        line[`Réponse audio ${q.id} Yield2`] = audioYield2[i].answer;
+      });
+
+      item.questionsVideo.forEach((q, i) => {
+        line[`Question vidéo ${q.id} Yield1`] = q.answer;
+        line[`Réponse vidéo ${q.id} Yield1`] = videoYield1[i].answer;
+      });
+
+      item.questionsVideo.forEach((q, i) => {
+        line[`Question vidéo ${q.id} Yield2`] = q.answer;
+        line[`Réponse vidéo ${q.id} Yield2`] = videoYield2[i].answer;
       });
 
       flattenedData.push(line);

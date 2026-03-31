@@ -7,7 +7,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
 
   getQuestionnaires: () => ipcRenderer.invoke("get-questionnaires"),
   getElement: (title, key) => ipcRenderer.invoke("get-element", title, key),
-  generateExcel: () => ipcRenderer.send("create-excel-file"),
 
   // fonction sécurisée pour extraire le chemin absolu du fichier
   getFilePath: (file) => {
@@ -16,4 +15,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
     }
     return file.path;
   },
+  generateExcel: (titleJson) =>
+    ipcRenderer.send("create-excel-file", titleJson),
 });
