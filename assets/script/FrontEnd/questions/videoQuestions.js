@@ -101,7 +101,7 @@ function showQuestion(index) {
 }
 
 // 4. On lance le processus au chargement de la page
-loadQuestions();
+loadQuestion();
 
 async function clearSessionStorage() {
   const answers = {};

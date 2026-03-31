@@ -16,6 +16,7 @@ const title = sessionStorage.getItem("titreQuestionnaireActuel");
 // 1. On crée des variables globales pour stocker les données et notre position
 let questions = [];
 let currentIndex = 0; // En informatique, le premier élément d'un tableau est à l'index 0
+let allTimer = 0;
 
 document.addEventListener("keydown", (event) => {
   // On vérifie qu'on appuie sur Espace ET que la modale n'est pas déjà cachée
@@ -43,7 +44,9 @@ async function loadQuestions() {
 function showQuestion(index) {
   // A. Vérifier si on a fini toutes les questions
   if (index >= questions.length) {
-    container.innerHTML = "<p>Vous avez terminé les questions vidéo !</p>";
+    container.innerHTML = "<p>Vous avez terminé les questions audio !</p>";
+    const moyenFinal = calculMoy(allTimer);
+    console.log(moyenFinal);
     // Optionnel : Tu pourrais le rediriger automatiquement avec window.location.href
     return; // On arrête la fonction ici
   }
@@ -80,7 +83,8 @@ function showQuestion(index) {
     );
     // Plus tard, tu pourras enregistrer la réponse ici
 
-    handleAnswer();
+    allTimer += handleAnswer();
+    console.log(allTimer);
 
     currentIndex++; // On passe à la suivante
     showQuestion(currentIndex); // On met à jour l'écran
@@ -92,7 +96,8 @@ function showQuestion(index) {
       currentQuestion.id,
     );
 
-    handleAnswer();
+    allTimer += handleAnswer();
+    console.log(allTimer);
 
     // Plus tard, tu pourras enregistrer la réponse ici
 
@@ -102,6 +107,12 @@ function showQuestion(index) {
 
   // F. On injecte tout dans le HTML
   container.append(text, btnVrai, btnFaux);
+}
+
+function calculMoy(addition) {
+  const moyenTemp = addition / 15;
+  const roundMoy = moyenTemp.toFixed(3);
+  return roundMoy;
 }
 
 // 4. On lance le processus au chargement de la page
