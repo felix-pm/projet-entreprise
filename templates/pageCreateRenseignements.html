@@ -13,15 +13,20 @@
         <form action="#" id="form-renseignements">
           <label for="number-passation">
             Renseignez le numéro de passation
-            <input type="number" id="number-passation" placeholder="Numéro" />
+            <input
+              type="number"
+              id="number-passation"
+              placeholder="Numéro"
+              required
+            />
           </label>
           <label for="age">
             Renseigner l'âge du patient
-            <input type="date" id="age" placeholder="Âge" />
+            <input type="date" id="age" placeholder="Âge" required />
           </label>
           <label for="sexe-select">
             Renseignez le sexe du patient
-            <select name="sexe" id="sexe-select">
+            <select name="sexe" id="sexe-select" required>
               <option value="">--Veuillez choisir une option--</option>
               <option value="men">Homme</option>
               <option value="girl">Femme</option>
