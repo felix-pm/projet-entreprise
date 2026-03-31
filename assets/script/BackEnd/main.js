@@ -14,6 +14,7 @@ const __dirname = path.dirname(__filename);
 // 4. Définition de tes chemins de sauvegarde (À adapter selon tes besoins)
 const folderData = path.join(app.getPath("documents"), "psy/mes-donnees"); // Dossier sécurisé par défaut d'Electron
 const renseigntmentsJson = path.join(folderData, "renseignements.json");
+const yield2Json = path.join(folderData, "yield2.json");
 
 // 5. Ensuite, ton code normal commence ici...
 const createWindow = () => {
@@ -42,6 +43,10 @@ app.whenReady().then(() => {
 
   if (!fs.existsSync(renseigntmentsJson)) {
     fs.writeFileSync(renseigntmentsJson, JSON.stringify([], null, 2));
+  }
+
+  if (!fs.existsSync(yield2Json)) {
+    fs.writeFileSync(yield2Json, JSON.stringify([], null, 2));
   }
 
   createWindow();
@@ -148,6 +153,26 @@ ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
     console.log(
       "Succès ! Fichier mis à jour pour les renseignements dans :",
       renseigntmentsJson,
+    );
+  } catch (erreur) {
+    console.error("Aïe, erreur lors de la sauvegarde :", erreur);
+  }
+});
+
+ipcMain.handle("yield2-videosQuestions", async (event, answerVideo) => {
+  try {
+    // A. On lit la liste existante
+    const currentData = JSON.parse(fs.readFileSync(yield2Json, "utf-8"));
+
+    // B. On ajoute le nouveau profil à la fin de la liste
+    currentData.push(answerVideo);
+
+    // C. On réécrit le fichier sur le disque dur avec la liste à jour
+    fs.writeFileSync(yield2Json, JSON.stringify(currentData, null, 2));
+
+    console.log(
+      "Succès ! Fichier mis à jour pour les renseignements dans :",
+      yield2Json,
     );
   } catch (erreur) {
     console.error("Aïe, erreur lors de la sauvegarde :", erreur);

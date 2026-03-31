@@ -1,19 +1,10 @@
-const yield2 = {};
-
 const buttonRecordScore = document.getElementById("recordScore");
 
-buttonRecordScore.addEventListener("click", (event) => {
-  pushscore();
-});
+const titleScore = document.getElementById("titleScore");
+const scoreValue = document.getElementById("scoreValue");
 
-function pushscore() {
-  const titleScore = document.getElementById("titleScore");
-  const scoreValue = document.getElementById("scoreValue");
-
-  yield2[titleScore.value] = scoreValue.valueAsNumber;
-
-  console.log(yield2);
-
-  titleScore.value = "";
+buttonRecordScore.addEventListener("click", () => {
+  window.electronAPI.savescoreJson(scoreValue);
   scoreValue.value = "";
-}
+  titleScore.value = "";
+});

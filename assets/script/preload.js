@@ -8,4 +8,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getQuestionnaires: () => ipcRenderer.invoke("get-questionnaires"),
   getElement: (title, key) => ipcRenderer.invoke("get-element", title, key),
   generateExcel: () => ipcRenderer.send("create-excel-file"),
+  savescoreJson: () => ipcRenderer.send("scoreExterieur"),
+  saveVideosQuestions: (answers) =>
+    ipcRenderer.invoke("yield2-videosQuestions", answers),
 });

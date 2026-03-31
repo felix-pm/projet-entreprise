@@ -31,6 +31,20 @@ function showQuestion(index) {
   // A. Vérifier si on a fini toutes les questions
   if (index >= questions.length) {
     container.innerHTML = "<p>Vous avez terminé les questions vidéo !</p>";
+    const recordquestions = document.createElement("a");
+    recordquestions.textContent = "Enregistrer les données";
+    recordquestions.className = "recordvideoanswers";
+    recordquestions.href = "allQuestionnaire.html";
+    container.append(recordquestions);
+
+    const recordvideoanswers = document.querySelector(".recordvideoanswers");
+
+    recordvideoanswers.addEventListener("click", async (event) => {
+      event.preventDefault();
+      await clearSessionStorage();
+      window.location.href = recordquestions.href;
+    });
+
     // Optionnel : Tu pourrais le rediriger automatiquement avec window.location.href
     return; // On arrête la fonction ici
   }
@@ -44,22 +58,22 @@ function showQuestion(index) {
   // D. Création des éléments HTML
   const text = document.createElement("p");
   text.classList.add("text");
-  text.textContent = `Question ${index + 1} : ${currentQuestion["question"]}`;
+  text.textContent = `${currentQuestion["question"]}?`;
 
   const btnVrai = document.createElement("button");
   btnVrai.classList.add("btnVrai");
+  btnVrai.classList.add("button");
   btnVrai.textContent = "Vrai";
 
   const btnFaux = document.createElement("button");
   btnFaux.classList.add("btnFaux");
+  btnVrai.classList.add("button");
   btnFaux.textContent = "Faux";
 
   // E. On ajoute les événements DIRECTEMENT sur les boutons qu'on vient de créer
   btnVrai.addEventListener("click", () => {
-    console.log(
-      "L'utilisateur a répondu Vrai à la question :",
-      currentQuestion.id,
-    );
+    sessionStorage.setItem(`yield2-Question ${index + 1}`, btnVrai.textContent);
+
     // Plus tard, tu pourras enregistrer la réponse ici
 
     currentIndex++; // On passe à la suivante
@@ -67,10 +81,7 @@ function showQuestion(index) {
   });
 
   btnFaux.addEventListener("click", () => {
-    console.log(
-      "L'utilisateur a répondu Faux à la question :",
-      currentQuestion.id,
-    );
+    sessionStorage.setItem(`yield2-Question ${index + 1}`, btnFaux.textContent);
     // Plus tard, tu pourras enregistrer la réponse ici
 
     currentIndex++; // On passe à la suivante
@@ -83,3 +94,24 @@ function showQuestion(index) {
 
 // 4. On lance le processus au chargement de la page
 loadQuestions();
+
+async function clearSessionStorage() {
+  const answers = {};
+  let sessionStorageClear = [];
+
+  for (let i = 0; i < sessionStorage.length; i++) {
+    if (sessionStorage.key(i).startsWith("yield2")) {
+      answers[sessionStorage.key(i)] = sessionStorage.getItem(
+        sessionStorage.key(i),
+      );
+      console.log(answers);
+      sessionStorageClear.push(sessionStorage.key(i));
+    }
+  }
+
+  await window.electronAPI.saveVideosQuestions(answers);
+
+  sessionStorageClear.forEach((key) => {
+    sessionStorage.removeItem(key);
+  });
+}
