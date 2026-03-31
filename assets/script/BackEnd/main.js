@@ -12,9 +12,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // 4. Définition de tes chemins de sauvegarde (À adapter selon tes besoins)
-const folderData = path.join(app.getPath("documents"), "psy/mes-donnees"); // Dossier sécurisé par défaut d'Electron
-const renseigntmentsJson = path.join(folderData, "renseignements.json");
-const yield2Json = path.join(folderData, "yield2.json");
+let folderData = path.join(app.getPath("documents"), "psy/mes-donnees"); // Dossier sécurisé par défaut d'Electron
+let renseigntmentsJson = path.join(folderData, "renseignements.json");
+let yield2Json = path.join(folderData, "yield2.json");
+let yield1Json = path.join(folderData, "Test2Reponse.json");
 
 // 5. Ensuite, ton code normal commence ici...
 const createWindow = () => {
@@ -49,6 +50,10 @@ app.whenReady().then(() => {
     fs.writeFileSync(yield2Json, JSON.stringify([], null, 2));
   }
 
+  if (!fs.existsSync(yield1Json)) {
+    fs.writeFileSync(yield1Json, JSON.stringify([], null, 2));
+  }
+
   createWindow();
 
   app.on("activate", () => {
@@ -80,6 +85,25 @@ function copyMediaFile(originalPath, targetFolder) {
 
   return originalPath || "";
 }
+
+ipcMain.on("create-folder", (event, titleJSON) => {
+  try {
+    const newFolderPath = path.join(
+      app.getPath("documents"),
+      "psy/mes-donnees/",
+      titleJSON,
+    );
+
+    if (!fs.existsSync(newFolderPath)) {
+      fs.mkdirSync(newFolderPath, { recursive: true });
+      console.log("Dossier créé :", newFolderPath);
+    }
+
+    folderData = newFolderPath;
+  } catch (err) {
+    console.log("Erreur du path : ", err);
+  }
+});
 
 ipcMain.on("form-test", (event, receivedData) => {
   try {

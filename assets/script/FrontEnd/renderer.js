@@ -1,3 +1,5 @@
+import { createFileSurvey } from "./createFileSurvey.js";
+
 function saveQuestion(saveQuestionName, inputName, dataQuestionPush) {
   saveQuestionName.forEach((input) => {
     if (input.value.trim() !== "") {
@@ -45,6 +47,13 @@ function saveJson() {
     const videoInput = document.querySelector("#video-url");
     const audioInput = document.querySelector("#audio-url");
 
+    const folderCreated = createFileSurvey();
+
+    if (!folderCreated) {
+      alert("Veuillez entrer un titre avant d'enregistrer.");
+      return;
+    }
+
     // Utilisation de la nouvelle fonction sécurisée d'Electron via le preload
     let videoValidator = "";
     if (videoInput.files.length > 0) {
@@ -90,7 +99,9 @@ function saveJson() {
       isAudioLinkOk
     ) {
       downloadJson(data);
-      window.location.href = "../index.html";
+      setTimeout(() => {
+        window.location.href = "../index.html";
+      }, 500);
     } else {
       let errorMessage = "Erreur de validation :\n";
       if (!isTitleOk) {
