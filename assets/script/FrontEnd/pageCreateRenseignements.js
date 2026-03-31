@@ -31,6 +31,8 @@ function saveJsonChildren() {
     const numberPassation = document
       .querySelector("#number-passation")
       .value.trim();
+    sessionStorage.setItem("numberPassation", numberPassation);
+
     const age = document.querySelector("#age").value.trim();
     const sexe = document.querySelector("#sexe-select").value.trim();
 
