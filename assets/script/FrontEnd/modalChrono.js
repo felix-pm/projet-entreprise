@@ -3,9 +3,8 @@ function stopTimer(idInterval) {
 }
 
 function toSecond(timeInMillis) {
-  const second = Math.floor(timeInMillis / 1000);
-  const millisecond = timeInMillis % 1000;
-  console.log(`${second} sec et ${millisecond} millisec`);
+  const second = timeInMillis / 1000;
+  return second;
 }
 
 let heureDepart;
@@ -30,5 +29,5 @@ export function initModal() {
 
 export function handleAnswer() {
   stopTimer(chrono);
-  toSecond(tempsEcoule);
+  return toSecond(tempsEcoule);
 }
