@@ -201,7 +201,7 @@ ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
   }
 });
 
-ipcMain.handle("yield2-videosQuestions", async (event, answerVideo) => {
+ipcMain.handle("yield2Questions", async (event, answerVideo) => {
   try {
     // A. On lit la liste existante
     const currentData = JSON.parse(fs.readFileSync(yield2Json, "utf-8"));
