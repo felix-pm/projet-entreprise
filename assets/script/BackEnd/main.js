@@ -12,6 +12,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // 4. Définition de tes chemins de sauvegarde (À adapter selon tes besoins)
+const folderDataProtocole = path.join(
+  app.getPath("documents"),
+  "psy/mes-donnees",
+);
 let folderData = path.join(app.getPath("documents"), "psy/mes-donnees"); // Dossier sécurisé par défaut d'Electron
 let renseigntmentsJson = path.join(folderData, "renseignements.json");
 let yield2Json = path.join(folderData, "yield2.json");
@@ -113,7 +117,7 @@ ipcMain.on("form-test", (event, receivedData) => {
     receivedData.audio = copyMediaFile(receivedData.audio, folderData);
 
     const title = receivedData.title + ".json";
-    const pathJson = path.join(folderData, title);
+    const pathJson = path.join(folderDataProtocole, title);
 
     if (!fs.existsSync(pathJson)) {
       fs.writeFileSync(pathJson, JSON.stringify([], null, 2));
@@ -214,6 +218,23 @@ ipcMain.handle("yield2-videosQuestions", async (event, answerVideo) => {
     );
   } catch (erreur) {
     console.error("Aïe, erreur lors de la sauvegarde :", erreur);
+  }
+});
+
+ipcMain.handle("yield1-questions", async (event, answerVideo) => {
+  try {
+    const currentData = JSON.parse(fs.readFileSync(yield1Json, "utf-8"));
+
+    currentData.push(answerVideo);
+
+    fs.writeFileSync(yield1Json, JSON.stringify(currentData, null, 2));
+
+    console.log(
+      "Succès ! Fichier mis à jour pour les renseignements dans :",
+      yield1Json,
+    );
+  } catch (err) {
+    console.error("Erreur lors de la sauvegarde : ", err);
   }
 });
 
