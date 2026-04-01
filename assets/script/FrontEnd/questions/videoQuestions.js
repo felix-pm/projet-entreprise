@@ -128,6 +128,7 @@ async function clearSessionStorage() {
   // 2. On parcourt le sessionStorage pour collecter les données
   // On utilise Object.keys pour éviter les problèmes d'index si le storage change
   const toutesLesCles = Object.keys(sessionStorage);
+  const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
   toutesLesCles.forEach((key) => {
     if (key.startsWith(`${currentYield}-QuestionVideo`)) {
@@ -140,9 +141,9 @@ async function clearSessionStorage() {
   });
 
   if (currentYield === "Yield1") {
-    await window.electronAPI.saveYield1Questions(answers);
+    await window.electronAPI.saveYield1Questions(answers, title);
   } else {
-    await window.electronAPI.saveYield2Questions(answers);
+    await window.electronAPI.saveYield2Questions(answers, title);
   }
 
   keysToDelete.forEach((key) => sessionStorage.removeItem(key));
