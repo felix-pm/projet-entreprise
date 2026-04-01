@@ -201,10 +201,15 @@ ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
   }
 });
 
-ipcMain.handle("yield2Questions", async (event, answerVideo) => {
+ipcMain.handle("yield2Questions", async (event, answerVideo, title) => {
   try {
     // A. On lit la liste existante
-    const currentData = JSON.parse(fs.readFileSync(yield2Json, "utf-8"));
+    const folderDataYield2 = path.join(
+      folderDataProtocole,
+      title,
+      "yield2.json",
+    );
+    const currentData = JSON.parse(fs.readFileSync(folderDataYield2, "utf-8"));
 
     // B. On ajoute le nouveau profil à la fin de la liste
     currentData.push(answerVideo);
@@ -221,9 +226,14 @@ ipcMain.handle("yield2Questions", async (event, answerVideo) => {
   }
 });
 
-ipcMain.handle("yield1Questions", async (event, answerVideo) => {
+ipcMain.handle("yield1-questions", async (event, answerVideo, title) => {
   try {
-    const currentData = JSON.parse(fs.readFileSync(yield1Json, "utf-8"));
+    const folderDataYield1 = path.join(
+      folderDataProtocole,
+      title,
+      "yield1.json",
+    );
+    const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
 
     currentData.push(answerVideo);
 
