@@ -1,5 +1,5 @@
 // FrontEnd/questions/defaultQuestion.js
-import { initModal, handleAnswer } from "../modalChrono.js";
+import { hiddenModalChrono, handleAnswer } from "../modal.js";
 import { saveRespons, saveInSessionStorage } from "../saveRespons.js";
 import { loadQuestion } from "../loadQuestion.js";
 
@@ -24,7 +24,7 @@ let allTimer = 0;
 
 document.addEventListener("keydown", (event) => {
   if (event.code === "Space" && !modal.classList.contains("hidden")) {
-    initModal();
+    hiddenModalChrono();
   }
 });
 
@@ -58,7 +58,7 @@ function showQuestion(index) {
   modal.classList.remove("hidden");
 
   const currentQuestion = questions[index];
-  modalTitle.textContent = `Question ${index + 1} : ${currentQuestion["question"]}`;
+  modalTitle.textContent = `${currentQuestion["question"]}?`;
 
   const text = document.createElement("p");
   text.classList.add("text");
@@ -76,8 +76,45 @@ function showQuestion(index) {
   // Gestion du clic pour passer à la question suivante
   saveInSessionStorage(btnVrai);
   saveInSessionStorage(btnFaux);
-
+  showTrustIndex(btnVrai);
+  showTrustIndex(btnFaux);
   container.append(text, btnVrai, btnFaux);
+  const buttonTrustIndexLow = document.querySelector("Low");
+  const buttonTrustIndexMiddle = document.querySelector("Middle");
+  const buttonTrustIndexHigh = document.querySelector("High");
+  hiddenTrustModal(buttonTrustIndexLow);
+  hiddenTrustModal(buttonTrustIndexMiddle);
+  hiddenTrustModal(buttonTrustIndexHigh);
+}
+
+function showTrustIndex(button) {
+  button.addEventListener("click", () => {
+    const modal = document.getElementById("modalIndexStart");
+    modal.remove("hidden");
+    const trustIndexLow = document.createElement("button");
+    trustIndexLow.textContent = "Low";
+    trustIndexLow.classList.add = "Low";
+    const trustIndexMiddle = document.createElement("button");
+    trustIndexMiddle.textContent = "Middle";
+    trustIndexMiddle.classList.add = "Middle";
+    const trustIndexHigh = document.createElement("button");
+    trustIndexHigh.textContent = "High";
+    trustIndexHigh.classList.add = "High";
+    modal.append(trustIndexLow, trustIndexMiddle, trustIndexHigh);
+  });
+}
+
+async function hiddenTrustModal(button) {
+  await button.addEventListener("click", () => {
+    if (button.textContent == "Low") {
+      sessionStorage.setItem(trustIndex, 1);
+    } else if (button.textContent == "Middle") {
+      sessionStorage.setItem(trustIndex, 2);
+    } else if (button.textContent == "High") {
+      sessionStorage.setItem(trustIndex, 3);
+    }
+    modal.add("hidden");
+  });
 }
 
 // 2. Initialisation : On lance le chargement en fonction de l'URL
@@ -100,6 +137,8 @@ async function init() {
   } else {
     container.innerHTML = "<p>Aucune question trouvée.</p>";
   }
+
+  const buttons = document.quer;
 }
 
 // On démarre le script !

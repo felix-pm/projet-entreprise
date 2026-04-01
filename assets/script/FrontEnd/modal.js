@@ -11,7 +11,7 @@ let heureDepart;
 let chrono;
 let tempsEcoule = 0;
 
-export function initModal() {
+export function hiddenModalChrono() {
   const modal = document.getElementById("modalStart");
 
   if (!modal) return;
