@@ -108,20 +108,6 @@ function showQuestion(index) {
 // 4. On lance le processus au chargement de la page
 loadQuestion();
 
-async function clesrSessionStorage() {
-  const numberPassation = sessionStorage.getItem("numberPassation");
-  const sexe = sessionStorage.getItem("sexe");
-  const age = sessionStorage.getItem("age");
-  const currentYield = sessionStorage.getItem("currentYield"); // "Yield1" ou "Yield2"
-
-  const answers = {
-    [numberPassation]: { sexe: [sexe] },
-    age: [age],
-    questionsVideo: {},
-    questionsAudio: {},
-  };
-}
-
 async function clearSessionStorage() {
   let keysToDelete = []; //!
 
@@ -148,4 +134,4 @@ async function clearSessionStorage() {
   keysToDelete.forEach((key) => sessionStorage.removeItem(key));
 }
 
-clesrSessionStorage();
+clearSessionStorage();
