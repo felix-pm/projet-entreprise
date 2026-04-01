@@ -1,4 +1,5 @@
 import { initModal, handleAnswer } from "../modalChrono.js";
+import { saveRespons, saveInSessionStorage } from "../saveRespons.js";
 
 const btnBack = document.getElementById("btnBack");
 
@@ -6,7 +7,7 @@ btnBack.addEventListener("click", (event) => {
   window.location.href = "questionnaire.html";
 });
 
-const container = document.getElementById("videoQuestion");
+const container = document.getElementById("videoQuestion"); //! unique à vidéo
 // ** Récupération de la modal
 const modal = document.querySelector("#modalStart");
 const modalTitle = document.querySelector("#questionModal");
@@ -24,7 +25,7 @@ document.addEventListener("keydown", (event) => {
 
 async function loadQuestion() {
   try {
-    questions = await window.electronAPI.getElement(title, "questionsVideo");
+    questions = await window.electronAPI.getElement(title, "questionsVideo"); //! unique à vidéo
 
     if (questions && questions.length > 0) {
       showQuestion(currentIndex); // On affiche la première question
@@ -40,7 +41,7 @@ const currentYield = sessionStorage.getItem("currentYield");
 
 function showQuestion(index) {
   if (index >= questions.length) {
-    container.innerHTML = "<p>Vous avez terminé les questions vidéo !</p>";
+    container.innerHTML = "<p>Vous avez terminé les questions vidéo !</p>"; //! unique à vidéo
     const recordquestions = document.createElement("a");
     recordquestions.textContent = "Enregistrer les données";
     recordquestions.className = "recordvideoanswers";
@@ -51,7 +52,7 @@ function showQuestion(index) {
 
     recordvideoanswers.addEventListener("click", async (event) => {
       event.preventDefault();
-      await clearSessionStorage();
+      await saveRespons();
       window.location.href = recordquestions.href;
     });
 
