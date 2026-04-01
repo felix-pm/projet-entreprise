@@ -108,39 +108,39 @@ function showQuestion(index) {
 // 4. On lance le processus au chargement de la page
 loadQuestion();
 
-const numberPassation = sessionStorage.getItem("numberPassation");
-const sexe = sessionStorage.getItem("sexe");
-const age = sessionStorage.getItem("age");
+async function clesrSessionStorage() {
+  const numberPassation = sessionStorage.getItem("numberPassation");
+  const sexe = sessionStorage.getItem("sexe");
+  const age = sessionStorage.getItem("age");
+  const currentYield = sessionStorage.getItem("currentYield"); // "Yield1" ou "Yield2"
 
-const answers = {
-  [numberPassation]: { sexe: [sexe] },
-  age: [age],
-  questionsVideo: {},
-};
+  const answers = {
+    [numberPassation]: { sexe: [sexe] },
+    age: [age],
+    questionsVideo: {},
+    questionsAudio: {},
+  };
 
-async function clearSessionStorage() {
   let keysToDelete = [];
-
-  // 2. On parcourt le sessionStorage pour collecter les données
-  // On utilise Object.keys pour éviter les problèmes d'index si le storage change
   const toutesLesCles = Object.keys(sessionStorage);
 
   toutesLesCles.forEach((key) => {
-    if (key.startsWith("yield2")) {
+    if (key.startsWith(`${currentYield}-QuestionVideo`)) {
       answers.questionsVideo[key] = sessionStorage.getItem(key);
-
+      keysToDelete.push(key);
+    } else if (key.startsWith(`${currentYield}-QuestionAudio`)) {
+      answers.questionsAudio[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     }
   });
 
-  console.log(answers);
+  if (currentYield === "Yield1") {
+    await window.electronAPI.saveYield1Questions(answers);
+  } else {
+    await window.electronAPI.saveYield2Questions(answers);
+  }
 
-  // 3. On envoie l'objet complet à Electron
-  await window.electronAPI.saveVideosQuestions(answers);
-
-  keysToDelete.forEach((key) => {
-    sessionStorage.removeItem(key);
-  });
-
-  console.log("Sauvegarde effectuée et clés yield2 supprimées.");
+  keysToDelete.forEach((key) => sessionStorage.removeItem(key));
 }
+
+clesrSessionStorage();
