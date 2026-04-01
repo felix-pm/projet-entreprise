@@ -1,6 +1,6 @@
 // FrontEnd/questions/defaultQuestion.js
 import { initModal, handleAnswer } from "../modalChrono.js";
-import { saveRespons, saveInSessionStorage } from "../saveRespons.js";
+import { clearSessionStorage, saveInSessionStorage } from "../saveRespons.js";
 import { loadQuestion } from "../loadQuestion.js";
 
 const btnBack = document.getElementById("btnBack");
@@ -13,6 +13,8 @@ const modal = document.querySelector("#modalStart");
 const modalTitle = document.querySelector("#questionModal");
 
 const title = sessionStorage.getItem("titreQuestionnaireActuel");
+
+const currentYield = sessionStorage.getItem("currentYield");
 
 // 1. ASTUCE : On récupère le type de question depuis l'URL (?type=...)
 const urlParams = new URLSearchParams(window.location.search);
@@ -46,9 +48,29 @@ function showQuestion(index) {
     container.append(allQuestions);
 
     const allQuestionsAnswer = document.querySelector(".recordvideoanswers");
+
+    // Événement au clic sur "Enregistrer les données"
     allQuestionsAnswer.addEventListener("click", async (event) => {
       event.preventDefault();
-      await saveRespons();
+
+      // --- 1. RÉCUPÉRATION DES RENSEIGNEMENTS ---
+      const numberPassation = sessionStorage.getItem("numberPassation");
+      const sexe = sessionStorage.getItem("sexe");
+      const age = sessionStorage.getItem("age");
+
+      // --- 2. CRÉATION DE L'OBJET GLOBAL ---
+      const answers = {
+        [numberPassation]: { sexe: [sexe] },
+        age: [age],
+      };
+
+      // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
+      answers[questionType] = {};
+
+      // --- 3. ENVOI À LA FONCTION DE SAUVEGARDE ---
+      // On passe "answers" ET "questionType" à clearSessionStorage
+      await clearSessionStorage(answers, questionType);
+
       window.location.href = allQuestions.href;
     });
     return;
@@ -69,16 +91,43 @@ function showQuestion(index) {
   btnVrai.textContent = "Vrai";
 
   const btnFaux = document.createElement("button");
-  // Correction ici : dans ton ancien code tu ajoutais 'button' à btnVrai au lieu de btnFaux
   btnFaux.classList.add("btnFaux", "button");
   btnFaux.textContent = "Faux";
 
-  // Gestion du clic pour passer à la question suivante
-  saveInSessionStorage(btnVrai);
-  saveInSessionStorage(btnFaux);
+  // NOUVEAU : On gère le clic ici pour garder le bon scope !
+  const handleButtonClick = (btnText) => {
+    // 1. Appel du fichier externe pour sauvegarder
+    saveInSessionStorage(currentYield, currentIndex, questionType, btnText);
+
+    // 2. Mise à jour de tes variables locales
+    allTimer += handleAnswer();
+    currentIndex++; // Ici ça marchera !
+
+    // 3. Affichage de la suite
+    showQuestion(currentIndex);
+  };
+
+  btnVrai.addEventListener("click", () =>
+    handleButtonClick(btnVrai.textContent),
+  );
+  btnFaux.addEventListener("click", () =>
+    handleButtonClick(btnFaux.textContent),
+  );
 
   container.append(text, btnVrai, btnFaux);
 }
+
+// Présent dans videoQuestions.js, mais MANQUANT dans defaultQuestion.js
+const numberPassation = sessionStorage.getItem("numberPassation");
+const sexe = sessionStorage.getItem("sexe");
+const age = sessionStorage.getItem("age");
+
+const answers = {
+  [numberPassation]: { sexe: [sexe] },
+  age: [age],
+  questionsVideo: {},
+  // (Note: d'ailleurs, pour que ce soit générique, il faudrait adapter "questionsVideo" selon le test)
+};
 
 // 2. Initialisation : On lance le chargement en fonction de l'URL
 async function init() {
