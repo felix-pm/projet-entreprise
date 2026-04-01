@@ -1,4 +1,4 @@
-import { initModal, handleAnswer } from "../modalChrono.js";
+import { initModal, handleAnswer } from "../modal.js";
 import { saveRespons, saveInSessionStorage } from "../saveRespons.js";
 
 const btnBack = document.getElementById("btnBack");
