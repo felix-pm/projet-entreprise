@@ -1,4 +1,5 @@
 import { initModal, handleAnswer } from "../modalChrono.js";
+import { saveRespons, saveInSessionStorage } from "../saveRespons.js";
 
 const btn = document.getElementById("btnBack");
 
@@ -6,7 +7,7 @@ btnBack.addEventListener("click", (event) => {
   window.location.href = "questionnaire.html";
 });
 
-const container = document.getElementById("videoQuestion");
+const container = document.getElementById("videoQuestion"); //! unique à vidéo
 // ** Récupération de la modal
 const modal = document.querySelector("#modalStart");
 const modalTitle = document.querySelector("#questionModal");
@@ -24,7 +25,7 @@ document.addEventListener("keydown", (event) => {
 
 async function loadQuestion() {
   try {
-    questions = await window.electronAPI.getElement(title, "questionsVideo");
+    questions = await window.electronAPI.getElement(title, "questionsVideo"); //! unique à vidéo
 
     if (questions && questions.length > 0) {
       showQuestion(currentIndex); // On affiche la première question
@@ -38,7 +39,7 @@ async function loadQuestion() {
 
 function showQuestion(index) {
   if (index >= questions.length) {
-    container.innerHTML = "<p>Vous avez terminé les questions vidéo !</p>";
+    container.innerHTML = "<p>Vous avez terminé les questions vidéo !</p>"; //! unique à vidéo
     const recordquestions = document.createElement("a");
     recordquestions.textContent = "Enregistrer les données";
     recordquestions.className = "recordvideoanswers";
@@ -49,7 +50,7 @@ function showQuestion(index) {
 
     recordvideoanswers.addEventListener("click", async (event) => {
       event.preventDefault();
-      await clearSessionStorage();
+      await saveRespons();
       window.location.href = recordquestions.href;
     });
 
@@ -80,49 +81,14 @@ function showQuestion(index) {
   btnVrai.classList.add("button");
   btnFaux.textContent = "Faux";
 
-  btnVrai.addEventListener("click", () => {
-    sessionStorage.setItem(`yield2-Question ${index + 1}`, btnVrai.textContent);
-
-    // Plus tard, tu pourras enregistrer la réponse ici
-
-    currentIndex++; // On passe à la suivante
-    showQuestion(currentIndex); // On met à jour l'écran
-  });
-
-  btnFaux.addEventListener("click", () => {
-    sessionStorage.setItem(`yield2-Question ${index + 1}`, btnFaux.textContent);
-    // Plus tard, tu pourras enregistrer la réponse ici
-
-    currentIndex++; // On passe à la suivante
-    showQuestion(currentIndex); // On met à jour l'écran
-  });
+  saveInSessionStorage(btnVrai);
+  saveInSessionStorage(btnFaux);
 
   container.append(text, btnVrai, btnFaux);
 }
 
 // 4. On lance le processus au chargement de la page
 loadQuestion();
-
-async function clearSessionStorage() {
-  const answers = {};
-  let sessionStorageClear = [];
-
-  for (let i = 0; i < sessionStorage.length; i++) {
-    if (sessionStorage.key(i).startsWith("yield2")) {
-      answers[sessionStorage.key(i)] = sessionStorage.getItem(
-        sessionStorage.key(i),
-      );
-      console.log(answers);
-      sessionStorageClear.push(sessionStorage.key(i));
-    }
-  }
-
-  await window.electronAPI.saveVideosQuestions(answers);
-
-  sessionStorageClear.forEach((key) => {
-    sessionStorage.removeItem(key);
-  });
-}
 
 const data = {
   title: titleValidator,
