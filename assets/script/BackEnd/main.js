@@ -221,7 +221,7 @@ ipcMain.handle("yield2Questions", async (event, answerVideo) => {
   }
 });
 
-ipcMain.handle("yield1-questions", async (event, answerVideo) => {
+ipcMain.handle("yield1Questions", async (event, answerVideo) => {
   try {
     const currentData = JSON.parse(fs.readFileSync(yield1Json, "utf-8"));
 

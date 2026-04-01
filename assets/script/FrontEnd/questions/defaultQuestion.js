@@ -44,7 +44,7 @@ function showQuestion(index) {
     const allQuestions = document.createElement("a");
     allQuestions.textContent = "Enregistrer les données";
     allQuestions.className = "recordvideoanswers";
-    allQuestions.href = "allQuestionnaire.html";
+    allQuestions.href = "questionnaire.html";
     container.append(allQuestions);
 
     const allQuestionsAnswer = document.querySelector(".recordvideoanswers");

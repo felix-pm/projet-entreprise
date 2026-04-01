@@ -10,20 +10,28 @@ export function saveInSessionStorage(
   );
 }
 
+const currentYield = sessionStorage.getItem("currentYield");
+
 export async function clearSessionStorage(answers, questionType) {
   let keysToDelete = [];
 
   const toutesLesCles = Object.keys(sessionStorage);
 
   toutesLesCles.forEach((key) => {
-    if (key.toLowerCase().startsWith("yield")) {
-      answers[questionType][key] = sessionStorage.getItem(key);
+    if (key.startsWith(`${currentYield}-QuestionVideo`)) {
+      answers.questionsVideo[key] = sessionStorage.getItem(key);
+      keysToDelete.push(key);
+    } else if (key.startsWith(`${currentYield}-QuestionAudio`)) {
+      answers.questionsAudio[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     }
   });
 
-  console.log("Objet final prêt à être envoyé à Electron :", answers);
-  await window.electronAPI.saveVideosQuestions(answers);
+  if (currentYield === "Yield1") {
+    await window.electronAPI.saveYield1Questions(answers);
+  } else {
+    await window.electronAPI.saveYield2Questions(answers);
+  }
 
   keysToDelete.forEach((key) => {
     sessionStorage.removeItem(key);

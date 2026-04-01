@@ -20,7 +20,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
     ipcRenderer.send("create-excel-file", titleJson),
   savescoreJson: () => ipcRenderer.send("scoreExterieur"),
   saveYield1Questions: (answers) =>
-    ipcRenderer.invoke("yield2Questions", answers),
-  saveYield2Questions: (answers) =>
     ipcRenderer.invoke("yield1Questions", answers),
+  saveYield2Questions: (answers) =>
+    ipcRenderer.invoke("yield2Questions", answers),
 });
