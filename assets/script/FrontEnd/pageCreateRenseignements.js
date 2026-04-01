@@ -28,8 +28,7 @@ function convertToMonth(date) {
 
 function saveJsonChildren() {
   // On récupère le formulaire au lieu du bouton
-  const age = document.querySelector("#age").value.trim();
-  const sexe = document.querySelector("#sexe-select").value.trim();
+
   const formRenseignements = document.getElementById("form-renseignements");
 
   // On écoute l'événement 'submit' sur le formulaire
@@ -37,6 +36,8 @@ function saveJsonChildren() {
     // On empêche le rechargement de la page
     event.preventDefault();
 
+    const age = document.querySelector("#age").value.trim();
+    const sexe = document.querySelector("#sexe-select").value.trim();
     const numberPassation = document
       .querySelector("#number-passation")
       .value.trim();
