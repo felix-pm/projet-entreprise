@@ -141,7 +141,7 @@ ipcMain.on("form-test", (event, receivedData) => {
 //récupération du nom du fichier
 ipcMain.handle("get-questionnaires", async () => {
   try {
-    const files = await fs.promises.readdir(folderData);
+    const files = await fs.promises.readdir(folderDataProtocole);
     const questionnaires = [];
 
     for (const file of files) {
