@@ -12,11 +12,11 @@ let chrono;
 let tempsEcoule = 0;
 
 export function hiddenModalChrono() {
-  const modal = document.getElementById("modalStart");
+  const modalSart = document.getElementById("modalStart");
 
-  if (!modal) return;
+  if (!modalSart) return;
 
-  modal.classList.add("hidden");
+  modalSart.classList.add("hidden");
 
   if (chrono) stopTimer(chrono);
 
