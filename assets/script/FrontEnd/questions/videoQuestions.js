@@ -120,6 +120,7 @@ async function clesrSessionStorage() {
     questionsVideo: {},
     questionsAudio: {},
   };
+}
 
 async function clearSessionStorage() {
   let keysToDelete = []; //!
