@@ -27,13 +27,9 @@ function convertToMonth(date) {
 }
 
 function saveJsonChildren() {
-  // On récupère le formulaire au lieu du bouton
-  const formRenseignements = document.getElementById("form-renseignements");
-
-  // On écoute l'événement 'submit' sur le formulaire
-  formRenseignements.addEventListener("submit", (event) => {
-    // On empêche le rechargement de la page
-    event.preventDefault();
+  btnSubmit.addEventListener("click", (event) => {
+    const age = document.querySelector("#age").value.trim();
+    const sexe = document.querySelector("#sexe-select").value.trim();
 
     const numberPassation = document
       .querySelector("#number-passation")
@@ -43,14 +39,15 @@ function saveJsonChildren() {
     sessionStorage.setItem("age", age);
 
     const ageDate = new Date(age);
+
     const ageMonth = convertToMonth(ageDate);
 
+    event.preventDefault();
     const childrenDatas = {
       numberPassation: numberPassation,
       age: ageMonth,
       sexe: sexe,
     };
-
     downloadJson(childrenDatas);
     window.location.href = "allQuestionnaire.html";
   });

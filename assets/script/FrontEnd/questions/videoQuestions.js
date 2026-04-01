@@ -36,6 +36,8 @@ async function loadQuestion() {
   }
 }
 
+const currentYield = sessionStorage.getItem("currentYield");
+
 function showQuestion(index) {
   if (index >= questions.length) {
     container.innerHTML = "<p>Vous avez terminé les questions vidéo !</p>";
@@ -81,11 +83,9 @@ function showQuestion(index) {
 
   btnVrai.addEventListener("click", () => {
     sessionStorage.setItem(
-      `yield2-QuestionVideo ${index + 1}`,
+      `${currentYield}-QuestionVideo${index + 1}`,
       btnVrai.textContent,
     );
-
-    // Plus tard, tu pourras enregistrer la réponse ici
 
     currentIndex++; // On passe à la suivante
     showQuestion(currentIndex); // On met à jour l'écran
@@ -93,10 +93,9 @@ function showQuestion(index) {
 
   btnFaux.addEventListener("click", () => {
     sessionStorage.setItem(
-      `yield2-QuestionVideo ${index + 1}`,
+      `${currentYield}-QuestionVideo${index + 1}`,
       btnFaux.textContent,
     );
-    // Plus tard, tu pourras enregistrer la réponse ici
 
     currentIndex++; // On passe à la suivante
     showQuestion(currentIndex); // On met à jour l'écran

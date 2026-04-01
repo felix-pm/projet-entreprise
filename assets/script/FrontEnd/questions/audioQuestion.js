@@ -40,7 +40,8 @@ async function loadQuestions() {
   }
 }
 
-// 3. Fonction qui gère l'affichage d'UNE question
+const currentYield = sessionStorage.getItem("currentYield");
+
 function showQuestion(index) {
   // A. Vérifier si on a fini toutes les questions
   if (index >= questions.length) {
