@@ -1,6 +1,6 @@
 // FrontEnd/questions/defaultQuestion.js
-import { initModal, handleAnswer } from "../modalChrono.js";
-import { clearSessionStorage, saveInSessionStorage } from "../saveRespons.js";
+import { hiddenModalChrono, handleAnswer } from "../modal.js";
+import { saveInSessionStorage } from "../saveRespons.js";
 import { loadQuestion } from "../loadQuestion.js";
 
 const btnBack = document.getElementById("btnBack");
@@ -9,8 +9,9 @@ btnBack.addEventListener("click", (event) => {
 });
 
 const container = document.getElementById("sectionQuestion");
-const modal = document.querySelector("#modalStart");
+const modalStart = document.querySelector("#modalStart");
 const modalTitle = document.querySelector("#questionModal");
+const modalIndex = document.getElementById("modalIndexStart");
 
 const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
@@ -25,8 +26,10 @@ let currentIndex = 0;
 let allTimer = 0;
 
 document.addEventListener("keydown", (event) => {
-  if (event.code === "Space" && !modal.classList.contains("hidden")) {
-    initModal();
+  if (event.code === "Space" && !modalStart.classList.contains("hidden")) {
+    event.preventDefault(); // Empêche la page de descendre
+    modalStart.classList.add("hidden");
+    hiddenModalChrono();
   }
 });
 
@@ -77,10 +80,10 @@ function showQuestion(index) {
   }
 
   container.innerHTML = "";
-  modal.classList.remove("hidden");
+  modalStart.classList.remove("hidden");
 
   const currentQuestion = questions[index];
-  modalTitle.textContent = `Question ${index + 1} : ${currentQuestion["question"]}`;
+  modalTitle.textContent = `${currentQuestion["question"]}?`;
 
   const text = document.createElement("p");
   text.classList.add("text");
@@ -114,7 +117,48 @@ function showQuestion(index) {
     handleButtonClick(btnFaux.textContent),
   );
 
+  // Gestion du clic pour passer à la question suivante
+  showTrustIndex(btnVrai, index);
+  showTrustIndex(btnFaux, index);
   container.append(text, btnVrai, btnFaux);
+}
+
+function showTrustIndex(button, index) {
+  modalIndex.innerHTML = "<h2>A quel point tu es confiant sur ta réponse?</h2>";
+  button.addEventListener("click", () => {
+    modalIndex.classList.remove("hidden");
+    const trustIndexLow = document.createElement("button");
+    trustIndexLow.textContent = "Low";
+    trustIndexLow.classList.add("Low");
+    const trustIndexMiddle = document.createElement("button");
+    trustIndexMiddle.textContent = "Middle";
+    trustIndexMiddle.classList.add("Middle");
+    const trustIndexHigh = document.createElement("button");
+    trustIndexHigh.textContent = "High";
+    trustIndexHigh.classList.add("High");
+    modalIndex.append(trustIndexLow, trustIndexMiddle, trustIndexHigh);
+
+    const buttonTrustIndexLow = document.querySelector(".Low");
+    const buttonTrustIndexMiddle = document.querySelector(".Middle");
+    const buttonTrustIndexHigh = document.querySelector(".High");
+
+    hiddenTrustModal(buttonTrustIndexLow, index);
+    hiddenTrustModal(buttonTrustIndexMiddle, index);
+    hiddenTrustModal(buttonTrustIndexHigh, index);
+  });
+}
+
+function hiddenTrustModal(button, index) {
+  button.addEventListener("click", () => {
+    if (button.textContent == "Low") {
+      sessionStorage.setItem(`trustIndex Question ${index + 1}`, 1);
+    } else if (button.textContent == "Middle") {
+      sessionStorage.setItem(`trustIndex Question ${index + 1}`, 2);
+    } else if (button.textContent == "High") {
+      sessionStorage.setItem(`trustIndex Question ${index + 1}`, 3);
+    }
+    modalIndex.classList.add("hidden");
+  });
 }
 
 // Présent dans videoQuestions.js, mais MANQUANT dans defaultQuestion.js
