@@ -215,18 +215,18 @@ ipcMain.handle("yield2Questions", async (event, answerVideo, title) => {
     currentData.push(answerVideo);
 
     // C. On réécrit le fichier sur le disque dur avec la liste à jour
-    fs.writeFileSync(yield2Json, JSON.stringify(currentData, null, 2));
+    fs.writeFileSync(folderDataYield2, JSON.stringify(currentData, null, 2));
 
     console.log(
       "Succès ! Fichier mis à jour pour les renseignements dans :",
-      yield2Json,
+      folderDataYield2,
     );
   } catch (erreur) {
     console.error("Aïe, erreur lors de la sauvegarde :", erreur);
   }
 });
 
-ipcMain.handle("yield1-questions", async (event, answerVideo, title) => {
+ipcMain.handle("yield1Questions", async (event, answerVideo, title) => {
   try {
     const folderDataYield1 = path.join(
       folderDataProtocole,
@@ -237,11 +237,11 @@ ipcMain.handle("yield1-questions", async (event, answerVideo, title) => {
 
     currentData.push(answerVideo);
 
-    fs.writeFileSync(yield1Json, JSON.stringify(currentData, null, 2));
+    fs.writeFileSync(folderDataYield1, JSON.stringify(currentData, null, 2));
 
     console.log(
       "Succès ! Fichier mis à jour pour les renseignements dans :",
-      yield1Json,
+      folderDataYield1,
     );
   } catch (err) {
     console.error("Erreur lors de la sauvegarde : ", err);

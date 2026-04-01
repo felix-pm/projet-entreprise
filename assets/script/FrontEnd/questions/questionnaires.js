@@ -6,7 +6,6 @@ async function displayQuestionnaires() {
   try {
     const titleQ = await window.electronAPI.getElement(title, "title");
     titleQuestionnaire.textContent = `Questionnaire : ${titleQ}`;
-    titleQuestionnaire.load();
   } catch (error) {
     console.error("Impossible de charger le titre du questionnaire :", error);
   }
