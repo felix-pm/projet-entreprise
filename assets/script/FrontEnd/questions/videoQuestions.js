@@ -37,7 +37,7 @@ async function loadQuestion() {
   }
 }
 
-const currentYield = sessionStorage.getItem("currentYield");
+const currentYield = sessionStorage.getItem("currentYield"); //!
 
 function showQuestion(index) {
   if (index >= questions.length) {
@@ -84,7 +84,7 @@ function showQuestion(index) {
 
   btnVrai.addEventListener("click", () => {
     sessionStorage.setItem(
-      `${currentYield}-QuestionVideo${index + 1}`,
+      `${currentYield}-QuestionVideo${index + 1}`, //!
       btnVrai.textContent,
     );
 
@@ -94,7 +94,7 @@ function showQuestion(index) {
 
   btnFaux.addEventListener("click", () => {
     sessionStorage.setItem(
-      `${currentYield}-QuestionVideo${index + 1}`,
+      `${currentYield}-QuestionVideo${index + 1}`, //!
       btnFaux.textContent,
     );
 
@@ -119,7 +119,7 @@ const answers = {
 };
 
 async function clearSessionStorage() {
-  let keysToDelete = [];
+  let keysToDelete = []; //!
 
   // 2. On parcourt le sessionStorage pour collecter les données
   // On utilise Object.keys pour éviter les problèmes d'index si le storage change

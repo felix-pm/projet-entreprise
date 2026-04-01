@@ -1,31 +1,33 @@
-export async function saveRespons() {
-  const answers = {};
-  let sessionStorageClear = [];
-
-  for (let i = 0; i < sessionStorage.length; i++) {
-    if (sessionStorage.key(i).startsWith("yield2")) {
-      answers[sessionStorage.key(i)] = sessionStorage.getItem(
-        sessionStorage.key(i),
-      );
-      console.log(answers);
-      sessionStorageClear.push(sessionStorage.key(i));
-    }
-  }
-
-  await window.electronAPI.saveVideosQuestions(answers);
-
-  sessionStorageClear.forEach((key) => {
-    sessionStorage.removeItem(key);
-  });
+export function saveInSessionStorage(
+  currentYield,
+  currentIndex,
+  questionType,
+  answerText,
+) {
+  sessionStorage.setItem(
+    `${currentYield}-${questionType}${currentIndex + 1}`,
+    answerText,
+  );
 }
 
-export function saveInSessionStorage(btn) {
-  btn.addEventListener("click", () => {
-    sessionStorage.setItem(`yield2-Question ${index + 1}`, btnVrai.textContent);
+export async function clearSessionStorage(answers, questionType) {
+  let keysToDelete = [];
 
-    // Plus tard, tu pourras enregistrer la réponse ici
-    allTimer += handleAnswer();
-    currentIndex++; // On passe à la suivante
-    showQuestion(currentIndex); // On met à jour l'écran
+  const toutesLesCles = Object.keys(sessionStorage);
+
+  toutesLesCles.forEach((key) => {
+    if (key.toLowerCase().startsWith("yield")) {
+      answers[questionType][key] = sessionStorage.getItem(key);
+      keysToDelete.push(key);
+    }
   });
+
+  console.log("Objet final prêt à être envoyé à Electron :", answers);
+  await window.electronAPI.saveVideosQuestions(answers);
+
+  keysToDelete.forEach((key) => {
+    sessionStorage.removeItem(key);
+  });
+
+  console.log("Sauvegarde effectuée et clés de réponses supprimées.");
 }
