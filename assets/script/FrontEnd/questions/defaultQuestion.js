@@ -1,6 +1,6 @@
 // FrontEnd/questions/defaultQuestion.js
 import { hiddenModalChrono, handleAnswer } from "../modal.js";
-import { saveInSessionStorage } from "../saveRespons.js";
+import { clearSessionStorage, saveInSessionStorage } from "../saveRespons.js";
 import { loadQuestion } from "../loadQuestion.js";
 
 const btnBack = document.getElementById("btnBack");
