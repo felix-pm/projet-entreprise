@@ -11,6 +11,7 @@ btnBack.addEventListener("click", (event) => {
 const container = document.getElementById("sectionQuestion");
 const modalStart = document.querySelector("#modalStart");
 const modalTitle = document.querySelector("#questionModal");
+const modalButton = document.getElementById("startQuestion");
 const modalIndex = document.getElementById("modalIndexStart");
 
 const title = sessionStorage.getItem("titreQuestionnaireActuel");
@@ -25,8 +26,8 @@ let questions = [];
 let currentIndex = 0;
 let allTimer = 0;
 
-document.addEventListener("keydown", (event) => {
-  if (event.code === "Space" && !modalStart.classList.contains("hidden")) {
+modalButton.addEventListener("click", (event) => {
+  if (!modalStart.classList.contains("hidden")) {
     event.preventDefault(); // Empêche la page de descendre
     modalStart.classList.add("hidden");
     hiddenModalChrono();
@@ -83,7 +84,7 @@ function showQuestion(index) {
   modalStart.classList.remove("hidden");
 
   const currentQuestion = questions[index];
-  modalTitle.textContent = `${currentQuestion["question"]}?`;
+  modalTitle.textContent = `Question ${index + 1}:${currentQuestion["question"]}?`;
 
   const text = document.createElement("p");
   text.classList.add("text");
@@ -124,19 +125,8 @@ function showQuestion(index) {
 }
 
 function showTrustIndex(button, index) {
-  modalIndex.innerHTML = "<h2>A quel point tu es confiant sur ta réponse?</h2>";
   button.addEventListener("click", () => {
     modalIndex.classList.remove("hidden");
-    const trustIndexLow = document.createElement("button");
-    trustIndexLow.textContent = "Low";
-    trustIndexLow.classList.add("Low");
-    const trustIndexMiddle = document.createElement("button");
-    trustIndexMiddle.textContent = "Middle";
-    trustIndexMiddle.classList.add("Middle");
-    const trustIndexHigh = document.createElement("button");
-    trustIndexHigh.textContent = "High";
-    trustIndexHigh.classList.add("High");
-    modalIndex.append(trustIndexLow, trustIndexMiddle, trustIndexHigh);
 
     const buttonTrustIndexLow = document.querySelector(".Low");
     const buttonTrustIndexMiddle = document.querySelector(".Middle");
@@ -163,18 +153,6 @@ function hiddenTrustModal(button, index) {
     modalIndex.classList.add("hidden");
   });
 }
-
-// Présent dans videoQuestions.js, mais MANQUANT dans defaultQuestion.js
-const numberPassation = sessionStorage.getItem("numberPassation");
-const sexe = sessionStorage.getItem("sexe");
-const age = sessionStorage.getItem("age");
-
-const answers = {
-  [numberPassation]: { sexe: [sexe] },
-  age: [age],
-  questionsVideo: {},
-  // (Note: d'ailleurs, pour que ce soit générique, il faudrait adapter "questionsVideo" selon le test)
-};
 
 // 2. Initialisation : On lance le chargement en fonction de l'URL
 async function init() {
