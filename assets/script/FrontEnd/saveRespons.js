@@ -25,6 +25,9 @@ export async function clearSessionStorage(answers, questionType) {
     } else if (key.startsWith(`${currentYield}-questionsAudio`)) {
       answers.questionsAudio[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
+    } else if (key.startsWith(`${currentYield}-questionsMdls`)) {
+      answers.questionsMdls[key] = sessionStorage.getItem(key);
+      keysToDelete.push(key);
     }
   });
 

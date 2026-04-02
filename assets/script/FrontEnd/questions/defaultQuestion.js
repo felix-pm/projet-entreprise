@@ -94,11 +94,11 @@ function showQuestion(index) {
 
   const btnVrai = document.createElement("button");
   btnVrai.classList.add("btnVrai", "button");
-  btnVrai.textContent = "Vrai";
+  btnVrai.textContent = questionType === "questionsMdls" ? "Vu" : "Vrai";
 
   const btnFaux = document.createElement("button");
   btnFaux.classList.add("btnFaux", "button");
-  btnFaux.textContent = "Faux";
+  btnFaux.textContent = questionType === "questionsMdls" ? "Entendu" : "Faux";
 
   // NOUVEAU : On gère le clic ici pour garder le bon scope !
   const handleButtonClick = (btnText) => {
@@ -166,8 +166,12 @@ async function init() {
   }
 
   // Optionnel : On change dynamiquement le grand titre H1 de la page
-  document.querySelector("h1").textContent =
-    questionType === "questionsVideo" ? "Questions Vidéo" : "Questions Audio";
+  let titreH1 = "Questions";
+  if (questionType === "questionsVideo") titreH1 = "Questions Vidéo";
+  else if (questionType === "questionsAudio") titreH1 = "Questions Audio";
+  else if (questionType === "questionsMdls") titreH1 = "Questions Source";
+
+  document.querySelector("h1").textContent = titreH1;
 
   // On appelle notre fonction loadQuestion qui a été simplifiée
   questions = await loadQuestion(title, questionType);
