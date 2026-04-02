@@ -151,7 +151,10 @@ function showTrustIndex(button, index) {
 function hiddenTrustModal(button, index) {
   button.addEventListener("click", () => {
     if (button.textContent == "Low") {
-      sessionStorage.setItem(`trustIndex Question ${index + 1}`, 1);
+      sessionStorage.setItem(
+        `${currentYield}-trustIndex Question ${index + 1}`,
+        1,
+      );
     } else if (button.textContent == "Middle") {
       sessionStorage.setItem(`trustIndex Question ${index + 1}`, 2);
     } else if (button.textContent == "High") {
