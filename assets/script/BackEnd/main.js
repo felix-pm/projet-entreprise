@@ -204,12 +204,12 @@ ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
 ipcMain.handle("yield2Questions", async (event, answerVideo, title) => {
   try {
     // A. On lit la liste existante
-    const folderDataYield2 = path.join(
+    const folderDataYield1 = path.join(
       folderDataProtocole,
       title,
       "yield2.json",
     );
-    const currentData = JSON.parse(fs.readFileSync(folderDataYield2, "utf-8"));
+    const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
 
     // Compare la clé avec les valeurs données pour trouver le numéro de passation
     const passationId = Object.keys(answerVideo).find(
@@ -238,17 +238,25 @@ ipcMain.handle("yield2Questions", async (event, answerVideo, title) => {
           ...(oldData.questionsAudio || {}),
           ...(answerVideo.questionsAudio || {}),
         },
+        questionsMdls: {
+          ...(oldData.questionsMdls || {}),
+          ...(answerVideo.questionsMdls || {}),
+        },
+        trustIndex: {
+          ...(oldData.trustIndex || {}),
+          ...(answerVideo.trustIndex || {}),
+        },
       };
     } else {
       currentData.push(answerVideo);
     }
 
     // C. On réécrit le fichier sur le disque dur avec la liste à jour
-    fs.writeFileSync(folderDataYield2, JSON.stringify(currentData, null, 2));
+    fs.writeFileSync(folderDataYield1, JSON.stringify(currentData, null, 2));
 
     console.log(
       "Succès ! Fichier mis à jour pour les renseignements dans :",
-      folderDataYield2,
+      folderDataYield1,
     );
   } catch (erreur) {
     console.error("Aïe, erreur lors de la sauvegarde :", erreur);
@@ -290,6 +298,134 @@ ipcMain.handle("yield1Questions", async (event, answerVideo, title) => {
         questionsAudio: {
           ...(oldData.questionsAudio || {}),
           ...(answerVideo.questionsAudio || {}),
+        },
+        questionsMdls: {
+          ...(oldData.questionsMdls || {}),
+          ...(answerVideo.questionsMdls || {}),
+        },
+        trustIndex: {
+          ...(oldData.trustIndex || {}),
+          ...(answerVideo.trustIndex || {}),
+        },
+      };
+    } else {
+      currentData.push(answerVideo);
+    }
+
+    fs.writeFileSync(folderDataYield1, JSON.stringify(currentData, null, 2));
+
+    console.log(
+      "Succès ! Fichier mis à jour pour les renseignements dans :",
+      folderDataYield1,
+    );
+  } catch (err) {
+    console.error("Erreur lors de la sauvegarde : ", err);
+  }
+});
+
+ipcMain.handle("QuestionSource", async (event, answerVideo, title) => {
+  try {
+    const folderDataYield1 = path.join(
+      folderDataProtocole,
+      title,
+      "yield1.json",
+    );
+    const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
+
+    // Compare la clé avec les valeurs données pour trouver le numéro de passation
+    const passationId = Object.keys(answerVideo).find(
+      (key) =>
+        key !== "age" && key !== "questionsVideo" && key !== "questionsAudio",
+    );
+
+    // Cherche dans le tableau l'objet le bon numéro de passation, si il n'existe pas il push les données qu'il a déjà récupéré
+    const index = currentData.findIndex((item) =>
+      Object.keys(item).includes(passationId),
+    );
+
+    if (index >= 0) {
+      // Récupération des anciennes données
+      const oldData = currentData[index];
+
+      // Ajout des anciennes données puis des nouvelles ou alors les laisse vide si le questionnaire correspondant n'a pas été remplie
+      currentData[index] = {
+        ...oldData,
+        ...answerVideo,
+        questionsVideo: {
+          ...(oldData.questionsVideo || {}),
+          ...(answerVideo.questionsVideo || {}),
+        },
+        questionsAudio: {
+          ...(oldData.questionsAudio || {}),
+          ...(answerVideo.questionsAudio || {}),
+        },
+        questionsMdls: {
+          ...(oldData.questionsMdls || {}),
+          ...(answerVideo.questionsMdls || {}),
+        },
+        trustIndex: {
+          ...(oldData.trustIndex || {}),
+          ...(answerVideo.trustIndex || {}),
+        },
+      };
+    } else {
+      currentData.push(answerVideo);
+    }
+
+    fs.writeFileSync(folderDataYield1, JSON.stringify(currentData, null, 2));
+
+    console.log(
+      "Succès ! Fichier mis à jour pour les renseignements dans :",
+      folderDataYield1,
+    );
+  } catch (err) {
+    console.error("Erreur lors de la sauvegarde : ", err);
+  }
+});
+
+ipcMain.handle("trustIndex", async (event, answerVideo, title) => {
+  try {
+    const folderDataYield1 = path.join(
+      folderDataProtocole,
+      title,
+      "yield1.json",
+    );
+    const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
+
+    // Compare la clé avec les valeurs données pour trouver le numéro de passation
+    const passationId = Object.keys(answerVideo).find(
+      (key) =>
+        key !== "age" && key !== "questionsVideo" && key !== "questionsAudio",
+    );
+
+    // Cherche dans le tableau l'objet le bon numéro de passation, si il n'existe pas il push les données qu'il a déjà récupéré
+    const index = currentData.findIndex((item) =>
+      Object.keys(item).includes(passationId),
+    );
+
+    if (index >= 0) {
+      // Récupération des anciennes données
+      const oldData = currentData[index];
+
+      // Ajout des anciennes données puis des nouvelles ou alors les laisse vide si le questionnaire correspondant n'a pas été remplie
+      currentData[index] = {
+        ...oldData,
+        ...answerVideo,
+        questionsVideo: {
+          ...(oldData.questionsVideo || {}),
+          ...(answerVideo.questionsVideo || {}),
+        },
+        questionsAudio: {
+          ...(oldData.questionsAudio || {}),
+          ...(answerVideo.questionsAudio || {}),
+        },
+        questionsMdls: {
+          ...(oldData.questionsMdls || {}),
+          ...(answerVideo.questionsMdls || {}),
+        },
+        trustIndex: {
+          ...(oldData.trustIndex || {}),
+          ...(answerVideo.trustIndex || {}),
         },
       };
     } else {

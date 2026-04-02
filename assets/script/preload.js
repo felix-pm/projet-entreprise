@@ -23,4 +23,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
     ipcRenderer.invoke("yield1Questions", answers, title),
   saveYield2Questions: (answers, title) =>
     ipcRenderer.invoke("yield2Questions", answers, title),
+  saveQuestionsSource: (answers, title) =>
+    ipcRenderer.invoke("QuestionSource", answers, title),
+  saveIndiceConfiance: (answers, title) =>
+    ipcRenderer.invoke("trustIndex", answers, title),
 });

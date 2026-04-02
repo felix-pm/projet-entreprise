@@ -69,6 +69,7 @@ function showQuestion(index) {
         [numberPassation]: { sexe: [sexe] },
         age: [age],
         date: [date],
+        trustIndex: {},
       };
 
       // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
