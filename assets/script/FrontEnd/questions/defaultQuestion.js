@@ -141,11 +141,10 @@ function showTrustIndex(button, index) {
 }
 
 function hiddenTrustModal(button, index) {
-  button.addEventListener("click", () => {
+  button.onclick = () => {
     if (button.textContent == "Low") {
       sessionStorage.setItem(
-        `trustIndex-
-        ${currentYield}-${questionType}${index + 1}`,
+        `trustIndex-${currentYield}-${questionType}${index + 1}`,
         1,
       );
     } else if (button.textContent == "Middle") {
@@ -160,7 +159,7 @@ function hiddenTrustModal(button, index) {
       );
     }
     modalIndex.classList.add("hidden");
-  });
+  };
 }
 
 // 2. Initialisation : On lance le chargement en fonction de l'URL
