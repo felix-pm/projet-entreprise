@@ -152,13 +152,14 @@ function hiddenTrustModal(button, index) {
   button.addEventListener("click", () => {
     if (button.textContent == "Low") {
       sessionStorage.setItem(
-        `${currentYield}-trustIndex Question ${index + 1}`,
+        `trustIndex-
+        ${currentYield}-${questionType}${index + 1}`,
         1,
       );
     } else if (button.textContent == "Middle") {
-      sessionStorage.setItem(`trustIndex Question ${index + 1}`, 2);
+      sessionStorage.setItem(`${currentYield}-${questionType}${index + 1}`, 2);
     } else if (button.textContent == "High") {
-      sessionStorage.setItem(`trustIndex Question ${index + 1}`, 3);
+      sessionStorage.setItem(`${currentYield}-${questionType}${index + 1}`, 3);
     }
     modalIndex.classList.add("hidden");
   });
