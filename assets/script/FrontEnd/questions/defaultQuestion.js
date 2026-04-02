@@ -34,17 +34,28 @@ modalButton.addEventListener("click", (event) => {
   }
 });
 
-function calculMoy(addition) {
-  // TODO faire en sorte que cela divise par 10 pour la source
-  const moyenTemp = addition / 15;
+function calculMoy(addition, type) {
+  let moyenTemp = 0;
+  if (type != "questionsMdls") {
+    moyenTemp = addition / 15;
+  } else {
+    moyenTemp = addition / 10;
+  }
   return moyenTemp.toFixed(3);
 }
 
 function showQuestion(index) {
   if (index >= questions.length) {
     container.innerHTML = "<p>Vous avez terminé les questions !</p>";
-    const moyenFinal = calculMoy(allTimer);
-    console.log("Moyenne temps:", moyenFinal);
+    const moyenFinal = calculMoy(allTimer, questionType);
+    saveInSessionStorage(
+      currentYield,
+      currentIndex,
+      questionType,
+      moyenFinal,
+      "MoyChrono",
+    );
+    console.log("Moyenne temps:", moyenFinal, questionType);
 
     const allQuestions = document.createElement("a");
     allQuestions.textContent = "Enregistrer les données";
@@ -105,9 +116,16 @@ function showQuestion(index) {
   const handleButtonClick = (btnText) => {
     // 1. Appel du fichier externe pour sauvegarder
     saveInSessionStorage(currentYield, currentIndex, questionType, btnText);
-
+    let time = handleAnswer();
+    saveInSessionStorage(
+      currentYield,
+      currentIndex,
+      questionType,
+      time,
+      "Chrono",
+    );
     // 2. Mise à jour de tes variables locales
-    allTimer += handleAnswer();
+    allTimer += time;
     currentIndex++; // Ici ça marchera !
 
     // 3. Affichage de la suite

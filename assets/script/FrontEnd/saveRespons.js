@@ -3,14 +3,29 @@ export function saveInSessionStorage(
   currentIndex,
   questionType,
   answerText,
+  precision = null,
 ) {
   if (questionType === "questionsMdls") {
-    sessionStorage.setItem(`${questionType}${currentIndex + 1}`, answerText);
+    if (precision === null) {
+      sessionStorage.setItem(`${questionType}${currentIndex + 1}`, answerText);
+    } else {
+      sessionStorage.setItem(
+        `${questionType}${precision}${currentIndex + 1}`,
+        answerText,
+      );
+    }
   } else {
-    sessionStorage.setItem(
-      `${currentYield}-${questionType}${currentIndex + 1}`,
-      answerText,
-    );
+    if (precision === null) {
+      sessionStorage.setItem(
+        `${currentYield}${questionType}${currentIndex + 1}`,
+        answerText,
+      );
+    } else {
+      sessionStorage.setItem(
+        `${currentYield}${questionType}${precision}${currentIndex + 1}`,
+        answerText,
+      );
+    }
   }
 }
 
