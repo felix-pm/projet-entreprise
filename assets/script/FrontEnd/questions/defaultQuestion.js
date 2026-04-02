@@ -149,9 +149,15 @@ function hiddenTrustModal(button, index) {
         1,
       );
     } else if (button.textContent == "Middle") {
-      sessionStorage.setItem(`${currentYield}-${questionType}${index + 1}`, 2);
+      sessionStorage.setItem(
+        `trustIndex-${currentYield}-${questionType}${index + 1}`,
+        2,
+      );
     } else if (button.textContent == "High") {
-      sessionStorage.setItem(`${currentYield}-${questionType}${index + 1}`, 3);
+      sessionStorage.setItem(
+        `trustIndex-${currentYield}-${questionType}${index + 1}`,
+        3,
+      );
     }
     modalIndex.classList.add("hidden");
   });
