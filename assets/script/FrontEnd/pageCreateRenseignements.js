@@ -41,6 +41,7 @@ function saveJsonChildren() {
     const numberPassation = document
       .querySelector("#number-passation")
       .value.trim();
+    const todayDate = document.querySelector("#todayDate").value.trim();
 
     const ageDate = new Date(age);
     const ageMonth = convertToMonth(ageDate);
@@ -48,12 +49,14 @@ function saveJsonChildren() {
     sessionStorage.setItem("numberPassation", numberPassation);
     sessionStorage.setItem("sexe", sexe);
     sessionStorage.setItem("age", ageMonth);
+    sessionStorage.setItem("date", todayDate);
 
     event.preventDefault();
     const childrenDatas = {
       numberPassation: numberPassation,
       age: ageMonth,
       sexe: sexe,
+      date: todayDate,
     };
     downloadJson(childrenDatas);
     window.location.href = "allQuestionnaire.html";
