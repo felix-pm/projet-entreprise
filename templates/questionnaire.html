@@ -14,11 +14,13 @@
       <div>
         <p>Yield 1</p>
         <a
+          class="linkQuestion"
           href="../templates/defaultQuestion.html?type=questionsVideo"
           onclick="sessionStorage.setItem('currentYield', 'Yield1')"
           >Questions vidéo</a
         >
         <a
+          class="linkQuestion"
           href="../templates/defaultQuestion.html?type=questionsAudio"
           onclick="sessionStorage.setItem('currentYield', 'Yield1')"
           >Questions audio</a
@@ -28,11 +30,13 @@
       <div>
         <p>Yield 2</p>
         <a
+          class="linkQuestion"
           href="../templates/defaultQuestion.html?type=questionsVideo"
           onclick="sessionStorage.setItem('currentYield', 'Yield2')"
           >Questions vidéo</a
         >
         <a
+          class="linkQuestion"
           href="../templates/defaultQuestion.html?type=questionsAudio"
           onclick="sessionStorage.setItem('currentYield', 'Yield2')"
           >Questions audio</a
@@ -52,6 +56,9 @@
     <script src="../assets/script/FrontEnd/questions/questionnaires.js"></script>
     <script src="../assets/script/FrontEnd/calculScore.js"></script>
     <script src="../assets/script/FrontEnd/jsonToExcel.js"></script>
-    <script src="../assets/script/FrontEnd/questions/videoQuestions.js"></script>
+    <script
+      type="module"
+      src="../assets/script/FrontEnd/questions/defaultQuestion.js"
+    ></script>
   </body>
 </html>

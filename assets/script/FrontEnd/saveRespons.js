@@ -16,21 +16,22 @@ export async function clearSessionStorage(answers, questionType) {
   let keysToDelete = [];
 
   const toutesLesCles = Object.keys(sessionStorage);
+  const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
   toutesLesCles.forEach((key) => {
-    if (key.startsWith(`${currentYield}-QuestionVideo`)) {
+    if (key.startsWith(`${currentYield}-questionsVideo`)) {
       answers.questionsVideo[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
-    } else if (key.startsWith(`${currentYield}-QuestionAudio`)) {
+    } else if (key.startsWith(`${currentYield}-questionsAudio`)) {
       answers.questionsAudio[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     }
   });
 
   if (currentYield === "Yield1") {
-    await window.electronAPI.saveYield1Questions(answers);
+    await window.electronAPI.saveYield1Questions(answers, title);
   } else {
-    await window.electronAPI.saveYield2Questions(answers);
+    await window.electronAPI.saveYield2Questions(answers, title);
   }
 
   keysToDelete.forEach((key) => {
