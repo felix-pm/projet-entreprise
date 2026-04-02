@@ -163,7 +163,7 @@ ipcMain.handle("get-questionnaires", async () => {
 //récupération du contenu du fichier
 ipcMain.handle("get-element", async (event, title, key) => {
   try {
-    const filePath = path.join(folderData, `${title}.json`);
+    const filePath = path.join(folderDataProtocole, `${title}.json`);
     const rawData = await fs.promises.readFile(filePath, "utf-8");
     const data = JSON.parse(rawData);
 
