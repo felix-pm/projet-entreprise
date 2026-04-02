@@ -41,13 +41,13 @@ function saveJsonChildren() {
     const numberPassation = document
       .querySelector("#number-passation")
       .value.trim();
-    sessionStorage.setItem("numberPassation", numberPassation);
-    sessionStorage.setItem("sexe", sexe);
-    sessionStorage.setItem("age", age);
 
     const ageDate = new Date(age);
-
     const ageMonth = convertToMonth(ageDate);
+
+    sessionStorage.setItem("numberPassation", numberPassation);
+    sessionStorage.setItem("sexe", sexe);
+    sessionStorage.setItem("age", ageMonth);
 
     event.preventDefault();
     const childrenDatas = {
