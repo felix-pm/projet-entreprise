@@ -4,8 +4,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Noir à 80% d'opacité */
-  z-index: 1000; /* S'assure d'être au-dessus de tes autres éléments */
+  background-color: #ffffff;
+  z-index: 1000;
 
   /* Flexbox pour centrer la boîte facilement */
   display: flex;
