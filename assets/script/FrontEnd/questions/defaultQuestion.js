@@ -61,11 +61,13 @@ function showQuestion(index) {
       const numberPassation = sessionStorage.getItem("numberPassation");
       const sexe = sessionStorage.getItem("sexe");
       const age = sessionStorage.getItem("age");
+      const date = sessionStorage.getItem("date");
 
       // --- 2. CRÉATION DE L'OBJET GLOBAL ---
       const answers = {
         [numberPassation]: { sexe: [sexe] },
         age: [age],
+        date: [date],
       };
 
       // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
