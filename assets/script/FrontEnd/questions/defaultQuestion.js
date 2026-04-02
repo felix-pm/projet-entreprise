@@ -61,11 +61,13 @@ function showQuestion(index) {
       const numberPassation = sessionStorage.getItem("numberPassation");
       const sexe = sessionStorage.getItem("sexe");
       const age = sessionStorage.getItem("age");
+      const date = sessionStorage.getItem("date");
 
       // --- 2. CRÉATION DE L'OBJET GLOBAL ---
       const answers = {
         [numberPassation]: { sexe: [sexe] },
         age: [age],
+        date: [date],
       };
 
       // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
@@ -142,13 +144,14 @@ function hiddenTrustModal(button, index) {
   button.addEventListener("click", () => {
     if (button.textContent == "Low") {
       sessionStorage.setItem(
-        `${currentYield}-trustIndex Question ${index + 1}`,
+        `trustIndex-
+        ${currentYield}-${questionType}${index + 1}`,
         1,
       );
     } else if (button.textContent == "Middle") {
-      sessionStorage.setItem(`trustIndex Question ${index + 1}`, 2);
+      sessionStorage.setItem(`${currentYield}-${questionType}${index + 1}`, 2);
     } else if (button.textContent == "High") {
-      sessionStorage.setItem(`trustIndex Question ${index + 1}`, 3);
+      sessionStorage.setItem(`${currentYield}-${questionType}${index + 1}`, 3);
     }
     modalIndex.classList.add("hidden");
   });
