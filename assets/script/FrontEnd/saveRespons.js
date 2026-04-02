@@ -29,16 +29,24 @@ export async function clearSessionStorage(answers, questionType) {
     } else if (key.startsWith(`${currentYield}-questionsAudio`)) {
       answers.questionsAudio[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
-    } else if (key.startsWith(`${currentYield}-questionsMdls`)) {
+    } else if (key.startsWith("questionsMdls")) {
+      trustIndex;
       answers.questionsMdls[key] = sessionStorage.getItem(key);
+      keysToDelete.push(key);
+    } else if (key.startsWith("trustIndex")) {
+      answers.trustIndex[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     }
   });
 
   if (currentYield === "Yield1") {
     await window.electronAPI.saveYield1Questions(answers, title);
-  } else {
+  } else if (currentYield == "Yield2") {
     await window.electronAPI.saveYield2Questions(answers, title);
+  } else if (questionType === "trustIndex") {
+    await window.electronAPI.saveIndiceConfiance(answers, title);
+  } else {
+    await window.electronAPI.saveQuestionsSource(answers, title);
   }
 
   keysToDelete.forEach((key) => {
