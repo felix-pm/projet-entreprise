@@ -3,6 +3,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import fs from "node:fs";
 import xlsx from "xlsx";
+import { sortJSON } from "../FrontEnd/sortJSON.js";
 
 // 2. Ajoute ces imports natifs de Node.js
 import { fileURLToPath } from "url";
@@ -204,12 +205,12 @@ ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
 ipcMain.handle("yield2Questions", async (event, answerVideo, title) => {
   try {
     // A. On lit la liste existante
-    const folderDataYield2 = path.join(
+    const folderDataYield1 = path.join(
       folderDataProtocole,
       title,
-      "yield2.json",
+      "yield1.json",
     );
-    const currentData = JSON.parse(fs.readFileSync(folderDataYield2, "utf-8"));
+    const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
 
     // Compare la clé avec les valeurs données pour trouver le numéro de passation
     const passationId = Object.keys(answerVideo).find(
@@ -244,11 +245,11 @@ ipcMain.handle("yield2Questions", async (event, answerVideo, title) => {
     }
 
     // C. On réécrit le fichier sur le disque dur avec la liste à jour
-    fs.writeFileSync(folderDataYield2, JSON.stringify(currentData, null, 2));
+    fs.writeFileSync(folderDataYield1, JSON.stringify(currentData, null, 2));
 
     console.log(
       "Succès ! Fichier mis à jour pour les renseignements dans :",
-      folderDataYield2,
+      folderDataYield1,
     );
   } catch (erreur) {
     console.error("Aïe, erreur lors de la sauvegarde :", erreur);
@@ -309,46 +310,55 @@ ipcMain.handle("yield1Questions", async (event, answerVideo, title) => {
 
 // Json en Excel
 ipcMain.on("create-excel-file", async (event, titleJson) => {
-  const jsonPath = path.join(folderData, titleJson + ".json");
-  const jsonPathYield1 = path.join(folderData, "Test2Reponse.json");
-  const jsonPathYield2 = path.join(folderData, "Test2Yield2.json");
+  const jsonPathYield1 = path.join(
+    folderDataProtocole,
+    titleJson,
+    "yield1.json",
+  );
   try {
     // Lis le fichier
-    const jsonRaw = await fs.promises.readFile(jsonPath, "utf-8");
     const jsonRawYield1 = await fs.promises.readFile(jsonPathYield1, "utf-8");
-    const jsonRawYield2 = await fs.promises.readFile(jsonPathYield2, "utf-8");
 
     // Transforme en objet
-    const jsonObject = JSON.parse(jsonRaw);
     const jsonObjectYield1 = JSON.parse(jsonRawYield1);
-    const jsonObjectYield2 = JSON.parse(jsonRawYield2);
 
     const flattenedData = [];
 
-    jsonObject.forEach((item, index) => {
-      let line = {};
-      const audioYield1 = jsonObjectYield1[index].questionsAudio;
-      const audioYield2 = jsonObjectYield2[index].questionsAudio;
-      const videoYield1 = jsonObjectYield1[index].questionsVideo;
-      const videoYield2 = jsonObjectYield2[index].questionsVideo;
-      item.questionsAudio.forEach((q, i) => {
-        line[`Question audio ${q.id} Yield1`] = q.answer;
-        line[`Réponse audio ${q.id} Yield1`] = audioYield1[i].answer;
+    jsonObjectYield1.forEach((item) => {
+      let line = {
+        "Numéro de Passation": item.numberPassation[0],
+        Age: item.age[0],
+        Sexe: item.sexe[0],
+        "AVANT FEEDBACK NEGATIF": "",
+      };
+
+      const keyVideoY1 = sortJSON(item.questionsVideo, "Yield1");
+
+      keyVideoY1.forEach((key, i) => {
+        line[`Réponse Question ${i + 1} Video`] = item.questionsVideo[key];
       });
 
-      item.questionsAudio.forEach((q, i) => {
-        line[`Question audio ${q.id} Yield2`] = q.answer;
-        line[`Réponse audio ${q.id} Yield2`] = audioYield2[i].answer;
+      line["APRES FEEDBACK NEGATIF"] = "";
+
+      const keyVideoY2 = sortJSON(item.questionsVideo, "Yield2");
+
+      keyVideoY2.forEach((key, i) => {
+        line[`Réponse Question ${i + 1} Video`] = item.questionsVideo[key];
       });
 
-      item.questionsVideo.forEach((q, i) => {
-        line[`Question vidéo ${q.id} Yield1`] = q.answer;
-        line[`Réponse vidéo ${q.id} Yield1`] = videoYield1[i].answer;
+      line["AVANT FEEDBACK NEGATIF"];
+
+      const keyAudioY1 = sortJSON(item.questionsAudio, "Yield1");
+
+      keyAudioY1.forEach((key, i) => {
+        line[`Réponse Question ${i + 1} Audio`] = item.questionsAudio[key];
       });
 
-      item.questionsVideo.forEach((q, i) => {
-        line[`Question vidéo ${q.id} Yield2`] = q.answer;
-        line[`Réponse vidéo ${q.id} Yield2`] = videoYield2[i].answer;
+      line["APRES FEEDBACK NEGATIF"];
+
+      const keyAudioY2 = sortJSON(item.questionsAudio, "Yield2");
+      keyAudioY2.forEach((key, i) => {
+        line[`Réponse Question ${i + 1} Video`] = item.questionsAudio[key];
       });
 
       flattenedData.push(line);
@@ -370,3 +380,17 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
     console.error("Erreur de la génération : ", err);
   }
 });
+
+// let line = {
+//   "Numéro de Passation": data.numberPassation,
+//   Age: data.age,
+//   Sexe: data.sexe,
+// };
+
+// data.questionsAudio.forEach((q, i) => {
+//   line[`Réponse Question ${[i]} Audio`] = q.Yield1 - questionsVideo[i];
+// });
+
+// data.questionsVideo.forEach((q, i) => {
+//   line[`Réponse Question ${[i]} Audio`] = q.Yield1 - questionsVideo[i];
+// });

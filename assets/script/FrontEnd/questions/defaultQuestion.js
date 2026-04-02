@@ -63,7 +63,8 @@ function showQuestion(index) {
 
       // --- 2. CRÉATION DE L'OBJET GLOBAL ---
       const answers = {
-        [numberPassation]: { sexe: [sexe] },
+        numberPassation: [numberPassation],
+        sexe: [sexe],
         age: [age],
       };
 
