@@ -35,6 +35,7 @@ modalButton.addEventListener("click", (event) => {
 });
 
 function calculMoy(addition) {
+  // TODO faire en sorte que cela divise par 10 pour la source
   const moyenTemp = addition / 15;
   return moyenTemp.toFixed(3);
 }
@@ -121,8 +122,10 @@ function showQuestion(index) {
   );
 
   // Gestion du clic pour passer à la question suivante
-  showTrustIndex(btnVrai, index);
-  showTrustIndex(btnFaux, index);
+  if (questionType != "questionsMdls") {
+    showTrustIndex(btnVrai, index);
+    showTrustIndex(btnFaux, index);
+  }
   container.append(text, btnVrai, btnFaux);
 }
 
@@ -171,7 +174,6 @@ async function init() {
     return;
   }
 
-  // Optionnel : On change dynamiquement le grand titre H1 de la page
   let titreH1 = "Questions";
   if (questionType === "questionsVideo") titreH1 = "Questions Vidéo";
   else if (questionType === "questionsAudio") titreH1 = "Questions Audio";

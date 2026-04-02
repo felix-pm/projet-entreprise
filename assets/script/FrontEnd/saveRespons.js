@@ -4,10 +4,14 @@ export function saveInSessionStorage(
   questionType,
   answerText,
 ) {
-  sessionStorage.setItem(
-    `${currentYield}-${questionType}${currentIndex + 1}`,
-    answerText,
-  );
+  if (questionType === "questionsMdls") {
+    sessionStorage.setItem(`${questionType}${currentIndex + 1}`, answerText);
+  } else {
+    sessionStorage.setItem(
+      `${currentYield}-${questionType}${currentIndex + 1}`,
+      answerText,
+    );
+  }
 }
 
 const currentYield = sessionStorage.getItem("currentYield");
