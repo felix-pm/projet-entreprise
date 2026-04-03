@@ -53,7 +53,7 @@ function showQuestion(index) {
       currentIndex,
       questionType,
       moyenFinal,
-      "MoyChrono",
+      "chronoMoy",
     );
     console.log("Moyenne temps:", moyenFinal, questionType);
 
@@ -81,6 +81,7 @@ function showQuestion(index) {
         age: [age],
         date: [date],
         trustIndex: {},
+        chrono: {},
       };
 
       // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
@@ -123,7 +124,7 @@ function showQuestion(index) {
       currentIndex,
       questionType,
       time,
-      "Chrono",
+      "chrono",
     );
     // 2. Mise à jour de tes variables locales
     allTimer += time;

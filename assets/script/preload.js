@@ -27,4 +27,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
     ipcRenderer.invoke("QuestionSource", answers, title),
   saveIndiceConfiance: (answers, title) =>
     ipcRenderer.invoke("trustIndex", answers, title),
+  saveChrono: (answers, title) => ipcRenderer.invoke("chrono", answers, title),
 });

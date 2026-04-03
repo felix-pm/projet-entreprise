@@ -10,19 +10,19 @@ export function saveInSessionStorage(
       sessionStorage.setItem(`${questionType}${currentIndex + 1}`, answerText);
     } else {
       sessionStorage.setItem(
-        `${questionType}${precision}${currentIndex + 1}`,
+        `${precision}${questionType}${currentIndex + 1}`,
         answerText,
       );
     }
   } else {
     if (precision === null) {
       sessionStorage.setItem(
-        `${currentYield}${questionType}${currentIndex + 1}`,
+        `${currentYield}-${questionType}${currentIndex + 1}`,
         answerText,
       );
     } else {
       sessionStorage.setItem(
-        `${currentYield}${questionType}${precision}${currentIndex + 1}`,
+        `${precision}-${currentYield}-${questionType}${currentIndex + 1}`,
         answerText,
       );
     }
@@ -45,11 +45,13 @@ export async function clearSessionStorage(answers, questionType) {
       answers.questionsAudio[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     } else if (key.startsWith("questionsMdls")) {
-      trustIndex;
       answers.questionsMdls[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     } else if (key.startsWith("trustIndex")) {
       answers.trustIndex[key] = sessionStorage.getItem(key);
+      keysToDelete.push(key);
+    } else if (key.startsWith("chrono")) {
+      answers.chrono[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     }
   });
@@ -60,8 +62,10 @@ export async function clearSessionStorage(answers, questionType) {
     await window.electronAPI.saveYield2Questions(answers, title);
   } else if (questionType === "trustIndex") {
     await window.electronAPI.saveIndiceConfiance(answers, title);
-  } else {
+  } else if (questionType === "chrono") {
     await window.electronAPI.saveQuestionsSource(answers, title);
+  } else {
+    await window.electronAPI.saveChrono(answers, title);
   }
 
   keysToDelete.forEach((key) => {
