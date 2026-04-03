@@ -188,11 +188,6 @@ function showQuestion(index) {
     );
     allTimer += time;
     currentIndex++;
-<<<<<<< HEAD
-
-    // 3. Affichage de la suite
-=======
->>>>>>> bf9dc925e7490da1bd8dafddea36458c7348b5fe
     showQuestion(currentIndex);
   };
 
