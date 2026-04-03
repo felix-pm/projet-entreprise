@@ -45,8 +45,8 @@ function calculMoy(addition, type) {
 }
 
 function showQuestion(index) {
+  container.innerHTML = "";
   if (index >= questions.length) {
-    container.innerHTML = "<p>Vous avez terminé les questions !</p>";
     const moyenFinal = calculMoy(allTimer, questionType);
     saveInSessionStorage(
       currentYield,
@@ -58,9 +58,16 @@ function showQuestion(index) {
     console.log("Moyenne temps:", moyenFinal, questionType);
 
     const allQuestions = document.createElement("a");
-    allQuestions.textContent = "Enregistrer les données";
     allQuestions.className = "recordvideoanswers";
-    allQuestions.href = "questionnaire.html";
+
+    if (currentYield == "Yield1") {
+      allQuestions.textContent = "Recommencer les questions";
+      allQuestions.href = `defaultQuestion.html?type=${questionType}`;
+    } else {
+      allQuestions.textContent = "Terminer le questionnaire";
+      allQuestions.href = `questionnaire.html`;
+    }
+
     container.append(allQuestions);
 
     const allQuestionsAnswer = document.querySelector(".recordvideoanswers");
@@ -91,12 +98,15 @@ function showQuestion(index) {
       // On passe "answers" ET "questionType" à clearSessionStorage
       await clearSessionStorage(answers, questionType);
 
+      if (currentYield == "Yield1") {
+        sessionStorage.setItem("currentYield", "Yield2");
+      }
+
       window.location.href = allQuestions.href;
     });
     return;
   }
 
-  container.innerHTML = "";
   modalStart.classList.remove("hidden");
 
   const currentQuestion = questions[index];
