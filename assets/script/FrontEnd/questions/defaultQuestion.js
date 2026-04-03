@@ -63,47 +63,49 @@ function showQuestion(index) {
     if (currentYield == "Yield1") {
       allQuestions.textContent = "Recommencer les questions";
       allQuestions.href = `defaultQuestion.html?type=${questionType}`;
+      // Événement au clic sur "Enregistrer les données"
+      allQuestions.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        if (currentYield == "Yield1") {
+          sessionStorage.setItem("currentYield", "Yield2");
+        }
+
+        window.location.href = allQuestions.href;
+      });
     } else {
       allQuestions.textContent = "Terminer le questionnaire";
       allQuestions.href = `questionnaire.html`;
+      // Événement au clic sur "Enregistrer les données"
+      allQuestions.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        // --- 1. RÉCUPÉRATION DES RENSEIGNEMENTS ---
+        const numberPassation = sessionStorage.getItem("numberPassation");
+        const sexe = sessionStorage.getItem("sexe");
+        const age = sessionStorage.getItem("age");
+        const date = sessionStorage.getItem("date");
+
+        // --- 2. CRÉATION DE L'OBJET GLOBAL ---
+        const answers = {
+          numberPassation: [numberPassation],
+          sexe: [sexe],
+          age: [age],
+          date: [date],
+          trustIndex: {},
+        };
+
+        // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
+        answers[questionType] = {};
+
+        // --- 3. ENVOI À LA FONCTION DE SAUVEGARDE ---
+        // On passe "answers" ET "questionType" à clearSessionStorage
+        await clearSessionStorage(answers, questionType);
+      });
     }
 
     container.append(allQuestions);
 
-    const allQuestionsAnswer = document.querySelector(".recordvideoanswers");
-
-    // Événement au clic sur "Enregistrer les données"
-    allQuestionsAnswer.addEventListener("click", async (event) => {
-      event.preventDefault();
-
-      // --- 1. RÉCUPÉRATION DES RENSEIGNEMENTS ---
-      const numberPassation = sessionStorage.getItem("numberPassation");
-      const sexe = sessionStorage.getItem("sexe");
-      const age = sessionStorage.getItem("age");
-      const date = sessionStorage.getItem("date");
-
-      // --- 2. CRÉATION DE L'OBJET GLOBAL ---
-      const answers = {
-        numberPassation: [numberPassation],
-        sexe: [sexe],
-        age: [age],
-        date: [date],
-        trustIndex: {},
-      };
-
-      // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
-      answers[questionType] = {};
-
-      // --- 3. ENVOI À LA FONCTION DE SAUVEGARDE ---
-      // On passe "answers" ET "questionType" à clearSessionStorage
-      await clearSessionStorage(answers, questionType);
-
-      if (currentYield == "Yield1") {
-        sessionStorage.setItem("currentYield", "Yield2");
-      }
-
-      window.location.href = allQuestions.href;
-    });
     return;
   }
 
