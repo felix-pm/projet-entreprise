@@ -45,7 +45,6 @@ export async function clearSessionStorage(answers, questionType) {
       answers.questionsAudio[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     } else if (key.startsWith("questionsMdls")) {
-      trustIndex;
       answers.questionsMdls[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     } else if (key.startsWith("trustIndex")) {
