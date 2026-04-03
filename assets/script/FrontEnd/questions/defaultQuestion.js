@@ -53,7 +53,7 @@ function showQuestion(index) {
       currentIndex,
       questionType,
       moyenFinal,
-      "MoyChrono",
+      "chronoMoy",
     );
     console.log("Moyenne temps:", moyenFinal, questionType);
 
@@ -106,6 +106,36 @@ function showQuestion(index) {
 
     container.append(allQuestions);
 
+    const allQuestionsAnswer = document.querySelector(".recordvideoanswers");
+
+    // Événement au clic sur "Enregistrer les données"
+    allQuestionsAnswer.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      // --- 1. RÉCUPÉRATION DES RENSEIGNEMENTS ---
+      const numberPassation = sessionStorage.getItem("numberPassation");
+      const sexe = sessionStorage.getItem("sexe");
+      const age = sessionStorage.getItem("age");
+      const date = sessionStorage.getItem("date");
+
+      // --- 2. CRÉATION DE L'OBJET GLOBAL ---
+      const answers = {
+        [numberPassation]: { sexe: [sexe] },
+        age: [age],
+        date: [date],
+        trustIndex: {},
+        chrono: {},
+      };
+
+      // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
+      answers[questionType] = {};
+
+      // --- 3. ENVOI À LA FONCTION DE SAUVEGARDE ---
+      // On passe "answers" ET "questionType" à clearSessionStorage
+      await clearSessionStorage(answers, questionType);
+
+      window.location.href = allQuestions.href;
+    });
     return;
   }
 
@@ -136,7 +166,7 @@ function showQuestion(index) {
       currentIndex,
       questionType,
       time,
-      "Chrono",
+      "chrono",
     );
     // 2. Mise à jour de tes variables locales
     allTimer += time;
