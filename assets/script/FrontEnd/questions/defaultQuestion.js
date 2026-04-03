@@ -3,11 +3,6 @@ import { hiddenModalChrono, handleAnswer } from "../modal.js";
 import { clearSessionStorage, saveInSessionStorage } from "../saveRespons.js";
 import { loadQuestion } from "../loadQuestion.js";
 
-const btnBack = document.getElementById("btnBack");
-btnBack.addEventListener("click", (event) => {
-  window.location.href = "questionnaire.html";
-});
-
 const container = document.getElementById("sectionQuestion");
 const modalStart = document.querySelector("#modalStart");
 const modalTitle = document.querySelector("#questionModal");

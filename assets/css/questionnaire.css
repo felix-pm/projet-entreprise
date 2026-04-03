@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  background-color: #f8f9fa; /* Un fond très légèrement gris/blanc cassé pour la douceur */
+  color: #333; /* Couleur de texte globale plus douce que le noir pur */
+}
+
+#section-questionnaire {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 20px; /* Gap réduit (40px c'était un peu grand pour un menu groupé) */
+  padding: 20px;
+}
+
+/* Style pour le titre h1 (qui sera injecté en JS) */
+#titleQuestionnaire {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20px; /* Ajoute un peu d'espace avant les boutons */
+}
+
+/* --- DESIGN DES LIENS (BOUTONS DU MENU) --- */
+#section-questionnaire a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 280px; /* Donne la même largeur à tous les boutons */
+  background-color: #575859; /* Bleu vif et moderne */
+  color: #ffffff;
+  padding: 14px 25px;
+  border-radius: 8px; /* Arrondi plus subtil et moderne que 15px */
+  font-size: 1.1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Ombre très légère */
+  transition: all 0.3s ease; /* Anime toutes les modifications (couleur, ombre, position) */
+}
+
+/* Effet au survol des liens */
+#section-questionnaire a:hover {
+  background-color: #585859;
+  transform: translateY(-2px); /* Le bouton se soulève légèrement */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* L'ombre s'agrandit */
+}
+
+/* Effet au clic des liens */
+#section-questionnaire a:active {
+  transform: translateY(0); /* Le bouton redescend à sa place */
+}
+
+/* --- DESIGN DU BOUTON EXCEL --- */
+#jsonToExcel {
+  margin-top: 30px; /* Sépare bien l'action d'export du menu principal */
+  padding: 14px 25px;
+  min-width: 280px; /* Même largeur que les autres boutons */
+  background-color: #28a745; /* Vert, couleur classique pour Excel/Succès */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Effet au survol du bouton Excel */
+#jsonToExcel:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Effet au clic du bouton Excel */
+#jsonToExcel:active {
+  transform: translateY(0);
+}

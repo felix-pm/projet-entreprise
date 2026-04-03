@@ -6,10 +6,10 @@
     <title>Document</title>
     <link rel="stylesheet" href="../assets/css/modalQuestion.css" />
     <link rel="stylesheet" href="../assets/css/modalIndex.css" />
+    <link rel="stylesheet" href="../assets/css/defaultQuestion.css" />
   </head>
   <body>
     <main>
-      <button id="btnBack">Back</button>
       <h1>Question vidéo</h1>
       <section id="sectionQuestion"></section>
       <div id="modalStart" class="modal">
@@ -17,10 +17,18 @@
         <button id="startQuestion">lancer la question</button>
       </div>
       <div id="modalIndexStart" class="hidden">
-        <h2>A quel point tu es confiant sur ta réponse?</h2>
-        <button class="button High">High</button>
-        <button class="button Middle">Middle</button>
-        <button class="button Low">Low</button>
+        <h2>A quel point en es-tu sûr.e ?</h2>
+        <div class="flex-modal">
+          <a class="button High"
+            ><img src="../assets/img/indice-vert.png" alt=""
+          /></a>
+          <a class="button Middle"
+            ><img src="../assets/img/indice-jaune.png" alt=""
+          /></a>
+          <a class="button Low"
+            ><img src="../assets/img/indice-rouge.png" alt=""
+          /></a>
+        </div>
       </div>
     </main>
     <script

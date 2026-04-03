@@ -1,11 +1,5 @@
 const btnSubmit = document.getElementById("btnSubmit");
 
-const btnBack = document.getElementById("btnBack");
-btnBack.addEventListener("click", (event) => {
-  event.preventDefault();
-  window.location.href = "../index.html";
-});
-
 function convertToMonth(date) {
   const date1 = new Date();
   const year = date.getFullYear();
