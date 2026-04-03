@@ -1,9 +1,3 @@
-const btnBack = document.getElementById("btnBack");
-
-btnBack.addEventListener("click", (event) => {
-  window.location.href = "questionnaire.html";
-});
-
 const baliseAudio = document.getElementById("audio");
 
 const title = sessionStorage.getItem("titreQuestionnaireActuel");

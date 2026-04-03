@@ -4,15 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fiche de renseignements</title>
+    <link rel="stylesheet" href="../assets/css/pageCreateRenseignements.css" />
   </head>
   <body>
+    <a href="../index.html"
+      ><img src="../assets/img/arrowBack.png" alt="" id="arrowBack"
+    /></a>
     <section id="section-renseignement">
-      <button id="btnBack">Back</button>
       <h1>Veuillez renseigner les informations du patient</h1>
-      <div class="section-input" style="display: flex; flex-direction: column">
+      <div class="section-input">
         <form action="#" id="form-renseignements">
           <label for="number-passation">
-            Renseignez le numéro de passation
+            Renseignez le numéro de passation :
             <input
               type="number"
               id="number-passation"
@@ -21,11 +24,11 @@
             />
           </label>
           <label for="age">
-            Renseigner l'âge du patient
+            Renseigner la dâte de naissance du patient :
             <input type="date" id="age" placeholder="Âge" required />
           </label>
           <label for="sexe-select">
-            Renseignez le sexe du patient
+            Renseignez le sexe du patient :
             <select name="sexe" id="sexe-select" required>
               <option value="">--Veuillez choisir une option--</option>
               <option value="men">Homme</option>
@@ -33,7 +36,7 @@
             </select>
           </label>
           <label for="date">
-            Date du jour de passation
+            Date du jour de passation :
             <input
               type="date"
               id="todayDate"
@@ -45,6 +48,9 @@
         </form>
       </div>
     </section>
-    <script src="../assets/script/FrontEnd/pageCreateRenseignements.js"></script>
+    <script
+      type="module"
+      src="../assets/script/FrontEnd/pageCreateRenseignements.js"
+    ></script>
   </body>
 </html>

@@ -1,0 +1,257 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* --- BOUTON RETOUR --- */
+#arrowBack {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 50px; /* Légèrement plus petit que 50px pour être plus élégant */
+  height: 50px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+#arrowBack:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* --- TITRE PRINCIPAL --- */
+h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #242525;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* --- CONTENEUR GLOBAL DU FORMULAIRE --- */
+#form {
+  width: 100%;
+  max-width: 800px; /* Limite la largeur pour une meilleure lisibilité */
+}
+
+#form-test {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Espace généreux entre chaque grande section */
+}
+
+/* --- SECTIONS (Cartes Blanches) --- */
+.titleProtocole,
+#importFile,
+.blocQuestion,
+form > div:nth-last-child(2) /* Cible la div des scores extérieurs qui n'a pas de classe */ {
+  background-color: #ffffff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Ombre très douce */
+}
+
+/* Titres dans les cartes */
+h2 {
+  font-size: 1.5rem;
+  color: #242525; /* Bleu pour hiérarchiser */
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f1f3f5;
+  padding-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.1rem;
+  color: #242525;
+  margin-bottom: 10px;
+}
+
+/* --- TITRE PROTOCOLE --- */
+.titleProtocole input[type="text"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  outline: none;
+}
+
+.titleProtocole input[type="text"]:focus {
+  border-color: #242525;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* --- IMPORT FICHIERS --- */
+#importFile {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* Pour les petits écrans */
+  gap: 20px;
+}
+
+.inputImport {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Style du faux bouton d'upload (+) */
+.custom-file-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border: 2px dashed #242525;
+  border-radius: 8px;
+  font-size: 2rem;
+  color: #242525;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f8f9fa;
+}
+
+.custom-file-upload:hover {
+  background-color: #e9ecef;
+  transform: translateY(-2px);
+}
+
+/* Cache le vrai input file moche */
+input[type="file"] {
+  display: none;
+}
+
+/* --- QUESTIONS (Générées en JS) --- */
+.divQuestion {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f8f9fa; /* Fond léger pour séparer chaque question */
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.divQuestion label {
+  font-weight: 600;
+  color: #242525;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.divInput {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* Évite que ça dépasse sur petit écran */
+}
+
+.inputQuestion {
+  flex-grow: 1; /* Prend tout l'espace disponible */
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.inputQuestion:focus {
+  border-color: #242525;
+}
+
+/* Style des boutons radio */
+.checkboxSurvey {
+  accent-color: #333434; /* Change la couleur native du bouton radio */
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.divInput span {
+  font-size: 0.9rem;
+  color: #242525;
+  cursor: pointer;
+}
+
+/* --- SCORES EXTÉRIEURS --- */
+form > div:nth-last-child(2) label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: #242525;
+}
+
+form > div:nth-last-child(2) input {
+  width: 60%;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  outline: none;
+}
+
+form > div:nth-last-child(2) input:focus {
+  border-color: #242525;
+}
+
+/* --- BOUTON ENREGISTRER --- */
+#saveJson {
+  align-self: center; /* Centre le bouton dans le formulaire flex */
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+#saveJson:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#saveJson:active {
+  transform: translateY(0);
+}
+
+/* Style appliqué au bouton quand un fichier est chargé */
+.custom-file-upload.file-loaded {
+  border-color: #28a745; /* Vert succès */
+  color: #28a745;
+  background-color: #eaf6ec; /* Fond très légèrement vert */
+}
+
+/* Style pour le texte du nom du fichier en dessous */
+.file-name-display {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #555;
+  text-align: center;
+  max-width: 150px; /* Évite que ça prenne toute la largeur si le nom est long */
+  word-break: break-word; /* Coupe le texte proprement s'il est trop long */
+  font-weight: 500;
+}

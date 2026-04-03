@@ -1,0 +1,220 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  background-color: #f8f9fa; /* Même fond doux que le reste de l'app */
+  color: #333;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative; /* Important pour le bouton Back et les modales */
+}
+
+/* --- LE BOUTON RETOUR --- */
+#btnBack {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 18px;
+  background-color: #e2e6ea;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+#btnBack:hover {
+  background-color: #d2d6da;
+  transform: translateY(-1px);
+}
+
+#btnBack:active {
+  transform: translateY(0);
+}
+
+/* --- LE TITRE --- */
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* --- LE CONTENEUR DE LA QUESTION --- */
+#sectionQuestion {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Espace entre le texte et les boutons */
+}
+
+/* Le texte de la question */
+.text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #495057;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Les boutons Vrai/Faux / Vu/Entendu */
+.button {
+  padding: 12px 24px;
+  width: 100%;
+  max-width: 200px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnVrai {
+  background-color: #5a6268;
+  color: white;
+}
+
+.btnVrai:hover {
+  background-color: #404041;
+}
+
+.btnFaux {
+  background-color: #5a6268; /* Gris pour différencier de l'action principale */
+  color: white;
+}
+
+.btnFaux:hover {
+  background-color: #404041;
+}
+
+/* Le lien pour terminer/recommencer (qui agit comme un bouton) */
+.recordvideoanswers {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 28px;
+  background-color: #28a745; /* Vert pour la validation */
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.recordvideoanswers:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+/* --- LES MODALES --- */
+/* La classe hidden est cruciale pour que ton JS puisse masquer les éléments */
+.hidden {
+  display: none !important;
+}
+
+/* Style partagé pour les deux modales (Start et Index de confiance) */
+.modal,
+#modalIndexStart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff; /* Fond semi-transparent clair */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* S'assure que ça passe par dessus le reste */
+  padding: 20px;
+  text-align: center;
+}
+
+/* Titres dans les modales */
+.modal h2,
+#modalIndexStart h2 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  max-width: 600px;
+}
+
+/* Bouton pour lancer la question */
+#startQuestion {
+  padding: 14px 28px;
+  background-color: #474748;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+#startQuestion:hover {
+  background-color: #2d2d2d;
+  transform: translateY(-2px);
+}
+
+/* Boutons de confiance (High, Middle, Low) */
+#modalIndexStart .button {
+  margin: 10px 0; /* Espace vertical entre les boutons de confiance */
+}
+
+.flex-modal {
+  display: flex;
+  flex-direction: row;
+  gap: 150px;
+}
+
+.flex-btn {
+  display: flex;
+  flex-direction: row; /* Aligne les boutons horizontalement */
+  justify-content: center; /* Centre les boutons au milieu du conteneur */
+  gap: 20px; /* Ajoute un bel espace entre le bouton Vrai et Faux */
+  width: 100%; /* S'assure que le conteneur prend toute la largeur disponible */
+}
+
+/* Je te remets la classe .button ici au cas où, 
+   assure-toi qu'elle a bien ces propriétés pour gérer la taille : */
+.button {
+  padding: 12px 24px;
+  width: 100%;
+  max-width: 200px; /* Cette ligne garantit que les deux boutons feront maximum 200px de large */
+  flex: 1; /* NOUVEAU : Force les deux boutons à se partager l'espace équitablement pour avoir la même taille */
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}

@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  background-color: #f8f9fa; /* Fond gris très clair habituel */
+  color: #333;
+}
+
+/* 1. On centre la carte au milieu de l'écran */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* --- LA CARTE BLANCHE PRINCIPALE --- */
+#section-questionnaire {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Ombre douce et élégante */
+  width: 100%;
+  max-width: 500px; /* Taille contenue, parfaite pour un menu */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Espacement régulier entre les boutons */
+}
+
+/* --- LE TITRE --- */
+#titleQuestionnaire {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a; /* Noir presque pur */
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* --- DESIGN DES LIENS (BOUTONS DU MENU) --- */
+#section-questionnaire a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Prend toute la largeur de la carte */
+  background-color: #e6e4e470; /* Fond blanc */
+  color: #495057; /* Texte gris foncé */
+  padding: 15px 25px;
+  border-radius: 8px;
+  border: 1px solid #ced4da; /* Bordure gris clair discrète */
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Effet au survol (Cohérent avec le reste de l'application) */
+#section-questionnaire a:hover {
+  border-color: #555; /* La bordure s'assombrit */
+  color: #1a1a1a; /* Le texte devient noir */
+  transform: translateY(-2px); /* Léger soulèvement */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* Apparition d'une petite ombre */
+}
+
+#section-questionnaire a:active {
+  transform: translateY(0);
+  background-color: #fcfcfc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* --- DESIGN DU BOUTON EXCEL --- */
+#section-questionnaire div {
+  width: 100%;
+  margin-top: 15px; /* Sépare un peu plus l'export du reste de la navigation */
+}
+
+#jsonToExcel {
+  width: 100%; /* S'aligne parfaitement avec les liens au-dessus */
+  padding: 15px 25px;
+  background-color: #28a745; /* Le vert validé pour les exports/sauvegardes */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Effet au survol du bouton Excel */
+#jsonToExcel:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Effet au clic du bouton Excel */
+#jsonToExcel:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}

@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* On s'assure que le bloc main empile bien ton H1 et ta section au centre */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#arrowBack {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+#arrowBack:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+#arrowBack:active {
+  transform: scale(0.95);
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* --- LE NOUVEAU DESIGN POUR LA CARTE AUDIO --- */
+section {
+  background-color: #ffffff; /* Le fond blanc qui fait ressortir le lecteur */
+  padding: 20px 30px; /* Un peu d'air autour du lecteur */
+  border-radius: 12px; /* Les fameux coins arrondis */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* L'ombre douce pour la profondeur */
+  width: 100%;
+  max-width: 500px; /* Taille optimale pour qu'un lecteur audio ne paraisse pas trop étiré */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- LE LECTEUR AUDIO LUI-MÊME --- */
+#audio {
+  width: 100%; /* S'étale bien dans toute sa jolie boîte blanche */
+  outline: none; /* Enlève la bordure de sélection bleue sur certains navigateurs */
+  border-radius: 8px; /* Arrondit légèrement le lecteur natif lui-même */
+}

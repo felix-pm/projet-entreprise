@@ -3,18 +3,41 @@
   padding: 0;
 }
 
+:root {
+  --background: #efefef;
+  --text: #141414;
+  --border: #303033;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  background-color: #f8f9fa;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 70px;
 }
 
 .homeTitle {
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: "Inter", sans-serif;
 }
 
 .buttonContainer {
@@ -22,15 +45,36 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  gap: 50px;
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 60%;
+  height: 400px;
 }
 
 .homeButton {
   padding: 30px;
   border: solid;
-  border-color: #6976aa;
+  border-color: var(--border);
   border-width: 2px;
   border-radius: 20px;
   text-decoration: none;
-  color: black;
+  color: var(--text);
+  height: 200px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 32px;
+  background-color: var(--background);
+  transition: all 0.3s ease;
+}
+
+.homeButton:hover {
+  transform: scale(1.02);
+  background-color: #dfdadabc;
 }

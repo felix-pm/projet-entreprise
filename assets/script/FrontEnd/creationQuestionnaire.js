@@ -9,6 +9,7 @@ function survey(
   const containerQuestions = document.querySelector(containerQuestion);
 
   for (let i = 1; i <= numberQuestions; i++) {
+    const divInput = document.createElement("div");
     const divQuestion = document.createElement("div");
     const labelQuestion = document.createElement("label");
     const inputQuestion = document.createElement("input");
@@ -20,6 +21,7 @@ function survey(
     labelQuestion.textContent = "Question " + i + " : ";
     inputQuestion.className = className;
     inputQuestion.dataset.id = i;
+    inputQuestion.classList.add("inputQuestion");
 
     checkbox1.type = "radio";
     checkbox1.name = checkboxName + i;
@@ -33,14 +35,14 @@ function survey(
     choice2.textContent = choice2Text;
     checkbox2.value = choice2Text;
 
-    divQuestion.append(
-      labelQuestion,
-      inputQuestion,
-      checkbox1,
-      choice1,
-      checkbox2,
-      choice2,
-    );
+    divQuestion.classList.add("divQuestion");
+
+    divInput.classList.add("divInput");
+
+    divInput.append(inputQuestion, checkbox1, choice1, checkbox2, choice2);
+
+    divQuestion.append(labelQuestion, divInput);
+
     containerQuestions.appendChild(divQuestion);
   }
 }
@@ -72,8 +74,44 @@ survey(
   "Entendu",
 );
 
-const btnBack = document.getElementById("btnBack");
-btnBack.addEventListener("click", (event) => {
-  event.preventDefault();
-  window.location.href = "../index.html";
+function setupFileInputFeedback(inputId) {
+  const input = document.getElementById(inputId);
+  const label = document.querySelector(`label[for="${inputId}"]`);
+
+  if (!input || !label) {
+    console.error(
+      `⚠️ Impossible de trouver l'input ou le label pour : ${inputId}`,
+    );
+    return;
+  }
+
+  input.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+
+    console.log(
+      `Fichier sélectionné pour ${inputId} :`,
+      file ? file.name : "Aucun",
+    );
+
+    if (file) {
+      label.textContent = "✓";
+      label.classList.add("file-loaded");
+
+      let fileNameDisplay =
+        input.parentElement.querySelector(".file-name-display");
+      if (!fileNameDisplay) {
+        fileNameDisplay = document.createElement("span");
+        fileNameDisplay.className = "file-name-display";
+        input.parentElement.appendChild(fileNameDisplay);
+      }
+
+      fileNameDisplay.textContent = file.name;
+    }
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  setupFileInputFeedback("video-url");
+  setupFileInputFeedback("audio-url");
+  console.log("✅ Détecteurs de fichiers activés !");
 });
