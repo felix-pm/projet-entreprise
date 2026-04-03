@@ -11,27 +11,40 @@ html {
   height: 100%;
   width: 100%;
   font-family: "Inter", sans-serif;
-  background-color: #f8f9fa; /* Un fond très légèrement gris/blanc cassé pour la douceur */
-  color: #333; /* Couleur de texte globale plus douce que le noir pur */
+  background-color: #f8f9fa; /* Fond gris très clair habituel */
+  color: #333;
 }
 
-#section-questionnaire {
-  text-align: center;
+/* 1. On centre la carte au milieu de l'écran */
+body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  gap: 20px; /* Gap réduit (40px c'était un peu grand pour un menu groupé) */
   padding: 20px;
 }
 
-/* Style pour le titre h1 (qui sera injecté en JS) */
+/* --- LA CARTE BLANCHE PRINCIPALE --- */
+#section-questionnaire {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Ombre douce et élégante */
+  width: 100%;
+  max-width: 500px; /* Taille contenue, parfaite pour un menu */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Espacement régulier entre les boutons */
+}
+
+/* --- LE TITRE --- */
 #titleQuestionnaire {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 20px; /* Ajoute un peu d'espace avant les boutons */
+  color: #1a1a1a; /* Noir presque pur */
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 /* --- DESIGN DES LIENS (BOUTONS DU MENU) --- */
@@ -39,35 +52,42 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 280px; /* Donne la même largeur à tous les boutons */
-  background-color: #575859; /* Bleu vif et moderne */
-  color: #ffffff;
-  padding: 14px 25px;
-  border-radius: 8px; /* Arrondi plus subtil et moderne que 15px */
+  width: 100%; /* Prend toute la largeur de la carte */
+  background-color: #e6e4e470; /* Fond blanc */
+  color: #495057; /* Texte gris foncé */
+  padding: 15px 25px;
+  border-radius: 8px;
+  border: 1px solid #ced4da; /* Bordure gris clair discrète */
   font-size: 1.1rem;
-  font-weight: 500;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Ombre très légère */
-  transition: all 0.3s ease; /* Anime toutes les modifications (couleur, ombre, position) */
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-/* Effet au survol des liens */
+/* Effet au survol (Cohérent avec le reste de l'application) */
 #section-questionnaire a:hover {
-  background-color: #585859;
-  transform: translateY(-2px); /* Le bouton se soulève légèrement */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* L'ombre s'agrandit */
+  border-color: #555; /* La bordure s'assombrit */
+  color: #1a1a1a; /* Le texte devient noir */
+  transform: translateY(-2px); /* Léger soulèvement */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* Apparition d'une petite ombre */
 }
 
-/* Effet au clic des liens */
 #section-questionnaire a:active {
-  transform: translateY(0); /* Le bouton redescend à sa place */
+  transform: translateY(0);
+  background-color: #fcfcfc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 /* --- DESIGN DU BOUTON EXCEL --- */
+#section-questionnaire div {
+  width: 100%;
+  margin-top: 15px; /* Sépare un peu plus l'export du reste de la navigation */
+}
+
 #jsonToExcel {
-  margin-top: 30px; /* Sépare bien l'action d'export du menu principal */
-  padding: 14px 25px;
-  min-width: 280px; /* Même largeur que les autres boutons */
-  background-color: #28a745; /* Vert, couleur classique pour Excel/Succès */
+  width: 100%; /* S'aligne parfaitement avec les liens au-dessus */
+  padding: 15px 25px;
+  background-color: #28a745; /* Le vert validé pour les exports/sauvegardes */
   color: white;
   border: none;
   border-radius: 8px;
@@ -91,4 +111,5 @@ html {
 /* Effet au clic du bouton Excel */
 #jsonToExcel:active {
   transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }

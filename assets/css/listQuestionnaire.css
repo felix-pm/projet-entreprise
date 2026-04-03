@@ -1,42 +1,89 @@
 * {
   margin: 0;
   padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 30px;
-  width: 100%;
-  height: 100%;
 }
 
+/* --- LE TITRE --- */
 .homeTitle {
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
+/* --- LE CONTENEUR DE LA LISTE --- */
 .allQuestionnaire {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
+  gap: 15px;
+  background-color: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   width: 600px;
-  max-height: 550px;
-  overflow-y: scroll;
-  border: solid;
-  border-color: black;
-  border-width: 5px;
-  padding: 15px;
+  height: 45s0px;
+  overflow-y: auto;
 }
 
+/* --- LE STYLE DES LIENS (Générés par ton JS) --- */
 .link {
-  border: solid;
-  border-color: black;
-  width: 80%;
-  height: 100px;
-  font-size: 24px;
+  display: block; /* S'assure que tout le bloc est cliquable */
+  background-color: #e8e5e59c;
+  padding: 20px 25px;
+  border-radius: 10px;
+  border: 1px solid #e9ecef; /* Bordure gris ultra clair par défaut */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); /* Ombre très douce pour le volume */
+
+  /* Typographie du lien */
+  color: #495057; /* Gris foncé pour le texte */
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+
+  /* Animations */
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Effet au survol : la carte se soulève et s'assombrit légèrement */
+.link:hover {
+  border-color: #555; /* La bordure devient gris foncé/noir au survol */
+  color: #1a1a1a; /* Le texte noircit un peu */
+  transform: translateY(-3px); /* Effet de soulèvement */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* L'ombre grandit */
+}
+
+/* Effet au clic : sensation de pression */
+.link:active {
+  transform: translateY(0);
+  background-color: #fcfcfc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }

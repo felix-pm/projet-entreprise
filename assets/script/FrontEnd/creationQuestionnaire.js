@@ -74,8 +74,44 @@ survey(
   "Entendu",
 );
 
-const btnBack = document.getElementById("btnBack");
-btnBack.addEventListener("click", (event) => {
-  event.preventDefault();
-  window.location.href = "../index.html";
+function setupFileInputFeedback(inputId) {
+  const input = document.getElementById(inputId);
+  const label = document.querySelector(`label[for="${inputId}"]`);
+
+  if (!input || !label) {
+    console.error(
+      `⚠️ Impossible de trouver l'input ou le label pour : ${inputId}`,
+    );
+    return;
+  }
+
+  input.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+
+    console.log(
+      `Fichier sélectionné pour ${inputId} :`,
+      file ? file.name : "Aucun",
+    );
+
+    if (file) {
+      label.textContent = "✓";
+      label.classList.add("file-loaded");
+
+      let fileNameDisplay =
+        input.parentElement.querySelector(".file-name-display");
+      if (!fileNameDisplay) {
+        fileNameDisplay = document.createElement("span");
+        fileNameDisplay.className = "file-name-display";
+        input.parentElement.appendChild(fileNameDisplay);
+      }
+
+      fileNameDisplay.textContent = file.name;
+    }
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  setupFileInputFeedback("video-url");
+  setupFileInputFeedback("audio-url");
+  console.log("✅ Détecteurs de fichiers activés !");
 });

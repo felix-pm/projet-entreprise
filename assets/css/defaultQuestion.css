@@ -97,21 +97,21 @@ h1 {
 }
 
 .btnVrai {
-  background-color: #007bff;
+  background-color: #5a6268;
   color: white;
 }
 
 .btnVrai:hover {
-  background-color: #0056b3;
+  background-color: #404041;
 }
 
 .btnFaux {
-  background-color: #6c757d; /* Gris pour différencier de l'action principale */
+  background-color: #5a6268; /* Gris pour différencier de l'action principale */
   color: white;
 }
 
 .btnFaux:hover {
-  background-color: #5a6268;
+  background-color: #404041;
 }
 
 /* Le lien pour terminer/recommencer (qui agit comme un bouton) */
@@ -194,4 +194,27 @@ h1 {
   display: flex;
   flex-direction: row;
   gap: 150px;
+}
+
+.flex-btn {
+  display: flex;
+  flex-direction: row; /* Aligne les boutons horizontalement */
+  justify-content: center; /* Centre les boutons au milieu du conteneur */
+  gap: 20px; /* Ajoute un bel espace entre le bouton Vrai et Faux */
+  width: 100%; /* S'assure que le conteneur prend toute la largeur disponible */
+}
+
+/* Je te remets la classe .button ici au cas où, 
+   assure-toi qu'elle a bien ces propriétés pour gérer la taille : */
+.button {
+  padding: 12px 24px;
+  width: 100%;
+  max-width: 200px; /* Cette ligne garantit que les deux boutons feront maximum 200px de large */
+  flex: 1; /* NOUVEAU : Force les deux boutons à se partager l'espace équitablement pour avoir la même taille */
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }

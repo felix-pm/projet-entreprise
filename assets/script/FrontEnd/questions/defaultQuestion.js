@@ -13,9 +13,8 @@ const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
 const currentYield = sessionStorage.getItem("currentYield");
 
-// 1. ASTUCE : On récupère le type de question depuis l'URL (?type=...)
 const urlParams = new URLSearchParams(window.location.search);
-const questionType = urlParams.get("type"); // Vaudra "questionsVideo" ou "questionsAudio"
+const questionType = urlParams.get("type");
 
 let questions = [];
 let currentIndex = 0;
@@ -23,7 +22,7 @@ let allTimer = 0;
 
 modalButton.addEventListener("click", (event) => {
   if (!modalStart.classList.contains("hidden")) {
-    event.preventDefault(); // Empêche la page de descendre
+    event.preventDefault();
     modalStart.classList.add("hidden");
     hiddenModalChrono();
   }
@@ -58,7 +57,6 @@ function showQuestion(index) {
     if (currentYield == "Yield1") {
       allQuestions.textContent = "Recommencer les questions";
       allQuestions.href = `defaultQuestion.html?type=${questionType}`;
-      // Événement au clic sur "Enregistrer les données"
       allQuestions.addEventListener("click", async (event) => {
         event.preventDefault();
 
@@ -71,17 +69,14 @@ function showQuestion(index) {
     } else {
       allQuestions.textContent = "Terminer le questionnaire";
       allQuestions.href = `questionnaire.html`;
-      // Événement au clic sur "Enregistrer les données"
       allQuestions.addEventListener("click", async (event) => {
         event.preventDefault();
 
-        // --- 1. RÉCUPÉRATION DES RENSEIGNEMENTS ---
         const numberPassation = sessionStorage.getItem("numberPassation");
         const sexe = sessionStorage.getItem("sexe");
         const age = sessionStorage.getItem("age");
         const date = sessionStorage.getItem("date");
 
-        // --- 2. CRÉATION DE L'OBJET GLOBAL ---
         const answers = {
           numberPassation: [numberPassation],
           sexe: [sexe],
@@ -90,11 +85,8 @@ function showQuestion(index) {
           trustIndex: {},
         };
 
-        // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
         answers[questionType] = {};
 
-        // --- 3. ENVOI À LA FONCTION DE SAUVEGARDE ---
-        // On passe "answers" ET "questionType" à clearSessionStorage
         await clearSessionStorage(answers, questionType);
       });
     }
@@ -143,6 +135,9 @@ function showQuestion(index) {
   text.classList.add("text");
   text.textContent = `${currentQuestion["question"]}?`;
 
+  const divBtn = document.createElement("div");
+  divBtn.classList.add("flex-btn");
+
   const btnVrai = document.createElement("button");
   btnVrai.classList.add("btnVrai", "button");
   btnVrai.textContent = questionType === "questionsMdls" ? "Vu" : "Vrai";
@@ -151,9 +146,7 @@ function showQuestion(index) {
   btnFaux.classList.add("btnFaux", "button");
   btnFaux.textContent = questionType === "questionsMdls" ? "Entendu" : "Faux";
 
-  // NOUVEAU : On gère le clic ici pour garder le bon scope !
   const handleButtonClick = (btnText) => {
-    // 1. Appel du fichier externe pour sauvegarder
     saveInSessionStorage(currentYield, currentIndex, questionType, btnText);
     let time = handleAnswer();
     saveInSessionStorage(
@@ -163,11 +156,8 @@ function showQuestion(index) {
       time,
       "chrono",
     );
-    // 2. Mise à jour de tes variables locales
     allTimer += time;
-    currentIndex++; // Ici ça marchera !
-
-    // 3. Affichage de la suite
+    currentIndex++;
     showQuestion(currentIndex);
   };
 
@@ -178,12 +168,13 @@ function showQuestion(index) {
     handleButtonClick(btnFaux.textContent),
   );
 
-  // Gestion du clic pour passer à la question suivante
   if (questionType != "questionsMdls") {
     showTrustIndex(btnVrai, index);
     showTrustIndex(btnFaux, index);
   }
-  container.append(text, btnVrai, btnFaux);
+
+  divBtn.append(btnVrai, btnFaux);
+  container.append(text, divBtn);
 }
 
 function showTrustIndex(button, index) {
@@ -222,7 +213,6 @@ function hiddenTrustModal(button, index) {
   };
 }
 
-// 2. Initialisation : On lance le chargement en fonction de l'URL
 async function init() {
   if (!questionType) {
     container.innerHTML =
@@ -237,7 +227,6 @@ async function init() {
 
   document.querySelector("h1").textContent = titreH1;
 
-  // On appelle notre fonction loadQuestion qui a été simplifiée
   questions = await loadQuestion(title, questionType);
 
   if (questions && questions.length > 0) {
@@ -247,5 +236,4 @@ async function init() {
   }
 }
 
-// On démarre le script !
 init();
