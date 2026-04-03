@@ -4,61 +4,73 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/creationQuestionnaire.css" />
   </head>
   <body>
-    <form id="form-test">
-      <button id="btnBack">Back</button>
-      <h1>Création du questionnaire</h1>
+    <a href="../index.html">
+      <img src="../assets/img/arrowBack.png" alt="" />
+    </a>
+    <h1>Création du questionnaire</h1>
+    <div id="form">
+      <form id="form-test">
+        <div class="titleProtocole">
+          <h3>Nom du protocole</h3>
+          <input type="text" id="title-test" name="title-test" />
+        </div>
 
-      <input
-        type="text"
-        id="title-test"
-        name="title-test"
-        placeholder="Nom du test"
-      />
+        <div id="importFile">
+          <div class="inputImport">
+            <h3>Importer une vidéo</h3>
+            <label for="video-url" class="custom-file-upload">+</label>
+            <input
+              type="file"
+              id="video-url"
+              name="video-url"
+              accept="video/*"
+            />
+          </div>
+          <div class="inputImport">
+            <h3>Importer un audio</h3>
+            <label for="audio-url" class="custom-file-upload">+</label>
+            <input
+              type="file"
+              id="audio-url"
+              name="audio-url"
+              accept="audio/*"
+            />
+          </div>
+        </div>
 
-      <input
-        type="file"
-        id="video-url"
-        name="video-url"
-        placeholder="Lien de la vidéo"
-      />
-      <input
-        type="file"
-        id="audio-url"
-        name="audio-url"
-        placeholder="Lien de l'audio"
-      />
+        <div class="blocQuestion" id="questions-video">
+          <h2>Questions sur la vidéo</h2>
+          <div id="container-questions-video"></div>
+        </div>
 
-      <div id="questions-video">
-        <h2>Questions sur la vidéo</h2>
-        <div id="container-questions-video"></div>
-      </div>
+        <div class="blocQuestion" id="questions-audio">
+          <h2>Questions sur l'audio</h2>
+          <div id="container-questions-audio"></div>
+        </div>
 
-      <div id="questions-audio">
-        <h2>Questions sur l'audio</h2>
-        <div id="container-questions-audio"></div>
-      </div>
-
-      <div id="question-mdls">
-        <h2>Questions sur la mémoire de la source</h2>
-        <div id="container-questions-mdls"></div>
-      </div>
-      <div style="display: flex; flex-direction: column">
-        <h2>Questions de score exterieur</h2>
-        <label for="">Score exterieur 1 : <input type="text" /></label>
-        <label for="">Score exterieur 2 :<input type="text" /></label>
-        <label for="">Score exterieur 3 :<input type="text" /></label>
-        <label for="">Score exterieur 4 :<input type="text" /></label>
-        <label for="">Score exterieur 5 :<input type="text" /></label>
-        <label for="">Score exterieur 6 :<input type="text" /></label>
-        <label for="">Score exterieur 7 :<input type="text" /></label>
-        <label for="">Score exterieur 8 :<input type="text" /></label>
-        <label for="">Score exterieur 9 :<input type="text" /></label>
-        <label for="">Score exterieur 10 :<input type="text" /></label>
-      </div>
-      <button type="submit" id="saveJson">Créer le fichier JSON</button>
-    </form>
+        <div class="blocQuestion" id="question-mdls">
+          <h2>Questions sur la mémoire de la source</h2>
+          <div id="container-questions-mdls"></div>
+        </div>
+        <div>
+          <h2>Questions de score exterieur</h2>
+          <label for="">Score exterieur 1 : <input type="text" /></label>
+          <label for="">Score exterieur 2 :<input type="text" /></label>
+          <label for="">Score exterieur 3 :<input type="text" /></label>
+          <label for="">Score exterieur 4 :<input type="text" /></label>
+          <label for="">Score exterieur 5 :<input type="text" /></label>
+          <label for="">Score exterieur 6 :<input type="text" /></label>
+          <label for="">Score exterieur 7 :<input type="text" /></label>
+          <label for="">Score exterieur 8 :<input type="text" /></label>
+          <label for="">Score exterieur 9 :<input type="text" /></label>
+          <label for="">Score exterieur 10 :<input type="text" /></label>
+        </div>
+        <button type="submit" id="saveJson">Enregistrer</button>
+      </form>
+    </div>
     <div
       id="custom-alert"
       style="
@@ -85,8 +97,14 @@
       </button>
     </div>
 
-    <script src="../assets/script/FrontEnd/creationQuestionnaire.js"></script>
+    <script
+      type="module"
+      src="../assets/script/FrontEnd/creationQuestionnaire.js"
+    ></script>
     <script type="module" src="../assets/script/FrontEnd/renderer.js"></script>
-    <script src="../assets/script/FrontEnd/createFileSurvey.js"></script>
+    <script
+      type="module"
+      src="../assets/script/FrontEnd/createFileSurvey.js"
+    ></script>
   </body>
 </html>
