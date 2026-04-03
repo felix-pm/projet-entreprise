@@ -2,6 +2,7 @@
 import { hiddenModalChrono, handleAnswer } from "../modal.js";
 import { clearSessionStorage, saveInSessionStorage } from "../saveRespons.js";
 import { loadQuestion } from "../loadQuestion.js";
+import { calculShift, calculScore } from "../calculScore.js";
 
 const container = document.getElementById("sectionQuestion");
 const modalStart = document.querySelector("#modalStart");
@@ -104,14 +105,43 @@ function showQuestion(index) {
       const sexe = sessionStorage.getItem("sexe");
       const age = sessionStorage.getItem("age");
       const date = sessionStorage.getItem("date");
+      // const sAudio1Y1 = await calculScore(
+      //   "questionsAudio",
+      //   "Yield1-questionsAudio",
+      // );
+      // const sVideo1Y1 = await calculScore(
+      //   "questionsVideo",
+      //   "Yield1-questionsVideo",
+      // );
+      // const sAudio2Y2 = await calculScore(
+      //   "questionsAudio",
+      //   "Yield2-questionsAudio",
+      // );
+      // const sVideo2Y2 = await calculScore(
+      //   "questionsVideo",
+      //   "Yield2-questionsVideo",
+      // );
+      // const sShiftAudio = await calculShift("questionsAudio");
+      // const sShiftVideo = await calculShift("questionsVideo");
+      // const totalSAudio = sAudio2Y2 + sShiftAudio;
+      // const totalSVideo = sVideo2Y2 + sShiftVideo;
 
       // --- 2. CRÉATION DE L'OBJET GLOBAL ---
       const answers = {
-        [numberPassation]: { sexe: [sexe] },
+        numberPassation: [numberPassation],
+        sexe: [sexe],
         age: [age],
         date: [date],
         trustIndex: {},
         chrono: {},
+        // scoreAudio1: sAudio1Y1,
+        // scoreAudio2: sAudio2Y2,
+        // scoreVideo1: sVideo1Y1,
+        // scoreVideo2: sVideo2Y2,
+        // scoreShiftVideo: sShiftVideo,
+        // scoreShiftAudio: sShiftAudio,
+        // calculTotalVideo: totalSVideo,
+        // calculTotalAudio: totalSAudio,
       };
 
       // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
@@ -158,6 +188,11 @@ function showQuestion(index) {
     );
     allTimer += time;
     currentIndex++;
+<<<<<<< HEAD
+
+    // 3. Affichage de la suite
+=======
+>>>>>>> bf9dc925e7490da1bd8dafddea36458c7348b5fe
     showQuestion(currentIndex);
   };
 

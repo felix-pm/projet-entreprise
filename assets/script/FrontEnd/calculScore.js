@@ -1,66 +1,46 @@
-async function calculScore(questionName) {
+export async function calculScore(questionName, yieldName) {
   const titleJSON = sessionStorage.getItem("titreQuestionnaireActuel");
   const questionsProtocole = await window.electronAPI.getElement(
     titleJSON,
     questionName,
   );
   const questionsAnswer = await window.electronAPI.getElement(
-    "Test2Reponse",
+    titleJSON + "/yield1",
     questionName,
   );
 
   let score = 0;
-  const givenAnswer = {};
-
-  questionsProtocole.forEach((p) => {
-    givenAnswer[p.id] = p.answer;
-  });
 
   // Parcours l'objet protocole et compare les réponses données avec les réponses du protocole
-  questionsAnswer.forEach((p) => {
-    const goodAnswer = p.answer;
-    const answerGiven = givenAnswer[p.id];
-
-    if (answerGiven == goodAnswer && goodAnswer == "Faux") {
+  questionsProtocole.forEach((p, i) => {
+    const key = `${yieldName + i + 1}`;
+    const answerGiven = questionsAnswer[key];
+    if (answerGiven == p.answer && p.answer == "Faux") {
       score++;
     }
   });
-
   console.log(questionName + " : ", score);
   return score;
 }
 
-async function calculShift(questionName) {
-  const answerJSONYield1 = await window.electronAPI.getElement(
-    "Test2Reponse",
-    questionName,
-  );
-  const answerJSONYield2 = await window.electronAPI.getElement(
-    "Test2Yield2",
+export async function calculShift(questionName) {
+  const titleJSON = sessionStorage.getItem("titreQuestionnaireActuel");
+  const answerJSON = await window.electronAPI.getElement(
+    titleJSON + "/yield1",
     questionName,
   );
 
   let score = 0;
-  const givenAnswer = {};
 
-  answerJSONYield1.forEach((p) => {
-    givenAnswer[p.id] = p.answer;
-  });
+  for (let i = 1; i <= 15; i++) {
+    const keyY1 = `Yield1-${questionName}${i}`;
+    const keyY2 = `Yield2-${questionName}${i}`;
 
-  // Parcours l'objet protocole et compare les réponses données avec les réponses du protocole
-  answerJSONYield2.forEach((p) => {
-    const answerYield2 = p.answer;
-
-    if (givenAnswer[p.id] !== answerYield2) {
+    if (answerJSON[keyY1] == answerJSON[keyY2]) {
       score++;
     }
-  });
+  }
 
   console.log(questionName + " shift score : ", score);
   return score;
 }
-
-calculScore("questionsAudio");
-calculScore("questionsVideo");
-calculShift("questionsAudio");
-calculShift("questionsVideo");
