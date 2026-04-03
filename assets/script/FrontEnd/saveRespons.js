@@ -74,3 +74,17 @@ export async function clearSessionStorage(answers, questionType) {
 
   console.log("Sauvegarde effectuée et clés de réponses supprimées.");
 }
+
+function clearAll() {
+  const buttonClear = document.getElementById("returnHome");
+
+  if (buttonClear) {
+    buttonClear.addEventListener("click", (event) => {
+      event.preventDefault();
+      sessionStorage.clear();
+      window.location.href = buttonClear.href;
+    });
+  }
+}
+
+clearAll();
