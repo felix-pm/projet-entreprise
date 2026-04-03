@@ -213,14 +213,11 @@ ipcMain.handle("yield2Questions", async (event, answerVideo, title) => {
     const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
 
     // Compare la clé avec les valeurs données pour trouver le numéro de passation
-    const passationId = Object.keys(answerVideo).find(
-      (key) =>
-        key !== "age" && key !== "questionsVideo" && key !== "questionsAudio",
-    );
+    const passationId = answerVideo.numberPassation[0];
 
     // Cherche dans le tableau l'objet le bon numéro de passation, si il n'existe pas il push les données qu'il a déjà récupéré
-    const index = currentData.findIndex((item) =>
-      Object.keys(item).includes(passationId),
+    const index = currentData.findIndex(
+      (item) => item.numberPassation && item.numberPassation[0] === passationId,
     );
 
     if (index >= 0) {
@@ -278,14 +275,11 @@ ipcMain.handle("yield1Questions", async (event, answerVideo, title) => {
     const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
 
     // Compare la clé avec les valeurs données pour trouver le numéro de passation
-    const passationId = Object.keys(answerVideo).find(
-      (key) =>
-        key !== "age" && key !== "questionsVideo" && key !== "questionsAudio",
-    );
+    const passationId = answerVideo.numberPassation[0];
 
     // Cherche dans le tableau l'objet le bon numéro de passation, si il n'existe pas il push les données qu'il a déjà récupéré
-    const index = currentData.findIndex((item) =>
-      Object.keys(item).includes(passationId),
+    const index = currentData.findIndex(
+      (item) => item.numberPassation && item.numberPassation[0] === passationId,
     );
 
     if (index >= 0) {
@@ -342,14 +336,11 @@ ipcMain.handle("QuestionSource", async (event, answerVideo, title) => {
     const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
 
     // Compare la clé avec les valeurs données pour trouver le numéro de passation
-    const passationId = Object.keys(answerVideo).find(
-      (key) =>
-        key !== "age" && key !== "questionsVideo" && key !== "questionsAudio",
-    );
+    const passationId = answerVideo.numberPassation[0];
 
     // Cherche dans le tableau l'objet le bon numéro de passation, si il n'existe pas il push les données qu'il a déjà récupéré
-    const index = currentData.findIndex((item) =>
-      Object.keys(item).includes(passationId),
+    const index = currentData.findIndex(
+      (item) => item.numberPassation && item.numberPassation[0] === passationId,
     );
 
     if (index >= 0) {
@@ -406,14 +397,11 @@ ipcMain.handle("trustIndex", async (event, answerVideo, title) => {
     const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
 
     // Compare la clé avec les valeurs données pour trouver le numéro de passation
-    const passationId = Object.keys(answerVideo).find(
-      (key) =>
-        key !== "age" && key !== "questionsVideo" && key !== "questionsAudio",
-    );
+    const passationId = answerVideo.numberPassation[0];
 
     // Cherche dans le tableau l'objet le bon numéro de passation, si il n'existe pas il push les données qu'il a déjà récupéré
-    const index = currentData.findIndex((item) =>
-      Object.keys(item).includes(passationId),
+    const index = currentData.findIndex(
+      (item) => item.numberPassation && item.numberPassation[0] === passationId,
     );
 
     if (index >= 0) {
@@ -470,14 +458,11 @@ ipcMain.handle("chrono", async (event, answerVideo, title) => {
     const currentData = JSON.parse(fs.readFileSync(folderDataYield1, "utf-8"));
 
     // Compare la clé avec les valeurs données pour trouver le numéro de passation
-    const passationId = Object.keys(answerVideo).find(
-      (key) =>
-        key !== "age" && key !== "questionsVideo" && key !== "questionsAudio",
-    );
+    const passationId = answerVideo.numberPassation[0];
 
     // Cherche dans le tableau l'objet le bon numéro de passation, si il n'existe pas il push les données qu'il a déjà récupéré
-    const index = currentData.findIndex((item) =>
-      Object.keys(item).includes(passationId),
+    const index = currentData.findIndex(
+      (item) => item.numberPassation && item.numberPassation[0] === passationId,
     );
 
     if (index >= 0) {
@@ -554,8 +539,11 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
         item.trustIndex,
         "trustIndex-Yield1-questionsVideo",
       );
+      const TrVideoY1 = sortJSON(item.chrono, "chrono-Yield1-questionsVideo");
 
       keyVideoY1.forEach((key, i) => {
+        const TrKeyVideoY1 = TrVideoY1[i];
+        line[`TR Question ${i + 1} Video`] = item.chrono[TrKeyVideoY1];
         line[`Réponse Question ${i + 1} Video`] = item.questionsVideo[key];
         const trustKeyVideoY1 = trustIndexVideoY1[i];
         line[`Indice de confiance Q${i + 1} Video`] =
@@ -564,6 +552,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
       line["APRES FEEDBACK NEGATIF"] = "";
 
+      const TrVideoY2 = sortJSON(item.chrono, "chrono-Yield2-questionsVideo");
       const keyVideoY2 = sortJSON(item.questionsVideo, "Yield2");
       const trustIndexVideoY2 = sortJSON(
         item.trustIndex,
@@ -571,6 +560,8 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
       );
 
       keyVideoY2.forEach((key, i) => {
+        const TrKeyVideoY2 = TrVideoY2[i];
+        line[`TR Question ${i + 1} Video`] = item.chrono[TrKeyVideoY2];
         line[`Réponse Question ${i + 1} Video`] = item.questionsVideo[key];
         const trustVideoKeyY2 = trustIndexVideoY2[i];
         line[`Indice de confiance Q${i + 1} Video`] =
@@ -579,6 +570,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
       line["AVANT FEEDBACK NEGATIF"];
 
+      const TrAudioY1 = sortJSON(item.chrono, "chrono-Yield1-questionsAudio");
       const keyAudioY1 = sortJSON(item.questionsAudio, "Yield1");
       const trustIndexAudioY1 = sortJSON(
         item.trustIndex,
@@ -586,6 +578,8 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
       );
 
       keyAudioY1.forEach((key, i) => {
+        const TrKeyAudioY1 = TrAudioY1[i];
+        line[`TR Question ${i + 1} Audio`] = item.chrono[TrKeyAudioY1];
         line[`Réponse Question ${i + 1} Audio`] = item.questionsAudio[key];
         const trustAudioKeyY1 = trustIndexAudioY1[i];
         line[`Indice de confiance Q${i + 1} Audio`] =
@@ -594,12 +588,15 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
       line["APRES FEEDBACK NEGATIF"];
 
+      const TrAudioY2 = sortJSON(item.chrono, "chrono-Yield2-questionsAudio");
       const keyAudioY2 = sortJSON(item.questionsAudio, "Yield2");
       const trustIndexAudioY2 = sortJSON(
         item.trustIndex,
         "trustIndex-Yield2-questionsAudio",
       );
       keyAudioY2.forEach((key, i) => {
+        const trKeyAudioY2 = TrAudioY2[i];
+        line[`TR Question ${i + 1}`] = item.chrono[trKeyAudioY2];
         line[`Réponse Question ${i + 1} Video`] = item.questionsAudio[key];
         const trustAudioKeyY2 = trustIndexAudioY2[i];
         line[`Indice de confiance Q${i + 1} Audio`] =
@@ -630,17 +627,3 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
     console.error("Erreur de la génération : ", err);
   }
 });
-
-// let line = {
-//   "Numéro de Passation": data.numberPassation,
-//   Age: data.age,
-//   Sexe: data.sexe,
-// };
-
-// data.questionsAudio.forEach((q, i) => {
-//   line[`Réponse Question ${[i]} Audio`] = q.Yield1 - questionsVideo[i];
-// });
-
-// data.questionsVideo.forEach((q, i) => {
-//   line[`Réponse Question ${[i]} Audio`] = q.Yield1 - questionsVideo[i];
-// });
