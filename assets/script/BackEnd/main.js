@@ -545,36 +545,70 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
         "Numéro de Passation": item.numberPassation[0],
         Age: item.age[0],
         Sexe: item.sexe[0],
+        "Date Passation": item.date[0],
         "AVANT FEEDBACK NEGATIF": "",
       };
 
       const keyVideoY1 = sortJSON(item.questionsVideo, "Yield1");
+      const trustIndexVideoY1 = sortJSON(
+        item.trustIndex,
+        "trustIndex-Yield1-questionsVideo",
+      );
 
       keyVideoY1.forEach((key, i) => {
         line[`Réponse Question ${i + 1} Video`] = item.questionsVideo[key];
+        const trustKeyVideoY1 = trustIndexVideoY1[i];
+        line[`Indice de confiance Q${i + 1} Video`] =
+          item.trustIndex[trustKeyVideoY1];
       });
 
       line["APRES FEEDBACK NEGATIF"] = "";
 
       const keyVideoY2 = sortJSON(item.questionsVideo, "Yield2");
+      const trustIndexVideoY2 = sortJSON(
+        item.trustIndex,
+        "trustIndex-Yield2-questionsVideo",
+      );
 
       keyVideoY2.forEach((key, i) => {
         line[`Réponse Question ${i + 1} Video`] = item.questionsVideo[key];
+        const trustVideoKeyY2 = trustIndexVideoY2[i];
+        line[`Indice de confiance Q${i + 1} Video`] =
+          item.trustIndex[trustVideoKeyY2];
       });
 
       line["AVANT FEEDBACK NEGATIF"];
 
       const keyAudioY1 = sortJSON(item.questionsAudio, "Yield1");
+      const trustIndexAudioY1 = sortJSON(
+        item.trustIndex,
+        "trustIndex-Yield1-questionsAudio",
+      );
 
       keyAudioY1.forEach((key, i) => {
         line[`Réponse Question ${i + 1} Audio`] = item.questionsAudio[key];
+        const trustAudioKeyY1 = trustIndexAudioY1[i];
+        line[`Indice de confiance Q${i + 1} Audio`] =
+          item.trustIndex[trustAudioKeyY1];
       });
 
       line["APRES FEEDBACK NEGATIF"];
 
       const keyAudioY2 = sortJSON(item.questionsAudio, "Yield2");
+      const trustIndexAudioY2 = sortJSON(
+        item.trustIndex,
+        "trustIndex-Yield2-questionsAudio",
+      );
       keyAudioY2.forEach((key, i) => {
         line[`Réponse Question ${i + 1} Video`] = item.questionsAudio[key];
+        const trustAudioKeyY2 = trustIndexAudioY2[i];
+        line[`Indice de confiance Q${i + 1} Audio`] =
+          item.trustIndex[trustAudioKeyY2];
+      });
+
+      const questionMdls = sortJSON(item.questionsMdls, "questionsMdls");
+      questionMdls.forEach((key, i) => {
+        line[`Réponse ${i + 1} Source`] = item.questionsMdls[key];
       });
 
       flattenedData.push(line);
