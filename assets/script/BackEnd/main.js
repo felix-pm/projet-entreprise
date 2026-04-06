@@ -531,7 +531,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
         Age: item.age[0],
         Sexe: item.sexe[0],
         "Date Passation": item.date[0],
-        "AVANT FEEDBACK NEGATIF": "",
+        "AVANT FEEDBACK NEGATIF VIDEO": "",
       };
 
       const keyVideoY1 = sortJSON(item.questionsVideo, "Yield1");
@@ -543,14 +543,15 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
       keyVideoY1.forEach((key, i) => {
         const TrKeyVideoY1 = TrVideoY1[i];
-        line[`TR Question ${i + 1} Video`] = item.chrono[TrKeyVideoY1];
-        line[`Réponse Question ${i + 1} Video`] = item.questionsVideo[key];
+        line[`TR Question ${i + 1} Video Y1`] = item.chrono[TrKeyVideoY1];
+        line[`Réponse Question ${i + 1} Video Y1`] = item.questionsVideo[key];
         const trustKeyVideoY1 = trustIndexVideoY1[i];
-        line[`Indice de confiance Q${i + 1} Video`] =
+        line[`Indice de confiance Q${i + 1} Video Y1`] =
           item.trustIndex[trustKeyVideoY1];
       });
 
-      line["APRES FEEDBACK NEGATIF"] = "";
+      line[`Yield 1 Vidéo`] = item.scoreVideoY1 + "/10";
+      line["APRES FEEDBACK NEGATIF VIDEO"] = "";
 
       const TrVideoY2 = sortJSON(item.chrono, "chrono-Yield2-questionsVideo");
       const keyVideoY2 = sortJSON(item.questionsVideo, "Yield2");
@@ -561,14 +562,16 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
       keyVideoY2.forEach((key, i) => {
         const TrKeyVideoY2 = TrVideoY2[i];
-        line[`TR Question ${i + 1} Video`] = item.chrono[TrKeyVideoY2];
-        line[`Réponse Question ${i + 1} Video`] = item.questionsVideo[key];
+        line[`TR Question ${i + 1} Video Y2`] = item.chrono[TrKeyVideoY2];
+        line[`Réponse Question ${i + 1} Video Y2`] = item.questionsVideo[key];
         const trustVideoKeyY2 = trustIndexVideoY2[i];
-        line[`Indice de confiance Q${i + 1} Video`] =
+        line[`Indice de confiance Q${i + 1} Video Y2`] =
           item.trustIndex[trustVideoKeyY2];
       });
-
-      line["AVANT FEEDBACK NEGATIF"];
+      line[`Yield 2 Vidéo`] = item.scoreVideoY2 + "/10";
+      line[`Shift Video`] = item.scoreShiftVideo + "/15";
+      line[`Total Suggestibilité Video`] = item.totalScoreVideo + "/25";
+      line["AVANT FEEDBACK NEGATIF AUDIO"] = "";
 
       const TrAudioY1 = sortJSON(item.chrono, "chrono-Yield1-questionsAudio");
       const keyAudioY1 = sortJSON(item.questionsAudio, "Yield1");
@@ -579,14 +582,14 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
       keyAudioY1.forEach((key, i) => {
         const TrKeyAudioY1 = TrAudioY1[i];
-        line[`TR Question ${i + 1} Audio`] = item.chrono[TrKeyAudioY1];
-        line[`Réponse Question ${i + 1} Audio`] = item.questionsAudio[key];
+        line[`TR Question ${i + 1} Audio Y1`] = item.chrono[TrKeyAudioY1];
+        line[`Réponse Question ${i + 1} Audio Y1`] = item.questionsAudio[key];
         const trustAudioKeyY1 = trustIndexAudioY1[i];
-        line[`Indice de confiance Q${i + 1} Audio`] =
+        line[`Indice de confiance Q${i + 1} Audio Y1`] =
           item.trustIndex[trustAudioKeyY1];
       });
-
-      line["APRES FEEDBACK NEGATIF"];
+      line[`Yield 1 Audio`] = item.scoreAudioY1 + "/10";
+      line["APRES FEEDBACK NEGATIF AUDIO"] = "";
 
       const TrAudioY2 = sortJSON(item.chrono, "chrono-Yield2-questionsAudio");
       const keyAudioY2 = sortJSON(item.questionsAudio, "Yield2");
@@ -596,12 +599,16 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
       );
       keyAudioY2.forEach((key, i) => {
         const trKeyAudioY2 = TrAudioY2[i];
-        line[`TR Question ${i + 1}`] = item.chrono[trKeyAudioY2];
-        line[`Réponse Question ${i + 1} Video`] = item.questionsAudio[key];
+        line[`TR Question ${i + 1} Audio Y2`] = item.chrono[trKeyAudioY2];
+        line[`Réponse Question ${i + 1} Audio Y2`] = item.questionsAudio[key];
         const trustAudioKeyY2 = trustIndexAudioY2[i];
-        line[`Indice de confiance Q${i + 1} Audio`] =
+        line[`Indice de confiance Q${i + 1} Audio Y2`] =
           item.trustIndex[trustAudioKeyY2];
       });
+
+      line[`Yield 2 Audio`] = item.scoreAudioY2 + "/10";
+      line[`Shift Audio`] = item.scoreShiftAudio + "/15";
+      line[`Total Suggestibilité Audio`] = item.totalScoreAudio + "/25";
 
       const questionMdls = sortJSON(item.questionsMdls, "questionsMdls");
       questionMdls.forEach((key, i) => {

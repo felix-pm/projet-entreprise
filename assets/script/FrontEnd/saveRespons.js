@@ -29,19 +29,24 @@ export function saveInSessionStorage(
   }
 }
 
-const currentYield = sessionStorage.getItem("currentYield");
-
 export async function clearSessionStorage(answers, questionType) {
+  const currentYield = sessionStorage.getItem("currentYield");
   let keysToDelete = [];
 
   const toutesLesCles = Object.keys(sessionStorage);
   const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
   toutesLesCles.forEach((key) => {
-    if (key.startsWith(`${currentYield}-questionsVideo`)) {
+    if (
+      key.startsWith("Yield1-questionsVideo") ||
+      key.startsWith("Yield2-questionsVideo")
+    ) {
       answers.questionsVideo[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
-    } else if (key.startsWith(`${currentYield}-questionsAudio`)) {
+    } else if (
+      key.startsWith("Yield1-questionsAudio") ||
+      key.startsWith("Yield2-questionsAudio")
+    ) {
       answers.questionsAudio[key] = sessionStorage.getItem(key);
       keysToDelete.push(key);
     } else if (key.startsWith("questionsMdls")) {

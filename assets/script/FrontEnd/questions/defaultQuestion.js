@@ -70,26 +70,6 @@ function showQuestion(index) {
     } else {
       allQuestions.textContent = "Terminer le questionnaire";
       allQuestions.href = `questionnaire.html`;
-      allQuestions.addEventListener("click", async (event) => {
-        event.preventDefault();
-
-        const numberPassation = sessionStorage.getItem("numberPassation");
-        const sexe = sessionStorage.getItem("sexe");
-        const age = sessionStorage.getItem("age");
-        const date = sessionStorage.getItem("date");
-
-        const answers = {
-          numberPassation: [numberPassation],
-          sexe: [sexe],
-          age: [age],
-          date: [date],
-          trustIndex: {},
-        };
-
-        answers[questionType] = {};
-
-        await clearSessionStorage(answers, questionType);
-      });
     }
 
     container.append(allQuestions);
@@ -97,62 +77,70 @@ function showQuestion(index) {
     const allQuestionsAnswer = document.querySelector(".recordvideoanswers");
 
     // Événement au clic sur "Enregistrer les données"
-    allQuestionsAnswer.addEventListener("click", async (event) => {
-      event.preventDefault();
+    if (currentYield !== "Yield1") {
+      allQuestionsAnswer.addEventListener("click", async (event) => {
+        event.preventDefault();
 
-      // --- 1. RÉCUPÉRATION DES RENSEIGNEMENTS ---
-      const numberPassation = sessionStorage.getItem("numberPassation");
-      const sexe = sessionStorage.getItem("sexe");
-      const age = sessionStorage.getItem("age");
-      const date = sessionStorage.getItem("date");
-      // const sAudio1Y1 = await calculScore(
-      //   "questionsAudio",
-      //   "Yield1-questionsAudio",
-      // );
-      // const sVideo1Y1 = await calculScore(
-      //   "questionsVideo",
-      //   "Yield1-questionsVideo",
-      // );
-      // const sAudio2Y2 = await calculScore(
-      //   "questionsAudio",
-      //   "Yield2-questionsAudio",
-      // );
-      // const sVideo2Y2 = await calculScore(
-      //   "questionsVideo",
-      //   "Yield2-questionsVideo",
-      // );
-      // const sShiftAudio = await calculShift("questionsAudio");
-      // const sShiftVideo = await calculShift("questionsVideo");
-      // const totalSAudio = sAudio2Y2 + sShiftAudio;
-      // const totalSVideo = sVideo2Y2 + sShiftVideo;
+        // --- 1. RÉCUPÉRATION DES RENSEIGNEMENTS ---
+        const numberPassation = sessionStorage.getItem("numberPassation");
+        const sexe = sessionStorage.getItem("sexe");
+        const age = sessionStorage.getItem("age");
+        const date = sessionStorage.getItem("date");
 
-      // --- 2. CRÉATION DE L'OBJET GLOBAL ---
-      const answers = {
-        numberPassation: [numberPassation],
-        sexe: [sexe],
-        age: [age],
-        date: [date],
-        trustIndex: {},
-        chrono: {},
-        // scoreAudio1: sAudio1Y1,
-        // scoreAudio2: sAudio2Y2,
-        // scoreVideo1: sVideo1Y1,
-        // scoreVideo2: sVideo2Y2,
-        // scoreShiftVideo: sShiftVideo,
-        // scoreShiftAudio: sShiftAudio,
-        // calculTotalVideo: totalSVideo,
-        // calculTotalAudio: totalSAudio,
-      };
+        // --- 2. CRÉATION DE L'OBJET GLOBAL ---
+        const answers = {
+          numberPassation: [numberPassation],
+          sexe: [sexe],
+          age: [age],
+          date: [date],
+          trustIndex: {},
+          chrono: {},
+        };
 
-      // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
-      answers[questionType] = {};
+        // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
+        answers[questionType] = {};
 
-      // --- 3. ENVOI À LA FONCTION DE SAUVEGARDE ---
-      // On passe "answers" ET "questionType" à clearSessionStorage
-      await clearSessionStorage(answers, questionType);
+        if (questionType === "questionsAudio") {
+          const sAudio1Y1 = await calculScore(
+            "questionsAudio",
+            "Yield1-questionsAudio",
+          );
+          const sAudio2Y2 = await calculScore(
+            "questionsAudio",
+            "Yield2-questionsAudio",
+          );
+          const sShiftAudio = await calculShift("questionsAudio");
+          const totalSAudio = sAudio2Y2 + sShiftAudio;
+          answers.scoreAudioY1 = sAudio1Y1;
+          answers.scoreAudioY2 = sAudio2Y2;
+          answers.scoreShiftAudio = sShiftAudio;
+          answers.totalScoreAudio = totalSAudio;
+        }
 
-      window.location.href = allQuestions.href;
-    });
+        if (questionType === "questionsVideo") {
+          const sVideo1Y1 = await calculScore(
+            "questionsVideo",
+            "Yield1-questionsVideo",
+          );
+          const sVideo2Y2 = await calculScore(
+            "questionsVideo",
+            "Yield2-questionsVideo",
+          );
+          const sShiftVideo = await calculShift("questionsVideo");
+          const totalSVideo = sVideo2Y2 + sShiftVideo;
+          answers.scoreVideoY1 = sVideo1Y1;
+          answers.scoreVideoY2 = sVideo2Y2;
+          answers.scoreShiftVideo = sShiftVideo;
+          answers.totalScoreVideo = totalSVideo;
+        }
+
+        // --- 3. ENVOI À LA FONCTION DE SAUVEGARDE ---
+        // On passe "answers" ET "questionType" à clearSessionStorage
+        await clearSessionStorage(answers, questionType);
+
+        window.location.href = allQuestions.href;
+      });
+    }
     return;
   }
 
@@ -187,8 +175,14 @@ function showQuestion(index) {
       "chrono",
     );
     allTimer += time;
-    currentIndex++;
-    showQuestion(currentIndex);
+
+    // Ne pas incrémenter ni appeler showQuestion ici si on attend le trustIndex
+    if (questionType != "questionsMdls") {
+      showTrustIndex(currentIndex); // on passe l'index courant
+    } else {
+      currentIndex++;
+      showQuestion(currentIndex);
+    }
   };
 
   btnVrai.addEventListener("click", () =>
@@ -198,49 +192,42 @@ function showQuestion(index) {
     handleButtonClick(btnFaux.textContent),
   );
 
-  if (questionType != "questionsMdls") {
-    showTrustIndex(btnVrai, index);
-    showTrustIndex(btnFaux, index);
-  }
-
   divBtn.append(btnVrai, btnFaux);
   container.append(text, divBtn);
 }
 
-function showTrustIndex(button, index) {
-  button.addEventListener("click", () => {
-    modalIndex.classList.remove("hidden");
+function showTrustIndex(index) {
+  modalIndex.classList.remove("hidden");
 
-    const buttonTrustIndexLow = document.querySelector(".Low");
-    const buttonTrustIndexMiddle = document.querySelector(".Middle");
-    const buttonTrustIndexHigh = document.querySelector(".High");
+  const buttonTrustIndexLow = document.querySelector(".Low");
+  const buttonTrustIndexMiddle = document.querySelector(".Middle");
+  const buttonTrustIndexHigh = document.querySelector(".High");
 
-    hiddenTrustModal(buttonTrustIndexLow, index);
-    hiddenTrustModal(buttonTrustIndexMiddle, index);
-    hiddenTrustModal(buttonTrustIndexHigh, index);
-  });
-}
-
-function hiddenTrustModal(button, index) {
-  button.onclick = () => {
-    if (button.textContent == "Low") {
-      sessionStorage.setItem(
-        `trustIndex-${currentYield}-${questionType}${index + 1}`,
-        1,
-      );
-    } else if (button.textContent == "Middle") {
-      sessionStorage.setItem(
-        `trustIndex-${currentYield}-${questionType}${index + 1}`,
-        2,
-      );
-    } else if (button.textContent == "High") {
-      sessionStorage.setItem(
-        `trustIndex-${currentYield}-${questionType}${index + 1}`,
-        3,
-      );
-    }
-    modalIndex.classList.add("hidden");
-  };
+  [buttonTrustIndexLow, buttonTrustIndexMiddle, buttonTrustIndexHigh].forEach(
+    (button) => {
+      button.onclick = () => {
+        if (button.classList.contains("Low")) {
+          sessionStorage.setItem(
+            `trustIndex-${currentYield}-${questionType}${index + 1}`,
+            1,
+          );
+        } else if (button.classList.contains("Middle")) {
+          sessionStorage.setItem(
+            `trustIndex-${currentYield}-${questionType}${index + 1}`,
+            2,
+          );
+        } else if (button.classList.contains("High")) {
+          sessionStorage.setItem(
+            `trustIndex-${currentYield}-${questionType}${index + 1}`,
+            3,
+          );
+        }
+        modalIndex.classList.add("hidden");
+        currentIndex++; // On incrémente seulement après le choix
+        showQuestion(currentIndex); // On passe à la question suivante après le choix
+      };
+    },
+  );
 }
 
 async function init() {
