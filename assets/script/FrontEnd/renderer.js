@@ -31,10 +31,12 @@ function getScoreTitle(getExternalTitleScore, scoreTitleTable) {
 }
 
 function saveJson() {
-  const buttonSaveJson = document.querySelector("#saveJson");
+  // On cible le FORMULAIRE au lieu du bouton
+  const formTest = document.querySelector("#form-test");
 
-  buttonSaveJson.addEventListener("click", (event) => {
-    event.preventDefault();
+  // On écoute le 'submit' sur le formulaire
+  formTest.addEventListener("submit", (event) => {
+    event.preventDefault(); // Empêche le rechargement de la page
 
     const saveQuestionVideo = document.querySelectorAll(".questions-video");
     const saveQuestionAudio = document.querySelectorAll(".questions-audio");
@@ -43,32 +45,36 @@ function saveJson() {
       ".input-scores-externes",
     );
 
-    const titleValidator = document.querySelector("#title-test").value.trim();
+    const title = document.querySelector("#title-test").value.trim();
     const videoInput = document.querySelector("#video-url");
     const audioInput = document.querySelector("#audio-url");
 
-    const folderCreated = createFileSurvey();
+    // --- 1. VÉRIFICATION MANUELLE DES FICHIERS ---
 
-    if (!folderCreated) {
-      alert("Veuillez entrer un titre avant d'enregistrer.");
-      return;
+    // On vérifie s'il y a au moins un fichier sélectionné pour la vidéo
+    if (!videoInput.files || videoInput.files.length === 0) {
+      alert("⚠️ Veuillez importer un fichier vidéo.");
+      return; // Le "return" arrête immédiatement l'exécution de la fonction ici
     }
 
-    // Utilisation de la nouvelle fonction sécurisée d'Electron via le preload
-    let videoValidator = "";
-    if (videoInput.files.length > 0) {
-      videoValidator =
-        window.electronAPI.getFilePath(videoInput.files[0]) || "";
+    // On vérifie s'il y a au moins un fichier sélectionné pour l'audio
+    if (!audioInput.files || audioInput.files.length === 0) {
+      alert("⚠️ Veuillez importer un fichier audio.");
+      return; // Le "return" arrête l'exécution ici
     }
 
-    let audioValidator = "";
-    if (audioInput && audioInput.files.length > 0) {
-      audioValidator =
-        window.electronAPI.getFilePath(audioInput.files[0]) || "";
-    }
+    // --- 2. SUITE DU CODE (s'exécute uniquement si les fichiers sont présents) ---
+
+    createFileSurvey();
+
+    // L'appel à Electron est maintenant 100% sûr car on est certain qu'il y a des fichiers
+    let videoValidator =
+      window.electronAPI.getFilePath(videoInput.files[0]) || "";
+    let audioValidator =
+      window.electronAPI.getFilePath(audioInput.files[0]) || "";
 
     const data = {
-      title: titleValidator,
+      title: title,
       video: videoValidator,
       audio: audioValidator,
       questionsVideo: [],
@@ -82,83 +88,13 @@ function saveJson() {
     saveQuestion(saveQuestionMdls, "answer-mdls", data.questionsMdls);
     getScoreTitle(getExternalTitleScore, data.externalScoreTitle);
 
-    const isTitleOk = titleValidator !== "";
-    const isVideoLinkOk = videoValidator !== "";
-    const isAudioLinkOk = audioValidator !== "";
+    window.electronAPI.sendData(data);
 
-    const isAudioAnswerOk = isValid(data.questionsAudio, 15);
-    const isVideoAnswerOk = isValid(data.questionsVideo, 15);
-    const isMdlsAnswerOk = isValid(data.questionsMdls, 10);
+    window.location.href = "../index.html";
 
-    if (
-      isAudioAnswerOk &&
-      isVideoAnswerOk &&
-      isMdlsAnswerOk &&
-      isTitleOk &&
-      isVideoLinkOk &&
-      isAudioLinkOk
-    ) {
-      downloadJson(data);
-      setTimeout(() => {
-        window.location.href = "../index.html";
-      }, 500);
-    } else {
-      let errorMessage = "Erreur de validation :\n";
-      if (!isTitleOk) {
-        errorMessage += "Veuillez rentrer un titre\n";
-      }
-      if (!isVideoLinkOk) {
-        errorMessage += "Veuillez rentrer un lien vidéo\n";
-      }
-      if (!isAudioLinkOk) {
-        errorMessage += "Veuillez rentrer un lien audio\n";
-      }
-      if (!isAudioAnswerOk) {
-        errorMessage +=
-          "Veuillez compléter tous les champs dans la section audio\n";
-      }
-      if (!isVideoAnswerOk) {
-        errorMessage +=
-          "Veuillez compléter tous les champs dans la section vidéo\n";
-      }
-      if (!isMdlsAnswerOk) {
-        errorMessage +=
-          "Veuillez compléter tous les champs dans la section mémoire de la source\n";
-      }
-      const alertBox = document.querySelector("#custom-alert");
-      const alertText = document.querySelector("#alert-text");
-
-      alertText.textContent = errorMessage;
-      alertBox.style.display = "block";
-
-      const firstEmpty = document.querySelector("#title-test");
-      if (firstEmpty) firstEmpty.focus();
-    }
+    const firstEmpty = document.querySelector("#title-test");
+    if (firstEmpty) firstEmpty.focus();
   });
-}
-
-function getTitle(data) {
-  return data.title;
-}
-
-function isValid(array, expectedCount) {
-  const rightCount = array.length === expectedCount;
-  let allAnswered = true;
-
-  for (let i = 0; i < array.length; i++) {
-    if (array[i].answer === null) {
-      allAnswered = false;
-      break;
-    }
-  }
-  if (rightCount && allAnswered) {
-    return true;
-  } else return false;
-}
-
-function downloadJson(data) {
-  window.electronAPI.sendData(data);
-  alert("Le questionnaire a été enregistré dans tes Documents !");
 }
 
 saveJson();

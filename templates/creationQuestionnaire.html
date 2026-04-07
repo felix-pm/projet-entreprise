@@ -15,7 +15,7 @@
       <form id="form-test">
         <div class="titleProtocole">
           <h3>Nom du protocole</h3>
-          <input type="text" id="title-test" name="title-test" />
+          <input type="text" id="title-test" name="title-test" required />
         </div>
 
         <div id="importFile">
@@ -70,31 +70,6 @@
         </div>
         <button type="submit" id="saveJson">Enregistrer</button>
       </form>
-    </div>
-    <div
-      id="custom-alert"
-      style="
-        display: none;
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #ff4444;
-        color: white;
-        padding: 15px;
-        border-radius: 5px;
-        z-index: 9999;
-        white-space: pre-line;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      "
-    >
-      <span id="alert-text"></span>
-      <button
-        onclick="this.parentElement.style.display = 'none'"
-        style="margin-left: 15px"
-      >
-        OK
-      </button>
     </div>
 
     <script
