@@ -11,7 +11,7 @@ export async function calculScore(questionName, yieldName) {
   questionsProtocole.forEach((p, i) => {
     const key = `${yieldName}${i + 1}`;
     const answerGiven = sessionStorage.getItem(key);
-    if (answerGiven == p.answer && p.answer == "Faux") {
+    if (answerGiven !== p.answer && p.answer == "Faux") {
       score++;
     }
   });

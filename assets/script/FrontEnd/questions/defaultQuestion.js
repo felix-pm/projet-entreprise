@@ -110,7 +110,7 @@ function showQuestion(index) {
             "Yield2-questionsAudio",
           );
           const sShiftAudio = await calculShift("questionsAudio");
-          const totalSAudio = sAudio2Y2 + sShiftAudio;
+          const totalSAudio = sAudio1Y1 + sShiftAudio;
           answers.scoreAudioY1 = sAudio1Y1;
           answers.scoreAudioY2 = sAudio2Y2;
           answers.scoreShiftAudio = sShiftAudio;
@@ -127,7 +127,7 @@ function showQuestion(index) {
             "Yield2-questionsVideo",
           );
           const sShiftVideo = await calculShift("questionsVideo");
-          const totalSVideo = sVideo2Y2 + sShiftVideo;
+          const totalSVideo = sVideo1Y1 + sShiftVideo;
           answers.scoreVideoY1 = sVideo1Y1;
           answers.scoreVideoY2 = sVideo2Y2;
           answers.scoreShiftVideo = sShiftVideo;
