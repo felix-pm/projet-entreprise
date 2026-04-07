@@ -60,22 +60,10 @@ h1 {
   text-align: center;
 }
 
-/* --- LE NOUVEAU DESIGN POUR LA CARTE AUDIO --- */
-section {
-  background-color: #ffffff; /* Le fond blanc qui fait ressortir le lecteur */
-  padding: 20px 30px; /* Un peu d'air autour du lecteur */
-  border-radius: 12px; /* Les fameux coins arrondis */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* L'ombre douce pour la profondeur */
-  width: 100%;
-  max-width: 500px; /* Taille optimale pour qu'un lecteur audio ne paraisse pas trop étiré */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 /* --- LE LECTEUR AUDIO LUI-MÊME --- */
 #audio {
   width: 100%; /* S'étale bien dans toute sa jolie boîte blanche */
   outline: none; /* Enlève la bordure de sélection bleue sur certains navigateurs */
   border-radius: 8px; /* Arrondit légèrement le lecteur natif lui-même */
+  pointer-events: none;
 }
