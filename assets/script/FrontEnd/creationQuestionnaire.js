@@ -22,18 +22,21 @@ function survey(
     inputQuestion.className = className;
     inputQuestion.dataset.id = i;
     inputQuestion.classList.add("inputQuestion");
+    inputQuestion.required = true;
 
     checkbox1.type = "radio";
     checkbox1.name = checkboxName + i;
     checkbox1.className = "checkboxSurvey";
     choice1.textContent = choice1Text;
     checkbox1.value = choice1Text;
+    checkbox1.required = true;
 
     checkbox2.type = "radio";
     checkbox2.name = checkboxName + i;
     checkbox2.className = "checkboxSurvey";
     choice2.textContent = choice2Text;
     checkbox2.value = choice2Text;
+    checkbox2.required = true;
 
     divQuestion.classList.add("divQuestion");
 
