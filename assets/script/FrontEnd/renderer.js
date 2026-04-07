@@ -58,17 +58,10 @@ function saveJson() {
       return; // Le "return" arrête immédiatement l'exécution de la fonction ici
     }
 
-<<<<<<< HEAD
     // On vérifie s'il y a au moins un fichier sélectionné pour l'audio
     if (!audioInput.files || audioInput.files.length === 0) {
       alert("⚠️ Veuillez importer un fichier audio.");
       return; // Le "return" arrête l'exécution ici
-=======
-    let videoValidator = "";
-    if (videoInput.files.length > 0) {
-      videoValidator =
-        window.electronAPI.getFilePath(videoInput.files[0]) || "";
->>>>>>> scoreExterieur
     }
 
     // --- 2. SUITE DU CODE (s'exécute uniquement si les fichiers sont présents) ---
@@ -102,10 +95,8 @@ function saveJson() {
 
     window.location.href = "../index.html";
 
-<<<<<<< HEAD
     const firstEmpty = document.querySelector("#title-test");
     if (firstEmpty) firstEmpty.focus();
-=======
     if (
       isAudioAnswerOk &&
       isVideoAnswerOk &&
@@ -150,7 +141,6 @@ function saveJson() {
       const firstEmpty = document.querySelector("#title-test");
       if (firstEmpty) firstEmpty.focus();
     }
->>>>>>> scoreExterieur
   });
 }
 
