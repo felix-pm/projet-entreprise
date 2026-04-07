@@ -4,6 +4,8 @@ const title = sessionStorage.getItem("titreQuestionnaireActuel");
 
 const allLink = document.querySelectorAll(".linkQuestion");
 
+// const numberPassation = sessionStorage.get;
+
 allLink.forEach((link, index) => {
   if (sessionStorage.getItem(`lien-${index}`) === "true") {
     link.removeAttribute("href");

@@ -7,6 +7,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
 
   getQuestionnaires: () => ipcRenderer.invoke("get-questionnaires"),
   getElement: (title, key) => ipcRenderer.invoke("get-element", title, key),
+  getAllElementsFolder: (title, key) =>
+    ipcRenderer.invoke("get-allElements-folder", title, key),
 
   // fonction sécurisée pour extraire le chemin absolu du fichier
   getFilePath: (file) => {

@@ -8,7 +8,6 @@ async function displayQuestionnaires(title) {
     listQuestionnaire.forEach((questionnaire) => {
       const link = document.createElement("a");
       link.textContent = questionnaire.title;
-      link.href = "questionnaire.html";
       link.classList.add("link");
 
       link.addEventListener("click", () => {
@@ -16,6 +15,14 @@ async function displayQuestionnaires(title) {
         const titreQuestion = sessionStorage.getItem(
           "titreQuestionnaireActuel",
         );
+        const urlParams = new URLSearchParams(window.location.search);
+        const source = urlParams.get("source");
+
+        if (source === "btnReturnTest") {
+          window.location.href = "allNumberPassation.html";
+        } else {
+          window.location.href = "questionnaire.html";
+        }
         console.log(titreQuestion);
       });
 

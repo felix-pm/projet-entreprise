@@ -180,6 +180,20 @@ ipcMain.handle("get-element", async (event, title, key) => {
   }
 });
 
+ipcMain.handle("get-allElements-folder", async (event, title, key) => {
+  try {
+    const filePath = path.join(folderDataProtocole, title, "yield1.json");
+    const rawData = await fs.promises.readFile(filePath, "utf-8");
+    const data = JSON.parse(rawData);
+    console.log("Chemin tenté :", filePath);
+    const arrayReturn = data.map((patient) => patient[key]);
+    return arrayReturn;
+  } catch (error) {
+    console.error("Erreur lors de la lecture de l'élément :", error);
+    return [];
+  }
+});
+
 // Pour les renseignements
 ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
   try {
