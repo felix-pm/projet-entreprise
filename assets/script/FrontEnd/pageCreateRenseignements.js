@@ -59,7 +59,6 @@ function saveJsonChildren() {
 
 function downloadJson(childrenDatas) {
   window.electronAPI.sendData2(childrenDatas);
-  alert("Le questionnaire a été enregistré dans tes Documents !");
 }
 
 saveJsonChildren();
