@@ -18,12 +18,11 @@ function saveQuestion(saveQuestionName, inputName, dataQuestionPush) {
 }
 
 function getScoreTitle(getExternalTitleScore, scoreTitleTable) {
-  getExternalTitleScore.forEach((input) => {
+  // On ajoute "index" pour générer un ID (1, 2, 3...) car tes inputs n'ont pas de dataset.id
+  getExternalTitleScore.forEach((input, index) => {
     if (input.value.trim() !== "") {
-      const id = input.dataset.id;
-
       scoreTitleTable.push({
-        id: id,
+        id: index + 1,
         scoreTitle: input.value,
       });
     }
@@ -41,8 +40,10 @@ function saveJson() {
     const saveQuestionVideo = document.querySelectorAll(".questions-video");
     const saveQuestionAudio = document.querySelectorAll(".questions-audio");
     const saveQuestionMdls = document.querySelectorAll(".questions-mdls");
+
+    // CORRECTION ICI : On cible les inputs texte à l'intérieur de tes labels id="input-scores-externes"
     const getExternalTitleScore = document.querySelectorAll(
-      ".input-scores-externes",
+      'label[id="input-scores-externes"] input[type="text"]',
     );
 
     const title = document.querySelector("#title-test").value.trim();
@@ -57,10 +58,17 @@ function saveJson() {
       return; // Le "return" arrête immédiatement l'exécution de la fonction ici
     }
 
+<<<<<<< HEAD
     // On vérifie s'il y a au moins un fichier sélectionné pour l'audio
     if (!audioInput.files || audioInput.files.length === 0) {
       alert("⚠️ Veuillez importer un fichier audio.");
       return; // Le "return" arrête l'exécution ici
+=======
+    let videoValidator = "";
+    if (videoInput.files.length > 0) {
+      videoValidator =
+        window.electronAPI.getFilePath(videoInput.files[0]) || "";
+>>>>>>> scoreExterieur
     }
 
     // --- 2. SUITE DU CODE (s'exécute uniquement si les fichiers sont présents) ---
@@ -80,20 +88,69 @@ function saveJson() {
       questionsVideo: [],
       questionsAudio: [],
       questionsMdls: [],
-      externalScoreTitle: [],
+      externalScoreTitle: [], // Tes titres vont bien s'enregistrer ici !
     };
 
     saveQuestion(saveQuestionAudio, "answer-audio", data.questionsAudio);
     saveQuestion(saveQuestionVideo, "answer-video", data.questionsVideo);
     saveQuestion(saveQuestionMdls, "answer-mdls", data.questionsMdls);
+
+    // Appel de la fonction pour remplir "externalScoreTitle"
     getScoreTitle(getExternalTitleScore, data.externalScoreTitle);
 
     window.electronAPI.sendData(data);
 
     window.location.href = "../index.html";
 
+<<<<<<< HEAD
     const firstEmpty = document.querySelector("#title-test");
     if (firstEmpty) firstEmpty.focus();
+=======
+    if (
+      isAudioAnswerOk &&
+      isVideoAnswerOk &&
+      isMdlsAnswerOk &&
+      isTitleOk &&
+      isVideoLinkOk &&
+      isAudioLinkOk
+    ) {
+      downloadJson(data); // Utilise bien ta fonction preload existante
+      setTimeout(() => {
+        window.location.href = "../index.html";
+      }, 500);
+    } else {
+      let errorMessage = "Erreur de validation :\n";
+      if (!isTitleOk) {
+        errorMessage += "Veuillez rentrer un titre\n";
+      }
+      if (!isVideoLinkOk) {
+        errorMessage += "Veuillez rentrer un lien vidéo\n";
+      }
+      if (!isAudioLinkOk) {
+        errorMessage += "Veuillez rentrer un lien audio\n";
+      }
+      if (!isAudioAnswerOk) {
+        errorMessage +=
+          "Veuillez compléter tous les champs dans la section audio\n";
+      }
+      if (!isVideoAnswerOk) {
+        errorMessage +=
+          "Veuillez compléter tous les champs dans la section vidéo\n";
+      }
+      if (!isMdlsAnswerOk) {
+        errorMessage +=
+          "Veuillez compléter tous les champs dans la section mémoire de la source\n";
+      }
+      const alertBox = document.querySelector("#custom-alert");
+      const alertText = document.querySelector("#alert-text");
+
+      alertText.textContent = errorMessage;
+      alertBox.style.display = "block";
+
+      const firstEmpty = document.querySelector("#title-test");
+      if (firstEmpty) firstEmpty.focus();
+    }
+>>>>>>> scoreExterieur
   });
 }
 

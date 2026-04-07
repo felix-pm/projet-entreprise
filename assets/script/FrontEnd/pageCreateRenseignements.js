@@ -53,7 +53,7 @@ function saveJsonChildren() {
       date: todayDate,
     };
     downloadJson(childrenDatas);
-    window.location.href = "allQuestionnaire.html";
+    window.location.href = "allQuestionnaire.html?type=question";
   });
 }
 
