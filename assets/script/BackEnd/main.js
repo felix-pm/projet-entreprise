@@ -646,6 +646,6 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
     console.log("Succès");
   } catch (err) {
-    console.error("Erreur de la génération : ", err);
+    console.error("Erreur de la génération : ", err, folderDataProtocole);
   }
 });
