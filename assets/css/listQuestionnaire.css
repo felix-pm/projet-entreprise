@@ -49,8 +49,10 @@ main {
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   width: 600px;
-  height: 45s0px;
+  height: 400px;
+  max-height: 400px;
   overflow-y: auto;
+  padding-right: 10px;
 }
 
 /* --- LE STYLE DES LIENS (Générés par ton JS) --- */

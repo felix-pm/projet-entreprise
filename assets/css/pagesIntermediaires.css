@@ -1,0 +1,57 @@
+/* assets/css/pagesIntermediaires.css */
+
+/* Style général de la page : centre le contenu verticalement et horizontalement */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f6; /* Couleur de fond douce */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Prend toute la hauteur de l'écran */
+  color: #333;
+}
+
+/* Boîte principale contenant le texte et le bouton */
+main {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Légère ombre pour faire ressortir la boîte */
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+/* Style des textes d'instruction */
+main p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+main p:last-of-type {
+  margin-bottom: 30px; /* Un peu plus d'espace avant le bouton */
+}
+
+/* Transformation du lien "Continuer" en bouton */
+main a {
+  display: inline-block;
+  background-color: #4caf50; /* Vert (tu peux changer selon ta charte graphique) */
+  color: white;
+  text-decoration: none;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Effet au survol du bouton */
+main a:hover {
+  background-color: #45a049;
+  transform: scale(1.05); /* Grossit très légèrement au survol */
+}
