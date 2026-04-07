@@ -7,7 +7,7 @@ export async function calculScore(questionName, yieldName) {
 
   let score = 0;
 
-  // Parcours l'objet protocole et compare les réponses données avec les réponses du protocole
+  // Parcours l'objet protocole et compare les réponses données avec les réponses du protocole,
   questionsProtocole.forEach((p, i) => {
     const key = `${yieldName}${i + 1}`;
     const answerGiven = sessionStorage.getItem(key);

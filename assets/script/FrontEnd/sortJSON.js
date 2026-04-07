@@ -3,7 +3,7 @@ export function sortJSON(itemName, yieldNumber) {
     return [];
   }
 
-  //   Filtre selon le numéro du Yield puis la fonction sort tri dans l'ordre croissant
+  //   Filtre selon le numéro du Yield puis la fonction sort tri dans l'ordre croissant,
   return Object.keys(itemName)
     .filter((key) => key.startsWith(yieldNumber))
     .sort((a, b) => {

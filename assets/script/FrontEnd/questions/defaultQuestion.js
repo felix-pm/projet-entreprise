@@ -76,7 +76,7 @@ function showQuestion(index) {
 
     const allQuestionsAnswer = document.querySelector(".recordvideoanswers");
 
-    // Événement au clic sur "Enregistrer les données"
+    // Événement au clic sur "Enregistrer les données",
     if (currentYield !== "Yield1") {
       allQuestionsAnswer.addEventListener("click", async (event) => {
         event.preventDefault();
