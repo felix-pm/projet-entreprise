@@ -90,12 +90,13 @@ function showQuestion(index) {
         // --- 2. CRÉATION DE L'OBJET GLOBAL ---
         const answers = {
           numberPassation: [numberPassation],
-          sexe: [sexe],
-          age: [age],
-          date: [date],
           trustIndex: {},
           chrono: {},
         };
+
+        if (sexe) answers.sexe = [sexe];
+        if (age) answers.age = [age];
+        if (date) answers.date = [date];
 
         // On crée dynamiquement la clé "questionsVideo" ou "questionsAudio" selon l'URL
         answers[questionType] = {};

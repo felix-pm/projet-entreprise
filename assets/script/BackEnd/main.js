@@ -194,6 +194,18 @@ ipcMain.handle("get-allElements-folder", async (event, title, key) => {
   }
 });
 
+ipcMain.handle("get-all-patients", async (event, title) => {
+  try {
+    const filePath = path.join(folderDataProtocole, title, "yield1.json");
+    const rawData = await fs.promises.readFile(filePath, "utf-8");
+    const data = JSON.parse(rawData);
+    return data;
+  } catch (err) {
+    console.error("Erreur : ", err);
+    return [];
+  }
+});
+
 // Pour les renseignements
 ipcMain.on("form-renseignements", (event, receivedDataRenseignements) => {
   try {

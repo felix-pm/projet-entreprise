@@ -1,31 +1,64 @@
-const titleQuestionnaire = document.getElementById("titleQuestionnaire");
+async function checkAndDisableLink() {
+  const title = sessionStorage.getItem("titreQuestionnaireActuel");
+  const allLink = document.querySelectorAll(".linkQuestion");
+  const currentNumber = sessionStorage.getItem("numberPassation");
+  const titleQuestionnaire = document.getElementById("titleQuestionnaire");
 
-const title = sessionStorage.getItem("titreQuestionnaireActuel");
-
-const allLink = document.querySelectorAll(".linkQuestion");
-
-// const numberPassation = sessionStorage.get;
-
-allLink.forEach((link, index) => {
-  if (sessionStorage.getItem(`lien-${index}`) === "true") {
-    link.removeAttribute("href");
-    link.style.color = "gray";
-    link.style.cursor = "default";
-    link.style.pointerEvents = "none";
-  }
-
-  link.addEventListener("click", (event) => {
-    sessionStorage.setItem(`lien-${index}`, "true");
-  });
-});
-
-async function displayQuestionnaires() {
   try {
     const titleQ = await window.electronAPI.getElement(title, "title");
     titleQuestionnaire.textContent = `Questionnaire : ${titleQ}`;
-  } catch (error) {
-    console.error("Impossible de charger le titre du questionnaire :", error);
+
+    // Récupération des données patients
+    const allPatients = await window.electronAPI.getAllPatients(title);
+    const currentPatient = allPatients.find(
+      (p) => String(p.numberPassation) === String(currentNumber),
+    );
+
+    allLink.forEach((link, index) => {
+      const type = link.getAttribute("data-type");
+      let alreadyDone = false;
+
+      // Vérifie le Json
+      if (currentPatient) {
+        if (
+          (type === "video" &&
+            currentPatient.questionsVideo &&
+            Object.keys(currentPatient.questionsVideo).length > 0) ||
+          (type === "audio" &&
+            currentPatient.questionsAudio &&
+            Object.keys(currentPatient.questionsAudio).length > 0) ||
+          (type === "mdls" &&
+            currentPatient.questionsMdls &&
+            Object.keys(currentPatient.questionsMdls).length > 0)
+        ) {
+          alreadyDone = true;
+        }
+      }
+
+      // Vérifie le sessionStorage
+      if (sessionStorage.getItem(`lien-${index}`) === "true") {
+        alreadyDone = true;
+      }
+
+      // Affiche en gris si les question ont été effectuées
+      if (alreadyDone) {
+        disableLink(link);
+      } else {
+        link.addEventListener("click", () => {
+          sessionStorage.setItem(`lien-${index}`, "true");
+        });
+      }
+    });
+  } catch (err) {
+    console.error("Erreur : ", err);
   }
 }
 
-displayQuestionnaires();
+function disableLink(link) {
+  link.removeAttribute("href");
+  link.style.color = "gray";
+  link.style.cursor = "default";
+  link.style.pointerEvents = "none";
+}
+
+checkAndDisableLink();

@@ -19,10 +19,7 @@ async function showAllNumberPassation() {
     container.appendChild(numberPassationButton);
 
     numberPassationButton.addEventListener("click", () => {
-      const numberPassationPatient = sessionStorage.setItem(
-        number,
-        "numeroPassationPatient",
-      );
+      sessionStorage.setItem("numberPassation", number);
       window.location.href = "questionnaire.html";
     });
   });
