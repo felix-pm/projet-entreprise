@@ -625,7 +625,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
     // Ajoute la feuille au classeur excel
     xlsx.utils.book_append_sheet(workbook, workSheet);
-    const outputPath = path.join(folderData, "convertedToExcel.xlsx");
+    const outputPath = path.join(folderDataProtocole, "convertedToExcel.xlsx");
     // Ajoute le classeur au chemin
     xlsx.writeFile(workbook, outputPath);
 
