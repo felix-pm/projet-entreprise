@@ -1,24 +1,32 @@
-const btnBack = document.getElementById("btnBack");
+const title = sessionStorage.getItem("titreQuestionnaireActuel");
+const div = document.getElementById("externalScore");
 
-btnBack.addEventListener("click", (event) => {
-  window.location.href = "questionnaire.html";
-});
+async function createAffichageScoreExterieur() {
+  const externalScoreTitles = await window.electronAPI.getElement(
+    title,
+    "externalScoreTitle",
+  );
 
-const titleScore = document.getElementById("titleScore");
-const scoreValue = document.getElementById("scoreValue");
+  externalScoreTitles.forEach((item) => {
+    const divInterieur = document.createElement("div");
 
-const numberPassation = sessionStorage.getItem("numberPassation");
+    const textQuestion = document.createElement("label");
+    textQuestion.textContent = item.scoreTitle;
 
-const scoreExterieur = { [numberPassation]: {} };
+    const input = document.createElement("input");
+    input.type = "text";
+    input.dataset.scoreName = item.scoreTitle;
+    input.className = "input-score-exterieur";
 
-const buttonRecordScore = document.getElementById("recordScore");
+    divInterieur.append(textQuestion, input);
+    div.append(divInterieur);
+  });
+}
 
-buttonRecordScore.addEventListener("click", () => {
-  window.electronAPI.savescoreJson(scoreExterieur);
-  scoreExterieur[`${numberPassation}`][`${titleScore.value}`] =
-    scoreValue.value;
-  // scoreExterieur[numberPassation].push(titleScore.value, scoreValue.value);
-  console.log(scoreExterieur);
-  scoreValue.value = "";
-  titleScore.value = "";
-});
+// const buttonRecordScore = document.getElementById("recordScore");
+
+// buttonRecordScore.addEventListener("click", () => {
+//   window.electronAPI.savescoreJson(scoreExterieur);
+// });
+
+createAffichageScoreExterieur();

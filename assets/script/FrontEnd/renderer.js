@@ -18,12 +18,11 @@ function saveQuestion(saveQuestionName, inputName, dataQuestionPush) {
 }
 
 function getScoreTitle(getExternalTitleScore, scoreTitleTable) {
-  getExternalTitleScore.forEach((input) => {
+  // On ajoute "index" pour générer un ID (1, 2, 3...) car tes inputs n'ont pas de dataset.id
+  getExternalTitleScore.forEach((input, index) => {
     if (input.value.trim() !== "") {
-      const id = input.dataset.id;
-
       scoreTitleTable.push({
-        id: id,
+        id: index + 1,
         scoreTitle: input.value,
       });
     }
@@ -39,8 +38,10 @@ function saveJson() {
     const saveQuestionVideo = document.querySelectorAll(".questions-video");
     const saveQuestionAudio = document.querySelectorAll(".questions-audio");
     const saveQuestionMdls = document.querySelectorAll(".questions-mdls");
+
+    // CORRECTION ICI : On cible les inputs texte à l'intérieur de tes labels id="input-scores-externes"
     const getExternalTitleScore = document.querySelectorAll(
-      ".input-scores-externes",
+      'label[id="input-scores-externes"] input[type="text"]',
     );
 
     const titleValidator = document.querySelector("#title-test").value.trim();
@@ -54,7 +55,6 @@ function saveJson() {
       return;
     }
 
-    // Utilisation de la nouvelle fonction sécurisée d'Electron via le preload
     let videoValidator = "";
     if (videoInput.files.length > 0) {
       videoValidator =
@@ -74,12 +74,14 @@ function saveJson() {
       questionsVideo: [],
       questionsAudio: [],
       questionsMdls: [],
-      externalScoreTitle: [],
+      externalScoreTitle: [], // Tes titres vont bien s'enregistrer ici !
     };
 
     saveQuestion(saveQuestionAudio, "answer-audio", data.questionsAudio);
     saveQuestion(saveQuestionVideo, "answer-video", data.questionsVideo);
     saveQuestion(saveQuestionMdls, "answer-mdls", data.questionsMdls);
+
+    // Appel de la fonction pour remplir "externalScoreTitle"
     getScoreTitle(getExternalTitleScore, data.externalScoreTitle);
 
     const isTitleOk = titleValidator !== "";
@@ -98,7 +100,7 @@ function saveJson() {
       isVideoLinkOk &&
       isAudioLinkOk
     ) {
-      downloadJson(data);
+      downloadJson(data); // Utilise bien ta fonction preload existante
       setTimeout(() => {
         window.location.href = "../index.html";
       }, 500);

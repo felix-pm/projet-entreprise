@@ -1,4 +1,6 @@
 const container = document.querySelector(".allQuestionnaire");
+const newUrlParam = new URLSearchParams(window.location.search);
+const scoreExt = newUrlParam.get("type");
 
 async function displayQuestionnaires(title) {
   try {
@@ -8,7 +10,12 @@ async function displayQuestionnaires(title) {
     listQuestionnaire.forEach((questionnaire) => {
       const link = document.createElement("a");
       link.textContent = questionnaire.title;
-      link.href = "questionnaire.html";
+      if (scoreExt == "question") {
+        link.href = "questionnaire.html";
+      } else {
+        link.href = "scoresExterieures.html";
+      }
+
       link.classList.add("link");
 
       link.addEventListener("click", () => {

@@ -28,4 +28,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   saveIndiceConfiance: (answers, title) =>
     ipcRenderer.invoke("trustIndex", answers, title),
   saveChrono: (answers, title) => ipcRenderer.invoke("chrono", answers, title),
+  // saveScoreExterieur: (answers, title) =>
+  //   ipcRenderer.invoke("scoreExterieur", answers, title),
 });
