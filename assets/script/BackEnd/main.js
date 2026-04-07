@@ -17,6 +17,7 @@ const folderDataProtocole = path.join(
   app.getPath("documents"),
   "psy/mes-donnees",
 );
+const folderDataDlExcel = path.join(app.getPath("downloads"));
 let folderData = path.join(app.getPath("documents"), "psy/mes-donnees"); // Dossier sécurisé par défaut d'Electron
 let renseigntmentsJson = path.join(folderData, "renseignements.json");
 let yield2Json = path.join(folderData, "yield2.json");
@@ -625,7 +626,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
 
     // Ajoute la feuille au classeur excel
     xlsx.utils.book_append_sheet(workbook, workSheet);
-    const outputPath = path.join(folderDataProtocole, "convertedToExcel.xlsx");
+    const outputPath = path.join(folderDataDlExcel, "convertedToExcel.xlsx");
     // Ajoute le classeur au chemin
     xlsx.writeFile(workbook, outputPath);
 
