@@ -10,11 +10,6 @@ async function displayQuestionnaires(title) {
     listQuestionnaire.forEach((questionnaire) => {
       const link = document.createElement("a");
       link.textContent = questionnaire.title;
-      if (scoreExt == "question") {
-        link.href = "questionnaire.html";
-      } else {
-        link.href = "scoresExterieures.html";
-      }
 
       link.classList.add("link");
 
@@ -28,8 +23,10 @@ async function displayQuestionnaires(title) {
 
         if (source === "btnReturnTest") {
           window.location.href = "allNumberPassation.html";
-        } else {
+        } else if (scoreExt == "question") {
           window.location.href = "questionnaire.html";
+        } else {
+          window.location.href = "scoresExterieures.html";
         }
         console.log(titreQuestion);
       });
