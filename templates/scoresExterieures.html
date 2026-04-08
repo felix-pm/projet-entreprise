@@ -10,16 +10,18 @@
     <a href="../index.html">
       <img src="../assets/img/arrowBack.png" alt="" id="arrowBack" />
     </a>
-    <h2>Scores Extérieures</h2>
-    <label for="inputNumberPassation">
-      Numéro de passation :
-      <input id="inputNumberPassation" type="number"
-    /></label>
-    <div id="externalScore"></div>
-    <button id="recordScore">Enregistrer le score</button>
-    <div>
-      <button id="jsonToExcel">Enregistrer en excel 📊</button>
-    </div>
+    <section id="allScoresExterieurs">
+      <h2>Scores Extérieurs</h2>
+      <label for="inputNumberPassation">
+        Numéro de passation :
+        <input id="inputNumberPassation" type="number"
+      /></label>
+      <div id="externalScore"></div>
+      <button id="recordScore">Enregistrer le score</button>
+      <div>
+        <button id="jsonToExcel">Enregistrer en excel 📊</button>
+      </div>
+    </section>
     <script
       type="module"
       src="../assets/script/FrontEnd/questions/scoreExterieur.js"
