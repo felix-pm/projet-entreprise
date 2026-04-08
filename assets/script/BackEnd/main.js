@@ -576,7 +576,8 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
         line[`Indice de confiance Q${i + 1} Video Y1`] =
           item.trustIndex[trustKeyVideoY1];
       });
-
+      line[`Chrono Moyenne Video Y1`] =
+        item.chrono["chronoMoy-Yield1-questionsVideo16"];
       line[`Yield 1 Vidéo`] = item.scoreVideoY1 + "/10";
       line["APRES FEEDBACK NEGATIF VIDEO"] = "";
 
@@ -595,6 +596,8 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
         line[`Indice de confiance Q${i + 1} Video Y2`] =
           item.trustIndex[trustVideoKeyY2];
       });
+      line[`Chrono Moyenne Video Y2`] =
+        item.chrono["chronoMoy-Yield2-questionsVideo16"];
       line[`Yield 2 Vidéo`] = item.scoreVideoY2 + "/10";
       line[`Shift Video`] = item.scoreShiftVideo + "/15";
       line[`Total Suggestibilité Video`] = item.totalScoreVideo + "/25";
@@ -615,6 +618,8 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
         line[`Indice de confiance Q${i + 1} Audio Y1`] =
           item.trustIndex[trustAudioKeyY1];
       });
+      line[`Chrono Moyenne Audio Y1`] =
+        item.chrono["chronoMoy-Yield1-questionsAudio16"];
       line[`Yield 1 Audio`] = item.scoreAudioY1 + "/10";
       line["APRES FEEDBACK NEGATIF AUDIO"] = "";
 
@@ -632,7 +637,8 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
         line[`Indice de confiance Q${i + 1} Audio Y2`] =
           item.trustIndex[trustAudioKeyY2];
       });
-
+      line[`Chrono Moyenne Audio Y2`] =
+        item.chrono["chronoMoy-Yield2-questionsAudio16"];
       line[`Yield 2 Audio`] = item.scoreAudioY2 + "/10";
       line[`Shift Audio`] = item.scoreShiftAudio + "/15";
       line[`Total Suggestibilité Audio`] = item.totalScoreAudio + "/25";
@@ -640,6 +646,11 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
       const questionMdls = sortJSON(item.questionsMdls, "questionsMdls");
       questionMdls.forEach((key, i) => {
         line[`Réponse ${i + 1} Source`] = item.questionsMdls[key];
+      });
+
+      const scoreExt = sortJSON(item.externalScores, "scoreExterieur-");
+      scoreExt.forEach((key, i) => {
+        line[`Score Extérieur ${i + 1}`] = item.externalScores[key];
       });
 
       flattenedData.push(line);
