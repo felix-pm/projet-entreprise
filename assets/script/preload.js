@@ -17,6 +17,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
     }
     return file.path;
   },
+  getAllPatients: (title) => ipcRenderer.invoke("get-all-patients", title),
   createFolder: (titleJson) => ipcRenderer.send("create-folder", titleJson),
   generateExcel: (titleJson) =>
     ipcRenderer.send("create-excel-file", titleJson),
