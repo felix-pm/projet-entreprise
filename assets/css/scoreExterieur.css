@@ -4,6 +4,16 @@ h2 {
   color: #242525;
   margin-bottom: 30px;
   text-align: center;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
 }
 
 #form-test {
@@ -13,10 +23,11 @@ h2 {
 }
 
 label {
-  font-weight: 600;
+  font-weight: bold;
   color: #242525;
   margin-bottom: 8px;
   font-size: 0.95rem;
+  font-family: "Inter", sans-serif;
 }
 
 .input-score-exterieur,
@@ -62,18 +73,14 @@ label {
   transition: all 0.3s ease;
 }
 
-#btnBack {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 18px;
-  background-color: #e2e6ea;
-  color: #333;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
+#arrowBack {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 50px; /* Légèrement plus petit que 50px pour être plus élégant */
+  height: 50px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
