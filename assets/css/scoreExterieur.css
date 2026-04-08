@@ -1,0 +1,79 @@
+h2 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #242525;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#form-test {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Espace généreux entre chaque grande section */
+}
+
+label {
+  font-weight: 600;
+  color: #242525;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.input-score-exterieur,
+#inputNumberPassation {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+#recordScore {
+  align-self: center; /* Centre le bouton dans le formulaire flex */
+  background-color: #5a6268;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+#jsonToExcel {
+  width: 100%; /* S'aligne parfaitement avec les liens au-dessus */
+  padding: 15px 25px;
+  background-color: #28a745; /* Le vert validé pour les exports/sauvegardes */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+#btnBack {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 18px;
+  background-color: #e2e6ea;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
