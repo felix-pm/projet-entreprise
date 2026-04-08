@@ -199,7 +199,7 @@ form > div:nth-last-child(2) label {
 }
 
 form > div:nth-last-child(2) input {
-  width: 60%;
+  width: 78%;
   padding: 8px 12px;
   border: 1px solid #ced4da;
   border-radius: 6px;
@@ -213,7 +213,7 @@ form > div:nth-last-child(2) input:focus {
 /* --- BOUTON ENREGISTRER --- */
 #saveJson {
   align-self: center; /* Centre le bouton dans le formulaire flex */
-  background-color: #28a745;
+  background-color: #6f78df;
   color: white;
   border: none;
   padding: 15px 40px;
@@ -229,7 +229,7 @@ form > div:nth-last-child(2) input:focus {
 }
 
 #saveJson:hover {
-  background-color: #218838;
+  background-color: #1960c5;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
@@ -240,9 +240,9 @@ form > div:nth-last-child(2) input:focus {
 
 /* Style appliqué au bouton quand un fichier est chargé */
 .custom-file-upload.file-loaded {
-  border-color: #28a745; /* Vert succès */
-  color: #28a745;
-  background-color: #eaf6ec; /* Fond très légèrement vert */
+  border-color: #6f78df; /* Vert succès */
+  color: #1960c5;
+  background-color: #a8a2e93a; /* Fond très légèrement vert */
 }
 
 /* Style pour le texte du nom du fichier en dessous */
@@ -254,4 +254,8 @@ form > div:nth-last-child(2) input:focus {
   max-width: 150px; /* Évite que ça prenne toute la largeur si le nom est long */
   word-break: break-word; /* Coupe le texte proprement s'il est trop long */
   font-weight: 500;
+}
+
+#form-bottom label {
+  font-weight: bold;
 }

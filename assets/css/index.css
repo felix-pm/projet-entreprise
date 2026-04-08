@@ -1,80 +1,165 @@
+/* --- VARIABLES (Thème Clair & Minimaliste) --- */
+:root {
+  --bg-color: #f8fafc; /* Fond général gris très clair */
+  --card-bg: #ffffff; /* Fond du conteneur blanc pur */
+  --text-main: #0f172a; /* Texte principal anthracite très foncé */
+  --text-muted: #64748b; /* Texte secondaire gris moyen */
+  --primary-color: #6f78df; /* Noir/Ardoise pour le bouton principal */
+  --primary-hover: #1960c5; /* Gris foncé au survol */
+  --secondary-bg: #f1f5f9; /* Gris très clair pour les boutons secondaires */
+  --secondary-hover: #e2e8f0; /* Gris un peu plus soutenu au survol */
+  --border-color: #e2e8f0; /* Bordures douces */
+  --transition: all 0.2s ease-in-out;
+}
+
+/* --- RESET & BODY --- */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-:root {
-  --background: #efefef;
-  --text: #141414;
-  --border: #303033;
-}
-
-html,
 body {
-  height: 100%;
-  width: 100%;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+/* --- MAIN CONTAINER --- */
+.dashboard-container {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 40px;
   width: 100%;
-  background-color: #f8f9fa;
+  max-width: 700px;
+  /* Ombre très légère et douce pour détacher la carte du fond */
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -2px rgba(0, 0, 0, 0.05);
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  gap: 70px;
+/* --- HEADER SECTION --- */
+.header-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.app-version {
+  display: inline-block;
+  background-color: var(--secondary-bg);
+  color: var(--text-muted);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
 }
 
 .homeTitle {
-  font-size: 40px;
+  font-size: 2rem;
   font-weight: 700;
-  color: var(--text);
-  font-family: "Inter", sans-serif;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  color: var(--text-main);
 }
 
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* --- BUTTONS GRID --- */
 .buttonContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-  background-color: #fff;
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  width: 60%;
-  height: 400px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
+/* Base button styling */
 .homeButton {
-  padding: 30px;
-  border: solid;
-  border-color: var(--border);
-  border-width: 2px;
-  border-radius: 20px;
-  text-decoration: none;
-  color: var(--text);
-  height: 200px;
-  width: 200px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 16px 20px;
+  border-radius: 8px; /* Bords légèrement moins ronds pour un côté plus sérieux */
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
   text-align: center;
-  font-family: "Inter", sans-serif;
-  font-size: 32px;
-  background-color: var(--background);
-  transition: all 0.3s ease;
+  transition: var(--transition);
+  border: 1px solid transparent;
 }
 
-.homeButton:hover {
-  transform: scale(1.02);
-  background-color: #dfdadabc;
+.homeButton:active {
+  transform: scale(0.98);
+}
+
+/* Bouton principal (Démarrer un test) */
+.homeButton.primary {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  grid-column: span 2;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.homeButton.primary:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Boutons secondaires */
+.homeButton.secondary {
+  background-color: var(--secondary-bg);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+.homeButton.secondary:hover {
+  background-color: var(--secondary-hover);
+}
+
+/* Bouton tertiaire (Scores extérieurs) */
+.homeButton.outline {
+  background-color: transparent;
+  color: var(--text-muted);
+  border-color: var(--border-color);
+  grid-column: span 2;
+}
+
+.homeButton.outline:hover {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+}
+
+/* --- RESPONSIVE DESIGN (Mobiles) --- */
+@media (max-width: 600px) {
+  .dashboard-container {
+    padding: 24px;
+  }
+
+  .homeTitle {
+    font-size: 1.5rem;
+  }
+
+  .buttonContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .homeButton.primary,
+  .homeButton.outline {
+    grid-column: span 1;
+  }
 }
