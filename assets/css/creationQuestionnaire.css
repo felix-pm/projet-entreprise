@@ -17,7 +17,7 @@ body {
 
 /* --- BOUTON RETOUR --- */
 #arrowBack {
-  position: absolute;
+  position: fixed;
   top: 10px;
   left: 10px;
   width: 50px; /* Légèrement plus petit que 50px pour être plus élégant */
