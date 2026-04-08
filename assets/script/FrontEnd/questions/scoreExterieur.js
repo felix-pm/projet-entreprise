@@ -6,7 +6,7 @@ const btnBack = document.getElementById("btnBack");
 if (btnBack) {
   btnBack.addEventListener("click", () => {
     // Tu peux changer le lien selon l'endroit où tu veux retourner
-    window.location.href = "allQuestionnaire.html?type=exterieur";
+    window.location.href = "index.html?type=exterieur";
   });
 }
 
