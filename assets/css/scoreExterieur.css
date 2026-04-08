@@ -7,6 +7,18 @@ h2 {
   font-family: "Inter", sans-serif;
 }
 
+label {
+  font-weight: bold;
+
+  color: #242525;
+
+  margin-bottom: 8px;
+
+  font-size: 0.95rem;
+
+  font-family: "Inter", sans-serif;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -14,73 +26,81 @@ body {
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  background-color: #f8f9fa;
+  margin: 0; /* Évite les scrolls inutiles */
 }
 
 #form-test {
   display: flex;
   flex-direction: column;
-  gap: 30px; /* Espace généreux entre chaque grande section */
+  gap: 30px;
+  width: 600px; /* On fixe la largeur ici pour que tout soit aligné */
 }
 
-label {
-  font-weight: bold;
-  color: #242525;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-  font-family: "Inter", sans-serif;
-}
-
+/* 1. Uniformisation des Inputs */
 .input-score-exterieur,
 #inputNumberPassation {
-  padding: 10px;
+  width: 100%; /* Prend toute la largeur du parent */
+  box-sizing: border-box; /* Évite que le padding ne fasse déborder l'input */
+  padding: 12px;
   border: 1px solid #ced4da;
   border-radius: 6px;
   outline: none;
   font-size: 0.95rem;
 }
 
-#recordScore {
-  align-self: center; /* Centre le bouton dans le formulaire flex */
-  background-color: #5a6268;
-  color: white;
-  border: none;
-  padding: 15px 40px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
-
+/* 2. Uniformisation des Boutons */
+#recordScore,
 #jsonToExcel {
-  width: 100%; /* S'aligne parfaitement avec les liens au-dessus */
-  padding: 15px 25px;
-  background-color: #28a745; /* Le vert validé pour les exports/sauvegardes */
-  color: white;
+  width: 100%; /* Les deux boutons auront désormais la même taille */
+  padding: 15px 0; /* Hauteur identique */
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   cursor: pointer;
-  outline: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#recordScore {
+  background-color: #5a6268;
+  color: white;
+}
+
+#jsonToExcel {
+  background-color: #28a745;
+  color: white;
+}
+
+#recordScore:hover,
+#jsonToExcel:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* 3. La section des scores */
+#allScoresExterieurs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 600px; /* Même largeur que le formulaire */
+  height: 600px;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 #arrowBack {
   position: fixed;
   top: 10px;
   left: 10px;
-  width: 50px; /* Légèrement plus petit que 50px pour être plus élégant */
-  height: 50px;
+  width: 45px;
+  height: 45px;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
 }
