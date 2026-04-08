@@ -24,6 +24,20 @@ body {
   padding: 20px;
 }
 
+.download {
+  position: absolute;
+  border-radius: 5px;
+  font-family: "Inter", sans-serif;
+  color: white;
+  right: 10px;
+  top: 0px;
+  height: auto;
+  width: 200px;
+  background-color: #28a745;
+  padding: 10px 5px 10px 5px;
+  text-align: center;
+}
+
 /* --- LA CARTE BLANCHE PRINCIPALE --- */
 #section-questionnaire {
   background-color: #ffffff;
