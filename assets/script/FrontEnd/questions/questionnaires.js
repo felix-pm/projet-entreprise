@@ -6,7 +6,7 @@ async function checkAndDisableLink() {
 
   try {
     const titleQ = await window.electronAPI.getElement(title, "title");
-    titleQuestionnaire.textContent = `Questionnaire : ${titleQ}`;
+    titleQuestionnaire.textContent = titleQ;
 
     // Récupération des données patients
     const allPatients = await window.electronAPI.getAllPatients(title);
@@ -60,5 +60,9 @@ function disableLink(link) {
   link.style.cursor = "default";
   link.style.pointerEvents = "none";
 }
+
+const textNumeroPassation = document.getElementById("numeroPassation");
+const numeroPassation = sessionStorage.getItem("numberPassation");
+textNumeroPassation.textContent = `Numéro de passation : ${numeroPassation}`;
 
 checkAndDisableLink();

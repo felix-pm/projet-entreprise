@@ -37,7 +37,7 @@ main p:last-of-type {
 /* Transformation du lien "Continuer" en bouton */
 main a {
   display: inline-block;
-  background-color: #4caf50; /* Vert (tu peux changer selon ta charte graphique) */
+  background-color: #6f78df; /* Vert (tu peux changer selon ta charte graphique) */
   color: white;
   text-decoration: none;
   padding: 12px 25px;
@@ -52,6 +52,6 @@ main a {
 
 /* Effet au survol du bouton */
 main a:hover {
-  background-color: #45a049;
+  background-color: #1960c5;
   transform: scale(1.05); /* Grossit très légèrement au survol */
 }

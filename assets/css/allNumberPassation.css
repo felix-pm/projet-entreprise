@@ -1,0 +1,146 @@
+/* --- VARIABLES (Thème Clair & Minimaliste) --- */
+:root {
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --primary-color: #6f78df;
+  --primary-hover: #1960c5;
+  --secondary-bg: #f1f5f9;
+  --secondary-hover: #e2e8f0;
+  --border-color: #e2e8f0;
+  --transition: all 0.2s ease-in-out;
+}
+
+/* --- RESET & BODY --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* --- CONTENEUR PRINCIPAL (La liste) --- */
+.allNumberPassation {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 600px; /* Légèrement plus fin que l'accueil pour une liste */
+  max-height: 80vh; /* Évite que la carte sorte de l'écran */
+  overflow-y: auto; /* Active le scroll si beaucoup d'éléments */
+
+  /* Layout de la liste */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  /* Ombre douce */
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* --- SCROLLBAR PERSONNALISÉE --- */
+.allNumberPassation::-webkit-scrollbar {
+  width: 8px;
+}
+
+.allNumberPassation::-webkit-scrollbar-track {
+  background: var(--bg-color);
+  border-radius: 8px;
+}
+
+.allNumberPassation::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 8px;
+}
+
+.allNumberPassation::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* --- BOUTONS GÉNÉRÉS PAR LE JS --- */
+.allNumberPassation button {
+  font-family: inherit;
+  background-color: var(--secondary-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: left; /* Aligné à gauche pour faciliter la lecture des dates/numéros */
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+
+  /* Pour un joli rendu si le texte est très long */
+  line-height: 1.5;
+}
+
+.allNumberPassation button:hover {
+  background-color: var(--secondary-hover);
+  border-color: var(--text-muted);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.allNumberPassation button:active {
+  transform: scale(0.98);
+}
+
+/* --- ÉTAT VIDE (Optionnel, au cas où le JS ne trouve rien) --- */
+.allNumberPassation:empty::after {
+  content: "Aucune passation trouvée.";
+  display: block;
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+  .allNumberPassation {
+    padding: 20px;
+    max-height: 90vh;
+  }
+
+  .allNumberPassation button {
+    font-size: 0.9rem;
+    padding: 14px 16px;
+  }
+}
+
+#arrowBack {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 50px; /* Légèrement plus petit que 50px pour être plus élégant */
+  height: 50px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+#arrowBack:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}

@@ -1,35 +1,49 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PsychoSoftWare</title>
+    <title>PsychoSoftWare | Accueil</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/css/index.css" />
   </head>
   <body>
-    <main>
-      <h1 class="homeTitle">Étude de la suggestibilité et de la mémoire</h1>
+    <main class="dashboard-container">
+      <div class="header-section">
+        <h1 class="homeTitle">Étude de la suggestibilité et de la mémoire</h1>
+        <p class="subtitle">Sélectionnez une action pour continuer</p>
+      </div>
 
       <section class="buttonContainer">
-        <!-- Link to information page -->
         <a
-          class="homeButton startTest"
+          class="homeButton primary"
           href="templates/pageCreateRenseignements.html"
-          >Démarrer un test</a
         >
+          Démarrer un test
+        </a>
 
-        <!-- Link to create a questionnaire -->
-        <a class="homeButton" href="templates/creationQuestionnaire.html"
-          >Créer un test</a
-        >
         <a
-          class="homeButton"
+          class="homeButton secondary"
+          href="templates/creationQuestionnaire.html"
+        >
+          Créer un test
+        </a>
+        <a
+          class="homeButton secondary"
           href="templates/allQuestionnaire.html?source=btnReturnTest"
-          >Reprendre un test</a
         >
-        <a href="templates/allQuestionnaire.html?type=scoreExterieur"
-          >Rajouter des score extérieurs</a
+          Reprendre un test
+        </a>
+
+        <a
+          class="homeButton outline"
+          href="templates/allQuestionnaire.html?type=scoreExterieur"
         >
+          Rajouter des scores extérieurs
+        </a>
       </section>
     </main>
   </body>
