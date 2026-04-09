@@ -259,3 +259,56 @@ form > div:nth-last-child(2) input:focus {
 #form-bottom label {
   font-weight: bold;
 }
+
+/* --- BOUTON : AJOUTER UNE QUESTION --- */
+.btn-add-question {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px 20px;
+  background-color: transparent;
+  color: #64748b; /* Gris doux */
+  border: 2px dashed #ced4da;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Effet au survol : devient bleu/violet comme ton thème */
+.btn-add-question:hover {
+  border-color: #6f78df;
+  color: #6f78df;
+  background-color: #f1f2fc; /* Fond très légèrement bleuté */
+  transform: translateY(-1px);
+}
+
+.btn-add-question:active {
+  transform: translateY(0);
+}
+
+/* --- BOUTON : SUPPRIMER LA QUESTION --- */
+.btn-delete-question {
+  padding: 8px 14px;
+  background-color: #fff0f0; /* Fond rouge très très clair */
+  color: #dc3545; /* Texte rouge classique */
+  border: 1px solid #ffcdd2; /* Bordure rouge douce */
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 10px; /* Sépare un peu des boutons radio */
+}
+
+/* Effet au survol : fond rouge plein */
+.btn-delete-question:hover {
+  background-color: #dc3545;
+  color: #ffffff;
+  border-color: #dc3545;
+}
+
+.btn-delete-question:active {
+  transform: scale(0.95);
+}

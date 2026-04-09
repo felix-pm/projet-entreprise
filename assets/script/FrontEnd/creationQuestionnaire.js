@@ -9,6 +9,7 @@ function survey(
   const nameButton = document.createElement("button");
   nameButton.textContent = "Ajouter une question";
   nameButton.type = "button";
+  nameButton.classList.add("btn-add-question");
   containerQuestions.append(nameButton);
   let i = 1;
   nameButton.addEventListener("click", () => {
@@ -23,6 +24,7 @@ function survey(
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Supprimer la question";
     deleteButton.type = "button";
+    deleteButton.classList.add("btn-delete-question");
 
     labelQuestion.textContent = "Question " + i + " : ";
     inputQuestion.className = className;
