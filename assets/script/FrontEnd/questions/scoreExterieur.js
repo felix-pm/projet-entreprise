@@ -40,7 +40,7 @@ async function createAffichageScoreExterieur() {
 }
 
 const buttonRecordScore = document.getElementById("recordScore");
-// Fonction magique pour créer des notifications empilables
+
 function showToast(titre, texte) {
   // 1. Cherche ou crée le conteneur global
   let container = document.getElementById("toast-container");
@@ -86,12 +86,13 @@ function showToast(titre, texte) {
 // -----------------------------------------
 // Ton écouteur de clic mis à jour :
 // -----------------------------------------
-buttonRecordScore.addEventListener("click", async () => {
+buttonRecordScore.addEventListener("click", async (event) => {
+  event.preventDefault();
   const numberPassationInput = document.getElementById("inputNumberPassation");
   const numberPassationValue = numberPassationInput.value.trim();
 
   if (!numberPassationValue) {
-    alert("Erreur : Veuillez renseigner le numéro de passation du patient.");
+    showToast("⚠️ Attention", "Veuillez renseigner le numéro de passation.");
     return;
   }
 
@@ -122,7 +123,7 @@ buttonRecordScore.addEventListener("click", async () => {
     allInputs.forEach((input) => (input.value = ""));
   } catch (err) {
     console.error("Erreur lors de la sauvegarde :", err);
-    alert("Erreur lors de la sauvegarde.");
+    showToast("Erreur", "Une erreur est survenue lors de la sauvegarde !");
   }
 });
 
