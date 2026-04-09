@@ -24,18 +24,75 @@ body {
   padding: 20px;
 }
 
-.download {
-  position: absolute;
-  border-radius: 5px;
+/* Le style de la nouvelle notification */
+.download-notification {
+  position: fixed; /* Fixed est mieux que absolute pour rester à l'écran même en scrollant */
+  top: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  border-left: 5px solid #28a745; /* Bordure d'accentuation verte */
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Belle ombre moderne */
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espace entre l'icône et le texte */
   font-family: "Inter", sans-serif;
-  color: white;
-  right: 10px;
-  top: 0px;
-  height: auto;
-  width: 200px;
-  background-color: #28a745;
-  padding: 10px 5px 10px 5px;
-  text-align: center;
+  z-index: 10000;
+
+  /* État initial pour l'animation (caché au-dessus de l'écran) */
+  transform: translateY(-150%);
+  opacity: 0;
+
+  /* Transition avec un effet légèrement rebondissant */
+  transition:
+    transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.4s ease;
+}
+
+/* Classe ajoutée en JS pour faire descendre la modale */
+.download-notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Classe ajoutée en JS pour faire glisser la modale vers la droite avant de disparaître */
+.download-notification.hide {
+  transform: translateX(120%);
+  opacity: 0;
+}
+
+/* Style de l'icône */
+.download-notification .icon {
+  background-color: #e6f4ea; /* Vert très clair */
+  color: #28a745;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Style du conteneur de texte */
+.download-notification .content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.download-notification .title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.download-notification .text {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
 }
 
 /* --- LA CARTE BLANCHE PRINCIPALE --- */
