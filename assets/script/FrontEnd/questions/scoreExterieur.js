@@ -39,8 +39,6 @@ async function createAffichageScoreExterieur() {
   });
 }
 
-const buttonRecordScore = document.getElementById("recordScore");
-
 function showToast(titre, texte) {
   // 1. Cherche ou crée le conteneur global
   let container = document.getElementById("toast-container");
@@ -86,15 +84,11 @@ function showToast(titre, texte) {
 // -----------------------------------------
 // Ton écouteur de clic mis à jour :
 // -----------------------------------------
-buttonRecordScore.addEventListener("click", async (event) => {
+const formElement = document.querySelector("#allScoresExterieurs form");
+formElement.addEventListener("submit", async (event) => {
   event.preventDefault();
   const numberPassationInput = document.getElementById("inputNumberPassation");
   const numberPassationValue = numberPassationInput.value.trim();
-
-  if (!numberPassationValue) {
-    showToast("⚠️ Attention", "Veuillez renseigner le numéro de passation.");
-    return;
-  }
 
   const scoreData = {
     numberPassation: [numberPassationValue],
