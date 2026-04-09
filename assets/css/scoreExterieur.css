@@ -27,21 +27,20 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: #f8f9fa;
-  margin: 0; /* Évite les scrolls inutiles */
+  margin: 0;
 }
 
 #form-test {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 600px; /* On fixe la largeur ici pour que tout soit aligné */
+  width: 600px;
 }
 
-/* 1. Uniformisation des Inputs */
 .input-score-exterieur,
 #inputNumberPassation {
-  width: 100%; /* Prend toute la largeur du parent */
-  box-sizing: border-box; /* Évite que le padding ne fasse déborder l'input */
+  width: 100%;
+  box-sizing: border-box;
   padding: 12px;
   border: 1px solid #ced4da;
   border-radius: 6px;
@@ -49,11 +48,10 @@ body {
   font-size: 0.95rem;
 }
 
-/* 2. Uniformisation des Boutons */
 #recordScore,
 #jsonToExcel {
-  width: 100%; /* Les deux boutons auront désormais la même taille */
-  padding: 15px 0; /* Hauteur identique */
+  width: 100%;
+  padding: 15px 0;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -66,16 +64,24 @@ body {
 }
 
 #recordScore {
-  background-color: #5a6268;
-  color: white;
+  background-color: #e6e4e470;
+  color: #495057;
+  padding: 15px 25px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
 }
 
 #jsonToExcel {
   background-color: #28a745;
   color: white;
 }
+#recordScore:hover {
+  border-color: #555;
+  color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
 
-#recordScore:hover,
 #jsonToExcel:hover {
   opacity: 0.9;
   transform: translateY(-2px);
@@ -173,4 +179,78 @@ body {
   font-size: 0.85rem;
   color: #64748b;
   margin: 0;
+}
+
+/* --- LE CONTENEUR INVISIBLE QUI GÈRE L'EMPILAGE --- */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column; /* Aligne les notifications de haut en bas */
+  gap: 15px; /* Espace entre les notifications */
+  z-index: 10000;
+}
+
+/* --- LA NOTIFICATION --- */
+.download-notification {
+  position: relative; /* Ce n'est plus "fixed" car le conteneur s'en charge */
+  background-color: #ffffff;
+  border-left: 5px solid #28a745;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: "Inter", sans-serif;
+  width: 320px; /* Largeur fixe pour faire plus propre */
+
+  /* L'animation arrive de la droite maintenant */
+  transform: translateX(120%);
+  opacity: 0;
+
+  transition:
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.3s ease;
+}
+
+.download-notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.download-notification.hide {
+  transform: translateX(120%);
+  opacity: 0;
+}
+
+/* Styles de textes et icône (Inchangés) */
+.download-notification .icon {
+  background-color: #e6f4ea;
+  color: #28a745;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+.download-notification .content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.download-notification .title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1a1a1a;
+  margin: 0;
+}
+.download-notification .text {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
 }

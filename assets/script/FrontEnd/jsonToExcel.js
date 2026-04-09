@@ -27,7 +27,17 @@ function jsonToExcel() {
   `;
 
     // 4. On l'ajoute au body
-    document.body.appendChild(notification);
+    // Remplace `document.body.appendChild(notification);` par :
+
+    let container = document.getElementById("toast-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "toast-container";
+      document.body.appendChild(container);
+    }
+
+    // Ajoute la modale en haut du conteneur
+    container.prepend(notification);
 
     // 5. Petite astuce JS : on attend la prochaine frame pour que le CSS enregistre l'état initial,
     // puis on ajoute la classe "show" pour déclencher l'animation de descente.

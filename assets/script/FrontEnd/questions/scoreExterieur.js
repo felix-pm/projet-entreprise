@@ -40,52 +40,89 @@ async function createAffichageScoreExterieur() {
 }
 
 const buttonRecordScore = document.getElementById("recordScore");
+// Fonction magique pour créer des notifications empilables
+function showToast(titre, texte) {
+  // 1. Cherche ou crée le conteneur global
+  let container = document.getElementById("toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toast-container";
+    document.body.appendChild(container);
+  }
 
+  // 2. Crée la notification
+  const notification = document.createElement("div");
+  notification.classList.add("download-notification");
+  notification.innerHTML = `
+    <div class="icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+    </div>
+    <div class="content">
+      <p class="title">${titre}</p>
+      <p class="text">${texte}</p>
+    </div>
+  `;
+
+  // 3. PREPEND : Ajoute au-dessus des autres (pousse les anciennes vers le bas)
+  container.prepend(notification);
+
+  // 4. Animation
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => notification.classList.add("show"));
+  });
+
+  // 5. Suppression
+  setTimeout(() => {
+    notification.classList.remove("show");
+    notification.classList.add("hide");
+    setTimeout(() => notification.remove(), 400); // 400ms = durée de la transition CSS
+  }, 3500);
+}
+
+// -----------------------------------------
+// Ton écouteur de clic mis à jour :
+// -----------------------------------------
 buttonRecordScore.addEventListener("click", async () => {
-  // 1. NOUVEAUTÉ : On récupère la valeur directement depuis l'input HTML !
   const numberPassationInput = document.getElementById("inputNumberPassation");
   const numberPassationValue = numberPassationInput.value.trim();
 
-  // On vérifie que tu as bien tapé un numéro
   if (!numberPassationValue) {
     alert("Erreur : Veuillez renseigner le numéro de passation du patient.");
     return;
   }
 
-  // 2. On prépare l'objet avec le numéro tapé à la main
   const scoreData = {
     numberPassation: [numberPassationValue],
     externalScores: {},
   };
 
   const allInputs = document.querySelectorAll(".input-score-exterieur");
-
-  // 3. On récupère les scores tapés
   allInputs.forEach((input) => {
     const idDuScore = input.dataset.scoreId;
-    const cleScore = `scoreExterieur-${idDuScore}`; // Donne "scoreExterieur-1"
+    const cleScore = `scoreExterieur-${idDuScore}`;
     const valeurTapee = input.value.trim();
-
-    if (valeurTapee !== "") {
-      scoreData.externalScores[cleScore] = valeurTapee;
-    }
+    if (valeurTapee !== "") scoreData.externalScores[cleScore] = valeurTapee;
   });
 
-  // 4. On envoie au Back-End
   try {
-    // Le Back-End va chercher le patient qui a ce numéro et lui ajouter les externalScores
     await window.electronAPI.saveYield1Questions(scoreData, title);
 
-    alert(
-      `Scores extérieurs enregistrés avec succès pour le patient N°${numberPassationValue} !`,
+    // L'APPEL DE LA NOTIFICATION AVEC LE NUMÉRO DE PASSATION !
+    showToast(
+      "Sauvegarde réussie",
+      `Les scores du patient N°${numberPassationValue} sont enregistrés.`,
     );
 
-    // (Optionnel) On vide les champs pour pouvoir enchaîner avec un autre patient
+    // On vide les champs
     numberPassationInput.value = "";
     allInputs.forEach((input) => (input.value = ""));
   } catch (err) {
     console.error("Erreur lors de la sauvegarde :", err);
-    alert("Une erreur est survenue lors de l'enregistrement.");
+    alert("Erreur lors de la sauvegarde.");
   }
 });
 
