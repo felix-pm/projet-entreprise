@@ -555,9 +555,9 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
     jsonObjectYield1.forEach((item) => {
       let line = {
         "Numéro de Passation": item.numberPassation[0],
-        Age: item.age[0],
-        Sexe: item.sexe[0],
-        "Date Passation": item.date[0],
+        Age: item.age?.[0] || "",
+        Sexe: item.sexe?.[0] || "",
+        "Date Passation": item.date?.[0] || "",
         "AVANT FEEDBACK NEGATIF VIDEO": "",
       };
 
@@ -648,9 +648,9 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
         line[`Réponse ${i + 1} Source`] = item.questionsMdls[key];
       });
 
-      const scoreExt = sortJSON(item.externalScores, "scoreExterieur-");
-      scoreExt.forEach((key, i) => {
-        line[`Score Extérieur ${i + 1}`] = item.externalScores[key];
+      const scoreExt = sortJSON(item.externalScores, "SE-");
+      scoreExt.forEach((key) => {
+        line[`${key}`] = item.externalScores[key];
       });
 
       flattenedData.push(line);

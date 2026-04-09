@@ -59,15 +59,28 @@ buttonRecordScore.addEventListener("click", async () => {
   };
 
   const allInputs = document.querySelectorAll(".input-score-exterieur");
+  const externalScoreTitles = await window.electronAPI.getElement(
+    title,
+    "externalScoreTitle",
+  );
+  let externalTable = [];
 
-  // 3. On récupère les scores tapés
-  allInputs.forEach((input) => {
-    const idDuScore = input.dataset.scoreId;
-    const cleScore = `scoreExterieur-${idDuScore}`; // Donne "scoreExterieur-1"
-    const valeurTapee = input.value.trim();
+  externalScoreTitles.forEach((index) => {
+    externalTable.push(index);
+  });
 
-    if (valeurTapee !== "") {
-      scoreData.externalScores[cleScore] = valeurTapee;
+  externalTable.forEach((value, index) => {
+    let cleScore = `SE-${value.scoreTitle}`;
+
+    // 3. On récupère les scores tapés
+    const currentInput = allInputs[index];
+    if (currentInput) {
+      const valeurTapee = currentInput.value.trim();
+      if (valeurTapee !== "") {
+        scoreData.externalScores[cleScore] = valeurTapee;
+      }
+
+      console.log(cleScore);
     }
   });
 
