@@ -41,9 +41,9 @@ function saveJson() {
     const saveQuestionAudio = document.querySelectorAll(".questions-audio");
     const saveQuestionMdls = document.querySelectorAll(".questions-mdls");
 
-    // CORRECTION ICI : On cible les inputs texte à l'intérieur de tes labels id="input-scores-externes"
+    // CORRECTION ICI : On cible les inputs texte à l'intérieur de tes labels class="input-scores-externes"
     const getExternalTitleScore = document.querySelectorAll(
-      'label[id="input-scores-externes"] input[type="text"]',
+      'label[class="input-scores-externes"] input[type="text"]',
     );
 
     const title = document.querySelector("#title-test").value.trim();

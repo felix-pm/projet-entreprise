@@ -2,13 +2,16 @@ function survey(
   containerQuestion,
   className,
   checkboxName,
-  numberQuestions,
   choice1Text,
   choice2Text,
 ) {
   const containerQuestions = document.querySelector(containerQuestion);
-
-  for (let i = 1; i <= numberQuestions; i++) {
+  const nameButton = document.createElement("button");
+  nameButton.textContent = "Ajouter une question";
+  nameButton.type = "button";
+  containerQuestions.append(nameButton);
+  let i = 1;
+  nameButton.addEventListener("click", () => {
     const divInput = document.createElement("div");
     const divQuestion = document.createElement("div");
     const labelQuestion = document.createElement("label");
@@ -17,6 +20,9 @@ function survey(
     const checkbox2 = document.createElement("input");
     const choice1 = document.createElement("span");
     const choice2 = document.createElement("span");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Supprimer la question";
+    deleteButton.type = "button";
 
     labelQuestion.textContent = "Question " + i + " : ";
     inputQuestion.className = className;
@@ -42,19 +48,31 @@ function survey(
 
     divInput.classList.add("divInput");
 
-    divInput.append(inputQuestion, checkbox1, choice1, checkbox2, choice2);
+    divInput.append(
+      inputQuestion,
+      checkbox1,
+      choice1,
+      checkbox2,
+      choice2,
+      deleteButton,
+    );
 
     divQuestion.append(labelQuestion, divInput);
 
     containerQuestions.appendChild(divQuestion);
-  }
+
+    i++;
+    deleteButton.addEventListener("click", () => {
+      divQuestion.remove();
+      i--;
+    });
+  });
 }
 
 survey(
   "#container-questions-video",
   "questions-video",
   "answer-video",
-  15,
   "Vrai",
   "Faux",
 );
@@ -63,7 +81,6 @@ survey(
   "#container-questions-audio",
   "questions-audio",
   "answer-audio",
-  15,
   "Vrai",
   "Faux",
 );
@@ -72,7 +89,6 @@ survey(
   "#container-questions-mdls",
   "questions-mdls",
   "answer-mdls",
-  10,
   "Vu",
   "Entendu",
 );
