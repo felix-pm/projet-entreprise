@@ -578,7 +578,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
       });
       line[`Chrono Moyenne Video Y1`] =
         item.chrono[`chronoMoy-Yield1-questionsVideo${TrVideoY1.length + 1}`];
-      line[`Yield 1 Vidéo`] = item.scoreVideoY1 + "/10";
+      line[`Yield 1 Vidéo`] = item.scoreVideoY1;
       line["APRES FEEDBACK NEGATIF VIDEO"] = "";
 
       const TrVideoY2 = sortJSON(item.chrono, "chrono-Yield2-questionsVideo");
@@ -598,9 +598,9 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
       });
       line[`Chrono Moyenne Video Y2`] =
         item.chrono[`chronoMoy-Yield2-questionsVideo${TrVideoY2.length + 1}`];
-      line[`Yield 2 Vidéo`] = item.scoreVideoY2 + "/10";
-      line[`Shift Video`] = item.scoreShiftVideo + "/15";
-      line[`Total Suggestibilité Video`] = item.totalScoreVideo + "/25";
+      line[`Yield 2 Vidéo`] = item.scoreVideoY2;
+      line[`Shift Video`] = item.scoreShiftVideo;
+      line[`Total Suggestibilité Video`] = item.totalScoreVideo;
       line["AVANT FEEDBACK NEGATIF AUDIO"] = "";
 
       const TrAudioY1 = sortJSON(item.chrono, "chrono-Yield1-questionsAudio");
@@ -620,7 +620,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
       });
       line[`Chrono Moyenne Audio Y1`] =
         item.chrono[`chronoMoy-Yield1-questionsAudio$${TrAudioY1.length + 1}`];
-      line[`Yield 1 Audio`] = item.scoreAudioY1 + "/10";
+      line[`Yield 1 Audio`] = item.scoreAudioY1;
       line["APRES FEEDBACK NEGATIF AUDIO"] = "";
 
       const TrAudioY2 = sortJSON(item.chrono, "chrono-Yield2-questionsAudio");
@@ -640,9 +640,9 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
       });
       line[`Chrono Moyenne Audio Y2`] =
         item.chrono[`chronoMoy-Yield2-questionsAudio$${TrAudioY2.length + 1}`];
-      line[`Yield 2 Audio`] = item.scoreAudioY2 + "/10";
-      line[`Shift Audio`] = item.scoreShiftAudio + "/15";
-      line[`Total Suggestibilité Audio`] = item.totalScoreAudio + "/25";
+      line[`Yield 2 Audio`] = item.scoreAudioY2;
+      line[`Shift Audio`] = item.scoreShiftAudio;
+      line[`Total Suggestibilité Audio`] = item.totalScoreAudio;
 
       const questionMdls = sortJSON(item.questionsMdls, "questionsMdls");
       questionMdls.forEach((key, i) => {
