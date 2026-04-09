@@ -81,9 +81,6 @@ function showToast(titre, texte) {
   }, 3500);
 }
 
-// -----------------------------------------
-// Ton écouteur de clic mis à jour :
-// -----------------------------------------
 const formElement = document.querySelector("#allScoresExterieurs form");
 formElement.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -96,11 +93,29 @@ formElement.addEventListener("submit", async (event) => {
   };
 
   const allInputs = document.querySelectorAll(".input-score-exterieur");
-  allInputs.forEach((input) => {
-    const idDuScore = input.dataset.scoreId;
-    const cleScore = `scoreExterieur-${idDuScore}`;
-    const valeurTapee = input.value.trim();
-    if (valeurTapee !== "") scoreData.externalScores[cleScore] = valeurTapee;
+  const externalScoreTitles = await window.electronAPI.getElement(
+    title,
+    "externalScoreTitle",
+  );
+  let externalTable = [];
+
+  externalScoreTitles.forEach((index) => {
+    externalTable.push(index);
+  });
+
+  externalTable.forEach((value, index) => {
+    let cleScore = `SE-${value.scoreTitle}`;
+
+    // 3. On récupère les scores tapés
+    const currentInput = allInputs[index];
+    if (currentInput) {
+      const valeurTapee = currentInput.value.trim();
+      if (valeurTapee !== "") {
+        scoreData.externalScores[cleScore] = valeurTapee;
+      }
+
+      console.log(cleScore);
+    }
   });
 
   try {
