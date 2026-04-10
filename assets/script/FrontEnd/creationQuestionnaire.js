@@ -74,7 +74,7 @@ function survey(
 function surveyExternalQuestion(containerQuestion, className) {
   const containerQuestions = document.querySelector(containerQuestion);
   const nameButton = document.createElement("button");
-  nameButton.textContent = "Ajouter une question";
+  nameButton.textContent = "Ajouter un score extérieur";
   nameButton.type = "button";
   nameButton.classList.add("btn-add-question");
   containerQuestions.append(nameButton);
@@ -95,6 +95,7 @@ function surveyExternalQuestion(containerQuestion, className) {
     inputQuestion.name = `score-ext-${i}`;
     inputQuestion.type = "text";
     inputQuestion.classList.add("inputQuestion");
+    divInput.className = "container-score";
 
     divQuestion.classList.add("divQuestion");
 

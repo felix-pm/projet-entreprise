@@ -58,11 +58,12 @@ h1 {
 .titleProtocole,
 #importFile,
 .blocQuestion,
-form > div:nth-last-child(2) /* Cible la div des scores extérieurs qui n'a pas de classe */ {
+#form-bottom {
   background-color: #ffffff;
   padding: 25px 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Ombre très douce */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
 }
 
 /* Titres dans les cartes */
@@ -189,22 +190,22 @@ input[type="file"] {
 }
 
 /* --- SCORES EXTÉRIEURS --- */
-form > div:nth-last-child(2) label {
+/* form > div:nth-last-child(2) label {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
   font-weight: 500;
   color: #242525;
-}
+} */
 
-form > div:nth-last-child(2) input {
+/* form > div:nth-last-child(2) input {
   width: 78%;
   padding: 8px 12px;
   border: 1px solid #ced4da;
   border-radius: 6px;
   outline: none;
-}
+} */
 
 form > div:nth-last-child(2) input:focus {
   border-color: #242525;
@@ -311,4 +312,40 @@ form > div:nth-last-child(2) input:focus {
 
 .btn-delete-question:active {
   transform: scale(0.95);
+}
+
+#container-score-exterieur .divQuestion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fcfcfc;
+  border: 1px solid #eee;
+}
+
+#container-score-exterieur .divInput {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important; /* Empêche le bouton de descendre */
+  gap: 15px;
+  width: 100%;
+  align-items: center;
+}
+
+/* Force l'input à s'étendre au maximum */
+#container-score-exterieur .inputQuestion {
+  flex: 1 !important;
+  min-width: 0; /* Permet au flex de fonctionner correctement */
+  size: 70%;
+}
+
+/* Style du bouton supprimer pour qu'il ne rétrécisse pas */
+#container-score-exterieur .btn-delete-question {
+  flex-shrink: 0;
+  white-space: nowrap; /* Garde le texte sur une ligne */
+}
+
+.container-score {
+  display: flex;
 }
