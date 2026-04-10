@@ -148,11 +148,11 @@ function showQuestion(index) {
   modalStart.classList.remove("hidden");
 
   const currentQuestion = questions[index];
-  modalTitle.textContent = `Question ${index + 1}:${currentQuestion["question"]}?`;
+  modalTitle.textContent = `Question ${index + 1}`;
 
   const text = document.createElement("p");
   text.classList.add("text");
-  text.textContent = `${currentQuestion["question"]}?`;
+  text.textContent = `${currentQuestion["question"]}`;
 
   const divBtn = document.createElement("div");
   divBtn.classList.add("flex-btn");

@@ -47,7 +47,6 @@ function survey(
     checkbox2.required = true;
 
     divQuestion.classList.add("divQuestion");
-
     divInput.classList.add("divInput");
 
     divInput.append(
@@ -60,13 +59,78 @@ function survey(
     );
 
     divQuestion.append(labelQuestion, divInput);
-
     containerQuestions.appendChild(divQuestion);
 
     i++;
+
     deleteButton.addEventListener("click", () => {
       divQuestion.remove();
-      i--;
+      reorderGeneral(containerQuestions, "Question ", checkboxName);
+      i = containerQuestions.querySelectorAll(".divQuestion").length + 1;
+    });
+  });
+}
+
+function surveyExternalQuestion(containerQuestion, className) {
+  const containerQuestions = document.querySelector(containerQuestion);
+  const nameButton = document.createElement("button");
+  nameButton.textContent = "Ajouter une question";
+  nameButton.type = "button";
+  nameButton.classList.add("btn-add-question");
+  containerQuestions.append(nameButton);
+  let i = 1;
+  nameButton.addEventListener("click", () => {
+    const divInput = document.createElement("div");
+    const divQuestion = document.createElement("div");
+    const labelQuestion = document.createElement("label");
+    const inputQuestion = document.createElement("input");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Supprimer la question";
+    deleteButton.type = "button";
+    deleteButton.classList.add("btn-delete-question");
+
+    labelQuestion.textContent = "Score Extérieur " + i + " : ";
+    inputQuestion.className = className;
+    inputQuestion.dataset.id = i;
+    inputQuestion.name = `score-ext-${i}`;
+    inputQuestion.type = "text";
+    inputQuestion.classList.add("inputQuestion");
+
+    divQuestion.classList.add("divQuestion");
+
+    divQuestion.append(labelQuestion, divInput);
+    divInput.append(inputQuestion, deleteButton);
+    containerQuestions.appendChild(divQuestion);
+
+    i++;
+
+    deleteButton.addEventListener("click", () => {
+      divQuestion.remove();
+      // On réindexe et on met à jour i
+      reorderGeneral(containerQuestions, "Score Extérieur ", "score-ext-");
+      i = containerQuestions.querySelectorAll(".divQuestion").length + 1;
+    });
+  });
+}
+
+// Fonction qui remet le bon index dans le JSON si une question est supprimée
+function reorderGeneral(container, labelText, namePrefix) {
+  const groups = container.querySelectorAll(".divQuestion");
+  groups.forEach((group, index) => {
+    const newIndex = index + 1;
+    const label = group.querySelector("label");
+    const inputs = group.querySelectorAll("input");
+
+    // Mise à jour du texte (on change le premier noeud texte pour ne pas supprimer l'input si il est dedans)
+    label.childNodes[0].textContent = labelText + newIndex + " : ";
+
+    inputs.forEach((input) => {
+      input.dataset.id = newIndex;
+      if (input.type === "radio") {
+        input.name = namePrefix + newIndex;
+      } else if (input.name.startsWith("score-ext-")) {
+        input.name = "score-ext-" + newIndex;
+      }
     });
   });
 }
@@ -94,6 +158,8 @@ survey(
   "Vu",
   "Entendu",
 );
+
+surveyExternalQuestion("#container-score-exterieur", "input-scores-externes");
 
 function setupFileInputFeedback(inputId) {
   const input = document.getElementById(inputId);

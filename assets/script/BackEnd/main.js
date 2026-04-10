@@ -619,7 +619,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
           item.trustIndex[trustAudioKeyY1];
       });
       line[`Chrono Moyenne Audio Y1`] =
-        item.chrono[`chronoMoy-Yield1-questionsAudio$${TrAudioY1.length + 1}`];
+        item.chrono[`chronoMoy-Yield1-questionsAudio${TrAudioY1.length + 1}`];
       line[`Yield 1 Audio`] = item.scoreAudioY1;
       line["APRES FEEDBACK NEGATIF AUDIO"] = "";
 
@@ -639,7 +639,7 @@ ipcMain.on("create-excel-file", async (event, titleJson) => {
           item.trustIndex[trustAudioKeyY2];
       });
       line[`Chrono Moyenne Audio Y2`] =
-        item.chrono[`chronoMoy-Yield2-questionsAudio$${TrAudioY2.length + 1}`];
+        item.chrono[`chronoMoy-Yield2-questionsAudio${TrAudioY2.length + 1}`];
       line[`Yield 2 Audio`] = item.scoreAudioY2;
       line[`Shift Audio`] = item.scoreShiftAudio;
       line[`Total Suggestibilité Audio`] = item.totalScoreAudio;

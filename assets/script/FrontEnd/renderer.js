@@ -42,8 +42,9 @@ function saveJson() {
     const saveQuestionMdls = document.querySelectorAll(".questions-mdls");
 
     // CORRECTION ICI : On cible les inputs texte à l'intérieur de tes labels class="input-scores-externes"
+    // Remplace ton ancien sélecteur par celui-ci :
     const getExternalTitleScore = document.querySelectorAll(
-      'label[class="input-scores-externes"] input[type="text"]',
+      ".input-scores-externes",
     );
 
     const title = document.querySelector("#title-test").value.trim();
